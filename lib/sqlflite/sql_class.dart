@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import '/main/data_types/record.dart';
+
 
 class SqlClass {
 
@@ -40,6 +42,11 @@ class SqlClass {
 )
     ''');
   }
+  Future<int> insertRecord(Record record) async {
+    final db = await database;
+    return await db.insert('record', record.toMap());
+  }
+
 
   Future<void> closeDatabase() async {
     final db = await database;
@@ -47,7 +54,23 @@ class SqlClass {
     _database = null;
   }
 
+  Future<Record?> getRecord(int id) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'record',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Record.fromMap(maps.first);
+    }
+    return null;
+  }
+
 }
+
+
 
 
 
