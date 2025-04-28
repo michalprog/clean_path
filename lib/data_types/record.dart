@@ -1,4 +1,6 @@
-import 'package:clean_path/main/enums/enums.dart';
+
+
+import '../enums/enums.dart';
 
 class Record {
   final int id;

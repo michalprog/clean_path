@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import '/main/data_types/record.dart';
-
+import '/data_types/record.dart';
 
 class SqlClass {
 
@@ -67,7 +66,40 @@ class SqlClass {
     }
     return null;
   }
+  Future<List<Record>> getAllRecords() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('record');
 
+    return List.generate(maps.length, (i) {
+      return Record.fromMap(maps[i]);
+    });
+  }
+  Future<Record?> getActiveRecordByType(int type) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'record',
+      where: 'type = ? AND is_active = ?',
+      whereArgs: [type, 1],
+      limit: 1,
+    );
+
+    if (maps.isNotEmpty) {
+      return Record.fromMap(maps.first);
+    }
+    return null;
+  }
+  Future<List<Record>> getActiveRecords() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'record',
+      where: 'is_active = ?',
+      whereArgs: [1],
+    );
+
+    return List.generate(maps.length, (i) {
+      return Record.fromMap(maps[i]);
+    });
+  }
 }
 
 

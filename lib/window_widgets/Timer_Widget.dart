@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+import '../providers/database_provider.dart';
 
 class TimerWidget extends StatefulWidget {
   const TimerWidget({super.key});
@@ -9,6 +12,7 @@ class TimerWidget extends StatefulWidget {
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
+
   final _stopWatchTimer = StopWatchTimer(
     mode: StopWatchMode.countUp,
   );
@@ -36,6 +40,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   }
   @override
   Widget build(BuildContext context) {
+    final database = Provider.of<DatabaseProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
