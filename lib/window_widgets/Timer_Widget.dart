@@ -15,18 +15,25 @@ class TimerWidget extends StatefulWidget {
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
-
-  final _stopWatchTimer = StopWatchTimer(
-    mode: StopWatchMode.countUp,
-  );
+  late StopWatchTimer _stopWatchTimer;
 
   static const int countdownStart = 1 * 86400000; // 1 dzień = 86 400 000 ms
+
+  @override
+  void initState() {
+    super.initState();
+    _stopWatchTimer = StopWatchTimer(
+      mode: StopWatchMode.countUp,
+      presetMillisecond: widget.startCounter, // ← tu przekazujesz startCounter
+    );
+  }
 
   @override
   void dispose() {
     _stopWatchTimer.dispose();
     super.dispose();
   }
+
   String _formatTime(int milliseconds) {
     int seconds = (milliseconds / 1000).truncate();
     int days = (seconds / 86400).truncate();
@@ -41,13 +48,13 @@ class _TimerWidgetState extends State<TimerWidget> {
 
     return "$formattedDays d $formattedHours h $formattedMinutes m $formattedSeconds s";
   }
+
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<DatabaseProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
         Container(
           width: 300,
           height: 300,
@@ -70,7 +77,7 @@ class _TimerWidgetState extends State<TimerWidget> {
           child: StreamBuilder<int>(
             stream: _stopWatchTimer.rawTime,
             builder: (context, snapshot) {
-              final value = snapshot.data ?? 0;
+              final value = snapshot.data ?? widget.startCounter; // ← użyj startCounter jako fallback
               return Text(
                 _formatTime(value),
                 style: const TextStyle(
@@ -83,18 +90,16 @@ class _TimerWidgetState extends State<TimerWidget> {
           ),
         ),
 
-
         SizedBox(height: 10),
 
-        // Countdown - mniejsza czcionka
         StreamBuilder<int>(
           stream: _stopWatchTimer.rawTime,
           builder: (context, snapshot) {
-            final value = snapshot.data ?? 0;
-            final countdownTime = (1 * 86400000) - value; // Odliczanie od 1 dnia
+            final value = snapshot.data ?? widget.startCounter;
+            final countdownTime = countdownStart - value;
 
             return Text(
-              "To next Achivment: ${_formatTime(countdownTime)}",
+              "To next Achievement: ${_formatTime(countdownTime)}",
               style: TextStyle(fontSize: 18, color: Colors.grey),
             );
           },
@@ -102,17 +107,16 @@ class _TimerWidgetState extends State<TimerWidget> {
 
         SizedBox(height: 20),
 
-        // Przyciski sterujące
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: ()=>startTimer(),
+              onPressed: () => startTimer(),
               child: Text("Start"),
             ),
             SizedBox(width: 10),
             ElevatedButton(
-              onPressed: ()=>resetTimer(),
+              onPressed: () => resetTimer(),
               child: Text("Reset"),
             ),
           ],
@@ -120,15 +124,15 @@ class _TimerWidgetState extends State<TimerWidget> {
       ],
     );
   }
-  void startTimer()
-  {
+
+  void startTimer() {
     _stopWatchTimer.onStartTimer();
     widget.timerFunction(1);
-
   }
-  void resetTimer()
-  {
+
+  void resetTimer() {
     _stopWatchTimer.onResetTimer();
     widget.timerFunction(2);
   }
 }
+

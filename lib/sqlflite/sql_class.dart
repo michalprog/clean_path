@@ -43,7 +43,7 @@ class SqlClass {
   }
   Future<Record> insertRecord(Record record) async {
     final db = await database;
-    int id=await db.insert('record', record.toMap());
+    int id=await db.insert('record', record.toMapForInsert());
     return Record(
       id,
       record.type,

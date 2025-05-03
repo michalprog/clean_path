@@ -54,7 +54,12 @@ class FapProvider extends ChangeNotifier
 
   }
   Future<void> resetTimer()async{
-    await databaseProvider.ResetTimer( faprecord!);
+    if (faprecord != null) {
+      await databaseProvider.ResetTimer(faprecord!);
+      faprecord = null;
+      timerTime = 0;
+      notifyListeners();
+    }
 
   }
 
