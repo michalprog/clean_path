@@ -24,8 +24,11 @@ class _TimerWidgetState extends State<TimerWidget> {
     super.initState();
     _stopWatchTimer = StopWatchTimer(
       mode: StopWatchMode.countUp,
-      presetMillisecond: widget.startCounter, // ← tu przekazujesz startCounter
+      presetMillisecond: widget.startCounter,
     );
+    if (widget.startCounter > 0) {
+      _stopWatchTimer.onStartTimer();
+    }
   }
 
   @override
@@ -77,7 +80,7 @@ class _TimerWidgetState extends State<TimerWidget> {
           child: StreamBuilder<int>(
             stream: _stopWatchTimer.rawTime,
             builder: (context, snapshot) {
-              final value = snapshot.data ?? widget.startCounter; // ← użyj startCounter jako fallback
+              final value = snapshot.data ?? widget.startCounter;
               return Text(
                 _formatTime(value),
                 style: const TextStyle(

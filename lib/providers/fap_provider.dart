@@ -6,11 +6,11 @@ import '/data_types/record.dart';
 
 class FapProvider extends ChangeNotifier
 {
-  Record? faprecord;
-  int timerTime=0;
+
   final DatabaseProvider databaseProvider;
   FapProvider(this.databaseProvider);
-
+  Record? fapRecord;
+  int timerTime=0;
   Future<void>provideData()
   async {
     await getRecord();
@@ -31,21 +31,21 @@ class FapProvider extends ChangeNotifier
 
 
     );
-    faprecord=newRecord;
+    fapRecord=newRecord;
     await databaseProvider.createNewRecord(newRecord);
   }
   Future<Record?> getRecord()
   async {
-    faprecord= await databaseProvider.getActiveRecordByType(0);
+    fapRecord= await databaseProvider.getActiveRecordByType(0);
 
-    return faprecord;
+    return fapRecord;
   }
   int getTimerTime()
   {
-    if (faprecord != null && faprecord!.isActive)
+    if (fapRecord != null && fapRecord!.isActive)
     {
       final DateTime now = DateTime.now();
-      final recordTime = faprecord!.activated;
+      final recordTime = fapRecord!.activated;
       return now.difference(recordTime).inMilliseconds;
     }else
     {
@@ -54,9 +54,9 @@ class FapProvider extends ChangeNotifier
 
   }
   Future<void> resetTimer()async{
-    if (faprecord != null) {
-      await databaseProvider.ResetTimer(faprecord!);
-      faprecord = null;
+    if (fapRecord != null) {
+      await databaseProvider.ResetTimer(fapRecord!);
+      fapRecord = null;
       timerTime = 0;
       notifyListeners();
     }

@@ -7,8 +7,17 @@ import '/data_types/record.dart';
 
 class AlcocholProvider extends ChangeNotifier{
   final DatabaseProvider databaseProvider;
-
   AlcocholProvider( this.databaseProvider);
+
+  Record? alcRecord;
+  int timerTime=0;
+  Future<void>provideData()
+  async {
+    await getRecord();
+    timerTime=getTimerTime();
+
+  }
+
   Future<void> createNewRecord(addictionTypes type) async {
     // Tworzymy aktualną datę
     final DateTime now = DateTime.now();
@@ -22,11 +31,35 @@ class AlcocholProvider extends ChangeNotifier{
 
 
     );
+    alcRecord=newRecord;
     await databaseProvider.createNewRecord(newRecord);
   }
   Future<Record?> getRecord()
   async {
-    return databaseProvider.getActiveRecordByType(1);
+    alcRecord= await databaseProvider.getActiveRecordByType(2);
+
+    return alcRecord;
+  }
+  int getTimerTime()
+  {
+    if (alcRecord != null && alcRecord!.isActive)
+    {
+      final DateTime now = DateTime.now();
+      final recordTime = alcRecord!.activated;
+      return now.difference(recordTime).inMilliseconds;
+    }else
+    {
+      return 0;
+    }
+
+  }
+  Future<void> resetTimer()async{
+    if (alcRecord != null) {
+      await databaseProvider.ResetTimer(alcRecord!);
+      alcRecord = null;
+      timerTime = 0;
+      notifyListeners();
+    }
 
   }
 

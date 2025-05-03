@@ -8,6 +8,17 @@ class SweetsProvider  extends ChangeNotifier{
 
   final DatabaseProvider databaseProvider;
   SweetsProvider(this.databaseProvider);
+
+
+  Record? sweetRecord;
+  int timerTime=0;
+  Future<void>provideData()
+  async {
+    await getRecord();
+    timerTime=getTimerTime();
+
+  }
+
   Future<void> createNewRecord(addictionTypes type) async {
     // Tworzymy aktualną datę
     final DateTime now = DateTime.now();
@@ -21,12 +32,34 @@ class SweetsProvider  extends ChangeNotifier{
 
 
     );
+    sweetRecord=newRecord;
     await databaseProvider.createNewRecord(newRecord);
   }
   Future<Record?> getRecord()
   async {
-    return databaseProvider.getActiveRecordByType(1);
-    return null;
-  }
+    sweetRecord= await databaseProvider.getActiveRecordByType(3);
 
+    return sweetRecord;
+  }
+  int getTimerTime()
+  {
+    if (sweetRecord != null && sweetRecord!.isActive)
+    {
+      final DateTime now = DateTime.now();
+      final recordTime = sweetRecord!.activated;
+      return now.difference(recordTime).inMilliseconds;
+    }else
+    {
+      return 0;
+    }
+
+  }
+  Future<void> resetTimer()async {
+    if (sweetRecord != null) {
+      await databaseProvider.ResetTimer(sweetRecord!);
+      sweetRecord = null;
+      timerTime = 0;
+      notifyListeners();
+    }
+  }
 }

@@ -6,8 +6,17 @@ import '/data_types/record.dart';
 
 class PapProvider extends ChangeNotifier
 {
+  Record? papRecord;
+  int timerTime=0;
   final DatabaseProvider databaseProvider;
   PapProvider(this.databaseProvider);
+  Future<void>provideData()
+  async {
+    await getRecord();
+    timerTime=getTimerTime();
+
+  }
+
   Future<void> createNewRecord(addictionTypes type) async {
     // Tworzymy aktualną datę
     final DateTime now = DateTime.now();
@@ -21,12 +30,35 @@ class PapProvider extends ChangeNotifier
 
 
     );
+    papRecord=newRecord;
     await databaseProvider.createNewRecord(newRecord);
   }
   Future<Record?> getRecord()
   async {
-    return databaseProvider.getActiveRecordByType(1);
-    return null;
+    papRecord= await databaseProvider.getActiveRecordByType(1);
+
+    return papRecord;
+  }
+  int getTimerTime()
+  {
+    if (papRecord != null && papRecord!.isActive)
+    {
+      final DateTime now = DateTime.now();
+      final recordTime = papRecord!.activated;
+      return now.difference(recordTime).inMilliseconds;
+    }else
+    {
+      return 0;
+    }
+
+  }
+  Future<void> resetTimer()async {
+    if (papRecord != null) {
+      await databaseProvider.ResetTimer(papRecord!);
+      papRecord = null;
+      timerTime = 0;
+      notifyListeners();
+    }
   }
 
 }

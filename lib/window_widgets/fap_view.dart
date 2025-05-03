@@ -17,14 +17,14 @@ class FapView extends StatelessWidget {
       {
       case 1://włączenie
           {
-            if(fapProvider.faprecord==null) {
+            if(fapProvider.fapRecord==null) {
               fapProvider.createNewRecord(addictionTypes.fap);
             }
             break;
       }
       case 2://reset timera
           {
-            if(fapProvider.faprecord!=null)
+            if(fapProvider.fapRecord!=null)
               {
                 fapProvider.resetTimer();
               }
@@ -59,6 +59,7 @@ break;
               ],
             ),
           );
+
         }
       },
     );
