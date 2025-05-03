@@ -25,7 +25,7 @@ class Record {
   }
   Map<String, dynamic> toMapForInsert() {
     return {
-      'type': type,
+      'type': type.index,
       'is_active': isActive ? 1 : 0,
       'activeted': activated.toIso8601String(),
       'desactivated': desactivated?.toIso8601String(),
