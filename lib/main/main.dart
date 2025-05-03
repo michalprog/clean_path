@@ -12,16 +12,20 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => DatabaseProvider()),
-      ProxyProvider<DatabaseProvider, FapProvider>(
+      ChangeNotifierProxyProvider<DatabaseProvider, FapProvider>(
+        create: (_) => FapProvider(DatabaseProvider()),
         update: (_, databaseProvider, __) => FapProvider(databaseProvider),
       ),
-      ProxyProvider<DatabaseProvider, PapProvider>(
+      ChangeNotifierProxyProvider<DatabaseProvider, PapProvider>(
+        create: (_) => PapProvider(DatabaseProvider()),
         update: (_, databaseProvider, __) => PapProvider(databaseProvider),
       ),
-      ProxyProvider<DatabaseProvider, AlcocholProvider>(
+      ChangeNotifierProxyProvider<DatabaseProvider, AlcocholProvider>(
+        create: (_) => AlcocholProvider(DatabaseProvider()),
         update: (_, databaseProvider, __) => AlcocholProvider(databaseProvider),
       ),
-      ProxyProvider<DatabaseProvider, SweetsProvider>(
+      ChangeNotifierProxyProvider<DatabaseProvider, SweetsProvider>(
+        create: (_) => SweetsProvider(DatabaseProvider()),
         update: (_, databaseProvider, __) => SweetsProvider(databaseProvider),
       ),
     ],

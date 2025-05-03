@@ -3,6 +3,7 @@ import '../enums/enums.dart';
 import '../sqlflite/sql_class.dart';
 import '/data_types/record.dart';
 
+
 class DatabaseProvider extends ChangeNotifier{
   final SqlClass _sqlClass = SqlClass.instance;
 
@@ -15,23 +16,26 @@ class DatabaseProvider extends ChangeNotifier{
   }
 
 // Funkcja tworząca nowy rekord z wymaganym typem (void - bez zwracania ID)
-  Future<void> createNewRecord(addictionTypes type) async {
-    // Tworzymy aktualną datę
-    final DateTime now = DateTime.now();
+  Future<Record> createNewRecord(Record newRecord) async {
 
-    // Tworzymy nowy rekord - id=0 zostanie zastąpione przez autoinkrementację w bazie
-    final Record newRecord = Record(
-      0,
-      type,
-      true, // rekord jest aktywny
-      now, // przechowujemy DateTime
-    );
-
-    // Dodajemy rekord do bazy danych
-    await _sqlClass.insertRecord(newRecord);
-
+    Record record=await _sqlClass.insertRecord(newRecord);
     // Odświeżamy listę rekordów
     await loadAllRecords();
+    return record;
   }
+  Future<Record?> getActiveRecordByType(int type)
+  async {
+    return await _sqlClass.getActiveRecordByType(type);
+  }
+  Future<void> ResetTimer(Record record)async{
+    Record updatedRecord = Record(
+      record.id,
+      record.type,
+      false, // isActive = false
+      record.activated,
+      desactivated: DateTime.now(),
+    );
+    await _sqlClass.updateRecord(updatedRecord);
 
+  }
 }

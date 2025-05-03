@@ -41,9 +41,16 @@ class SqlClass {
 )
     ''');
   }
-  Future<int> insertRecord(Record record) async {
+  Future<Record> insertRecord(Record record) async {
     final db = await database;
-    return await db.insert('record', record.toMap());
+    int id=await db.insert('record', record.toMap());
+    return Record(
+      id,
+      record.type,
+      record.isActive,
+      record.activated,
+      desactivated: record.desactivated,
+    );
   }
 
 
@@ -99,6 +106,17 @@ class SqlClass {
     return List.generate(maps.length, (i) {
       return Record.fromMap(maps[i]);
     });
+  }
+  Future<void> updateRecord(Record record) async {
+    final db = await database;
+
+    await db.update(
+      'record',
+      record.toMap(),
+      where: 'id = ?',
+      whereArgs: [record.id],
+    );
+
   }
 }
 

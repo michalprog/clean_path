@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/alcochol_provider.dart';
 import '../providers/database_provider.dart';
 import 'Timer_Widget.dart';
 
@@ -9,7 +10,7 @@ class AlkView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final database = Provider.of<DatabaseProvider>(context);
+    final alcocholProvider = Provider.of<AlcocholProvider>(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +28,7 @@ class AlkView extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          TimerWidget(),
+          TimerWidget(timerFunction: (int option) {  }, startCounter: 0,),
 
         ],
 
