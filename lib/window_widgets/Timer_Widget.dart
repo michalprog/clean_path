@@ -5,13 +5,16 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../providers/database_provider.dart';
 
 class TimerWidget extends StatefulWidget {
-  final Function (int option) timerFunction;
+  final Function(int option) timerFunction;
   final int startCounter;
-  const TimerWidget({super.key, required this.timerFunction, required this.startCounter} );
+  const TimerWidget({
+    super.key,
+    required this.timerFunction,
+    required this.startCounter,
+  });
 
   @override
   State<TimerWidget> createState() => _TimerWidgetState();
-
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
@@ -113,15 +116,9 @@ class _TimerWidgetState extends State<TimerWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => startTimer(),
-              child: Text("Start"),
-            ),
+            ElevatedButton(onPressed: () => startTimer(), child: Text("Start")),
             SizedBox(width: 10),
-            ElevatedButton(
-              onPressed: () => resetTimer(),
-              child: Text("Reset"),
-            ),
+            ElevatedButton(onPressed: () => resetTimer(), child: Text("Reset")),
           ],
         ),
       ],
@@ -138,4 +135,3 @@ class _TimerWidgetState extends State<TimerWidget> {
     widget.timerFunction(2);
   }
 }
-

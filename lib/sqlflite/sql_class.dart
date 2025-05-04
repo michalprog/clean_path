@@ -4,7 +4,6 @@ import 'package:path/path.dart';
 import '/data_types/record.dart';
 
 class SqlClass {
-
   static Database? _database;
 
   SqlClass._internal();
@@ -17,16 +16,13 @@ class SqlClass {
     _database = await _initDatabase();
     return _database!;
   }
+
   // Inicjalizacja bazy danych
   Future<Database> _initDatabase() async {
     String dbPath = await getDatabasesPath();
     String path = join(dbPath, 'notes.db');
 
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   // Tworzenie tabeli przy pierwszym uruchomieniu
@@ -41,9 +37,10 @@ class SqlClass {
 )
     ''');
   }
+
   Future<Record> insertRecord(Record record) async {
     final db = await database;
-    int id=await db.insert('record', record.toMapForInsert());
+    int id = await db.insert('record', record.toMapForInsert());
     return Record(
       id,
       record.type,
@@ -52,7 +49,6 @@ class SqlClass {
       desactivated: record.desactivated,
     );
   }
-
 
   Future<void> closeDatabase() async {
     final db = await database;
@@ -73,6 +69,7 @@ class SqlClass {
     }
     return null;
   }
+
   Future<List<Record>> getAllRecords() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('record');
@@ -81,6 +78,7 @@ class SqlClass {
       return Record.fromMap(maps[i]);
     });
   }
+
   Future<Record?> getActiveRecordByType(int type) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -95,6 +93,7 @@ class SqlClass {
     }
     return null;
   }
+
   Future<List<Record>> getActiveRecords() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -107,6 +106,7 @@ class SqlClass {
       return Record.fromMap(maps[i]);
     });
   }
+
   Future<void> updateRecord(Record record) async {
     final db = await database;
 
@@ -116,11 +116,5 @@ class SqlClass {
       where: 'id = ?',
       whereArgs: [record.id],
     );
-
   }
 }
-
-
-
-
-

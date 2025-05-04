@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../enums/enums.dart';
 import '../providers/alcochol_provider.dart';
-import '../providers/database_provider.dart';
 import 'Timer_Widget.dart';
 
 class AlkView extends StatelessWidget {
@@ -12,28 +10,25 @@ class AlkView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final alcocholProvider = Provider.of<AlcocholProvider>(context);
-    void providerOperation(int option)
-    {
-      switch (option)
-      {
-        case 1://włączenie
+    void providerOperation(int option) {
+      switch (option) {
+        case 1: //włączenie
           {
-            if(alcocholProvider.alcRecord==null) {
+            if (alcocholProvider.alcRecord == null) {
               alcocholProvider.createNewRecord(addictionTypes.alcochol);
             }
             break;
           }
-        case 2://reset timera
+        case 2: //reset timera
           {
-            if(alcocholProvider.alcRecord!=null)
-            {
+            if (alcocholProvider.alcRecord != null) {
               alcocholProvider.resetTimer();
             }
             break;
           }
-
       }
     }
+
     return FutureBuilder(
       future: alcocholProvider.provideData(),
       builder: (context, snapshot) {
@@ -46,7 +41,6 @@ class AlkView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 SizedBox(
                   height: 100,
                   width: 300,
@@ -56,19 +50,16 @@ class AlkView extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
+                const SizedBox(height: 50),
+                TimerWidget(
+                  timerFunction: providerOperation,
+                  startCounter: alcocholProvider.timerTime,
                 ),
-                TimerWidget(timerFunction: providerOperation, startCounter: alcocholProvider.timerTime,),
-
               ],
-
             ),
           );
         }
       },
     );
-
-
   }
 }
