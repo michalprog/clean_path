@@ -1,3 +1,4 @@
+import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../window_widgets/alk_view.dart';
@@ -47,6 +48,7 @@ class _MainWindowState extends State<MainWindow> {
             )),
         backgroundColor: Colors.greenAccent,
       ),
+      drawer: DrawerWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () => changeWindow(4),
