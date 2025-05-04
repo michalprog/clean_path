@@ -80,10 +80,10 @@ flutter:
     - "assets/icon/cleanPathIcon.png"
     - "assets/icon/cleanPathLogo.png"
     - "assets/images/main_window_screen.png"
-    - "assets/images/clean_path0"
-    - "assets/images/clean_path1"
-    - "assets/images/clean_path2"
-    - "assets/images/clean_path3"
+    - "assets/images/clean_path0.png"
+    - "assets/images/clean_path1.png"
+    - "assets/images/clean_path2.png"
+    - "assets/images/clean_path3.png"
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

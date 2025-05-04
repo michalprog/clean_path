@@ -30,12 +30,12 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.forum),
-            title: Text('forum'),
+            title: Text('Forum'),
             onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.emoji_events),
-            title: Text('Achivments'),
+            title: Text('Achievements'),
             onTap: () {},
           ),
         ],

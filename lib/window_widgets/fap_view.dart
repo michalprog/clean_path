@@ -37,25 +37,33 @@ class FapView extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 100,
-                  width: 300,
-                  child: Text(
-                    "Stop Pornography with us Today !",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20),
+          return Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: fapProvider.giveWindowImage(),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                   SizedBox(
+                    height: 100,
+                    width: 300,
+                    child: Text(
+                      fapProvider.getMotivationMsg(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 50),
-                TimerWidget(
-                  timerFunction: providerOperation,
-                  startCounter: fapProvider.timerTime,
-                ),
-              ],
+                  const SizedBox(height: 100),
+                  TimerWidget(
+                    timerFunction: providerOperation,
+                    startCounter: fapProvider.timerTime,
+                  ),
+                ],
+              ),
             ),
           );
         }

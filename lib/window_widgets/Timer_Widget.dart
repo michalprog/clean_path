@@ -6,8 +6,9 @@ import '../providers/database_provider.dart';
 
 class TimerWidget extends StatefulWidget {
   final Function(int option) timerFunction;
+  bool TimerState=false;
   final int startCounter;
-  const TimerWidget({
+  TimerWidget({
     super.key,
     required this.timerFunction,
     required this.startCounter,
@@ -31,6 +32,7 @@ class _TimerWidgetState extends State<TimerWidget> {
     );
     if (widget.startCounter > 0) {
       _stopWatchTimer.onStartTimer();
+      widget.TimerState=true;
     }
   }
 
@@ -39,7 +41,6 @@ class _TimerWidgetState extends State<TimerWidget> {
     _stopWatchTimer.dispose();
     super.dispose();
   }
-
   String _formatTime(int milliseconds) {
     int seconds = (milliseconds / 1000).truncate();
     int days = (seconds / 86400).truncate();
@@ -54,6 +55,29 @@ class _TimerWidgetState extends State<TimerWidget> {
 
     return "$formattedDays d $formattedHours h $formattedMinutes m $formattedSeconds s";
   }
+  String _mainFormatTime(int milliseconds) {
+    int seconds = (milliseconds / 1000).truncate();
+    int days = (seconds / 86400).truncate();
+    int hours = ((seconds % 86400) / 3600).truncate();
+    int minutes = ((seconds % 3600) / 60).truncate();
+    int remainingSeconds = seconds % 60;
+
+    String formattedHours = hours.toString().padLeft(2, '0');
+    String formattedMinutes = minutes.toString().padLeft(2, '0');
+    String formattedSeconds = remainingSeconds.toString().padLeft(2, '0');
+
+    String formattedDays;
+    if (days < 10) {
+      formattedDays = days.toString();
+    } else if (days < 100) {
+      formattedDays = days.toString().padLeft(2, '0');
+    } else {
+      formattedDays = days.toString().padLeft(3, '0');
+    }
+
+    return "$formattedHours : $formattedMinutes : $formattedSeconds\n"
+        "$formattedDays d";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,42 +85,24 @@ class _TimerWidgetState extends State<TimerWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          width: 300,
-          height: 300,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [Colors.greenAccent, Colors.blueAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 6,
-                offset: Offset(2, 4),
+        StreamBuilder<int>(
+          stream: _stopWatchTimer.rawTime,
+          builder: (context, snapshot) {
+            final value = snapshot.data ?? widget.startCounter;
+            return Text(
+              _mainFormatTime(value),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+
               ),
-            ],
-          ),
-          alignment: Alignment.center,
-          child: StreamBuilder<int>(
-            stream: _stopWatchTimer.rawTime,
-            builder: (context, snapshot) {
-              final value = snapshot.data ?? widget.startCounter;
-              return Text(
-                _formatTime(value),
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              );
-            },
-          ),
+            );
+          },
         ),
 
-        SizedBox(height: 10),
+        SizedBox(height: 50),
 
         StreamBuilder<int>(
           stream: _stopWatchTimer.rawTime,
@@ -111,27 +117,24 @@ class _TimerWidgetState extends State<TimerWidget> {
           },
         ),
 
-        SizedBox(height: 20),
+        SizedBox(height: 50),
+        ElevatedButton(onPressed: () => timerFunction(), child: Text(widget.TimerState ? "Reset" : "Start"),),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(onPressed: () => startTimer(), child: Text("Start")),
-            SizedBox(width: 10),
-            ElevatedButton(onPressed: () => resetTimer(), child: Text("Reset")),
-          ],
-        ),
       ],
     );
   }
 
-  void startTimer() {
-    _stopWatchTimer.onStartTimer();
-    widget.timerFunction(1);
+  void timerFunction()
+  {
+    if(widget.TimerState)
+      {
+        _stopWatchTimer.onResetTimer();
+        widget.timerFunction(2);
+      }else
+        {
+          _stopWatchTimer.onStartTimer();
+          widget.timerFunction(1);
+        }
   }
 
-  void resetTimer() {
-    _stopWatchTimer.onResetTimer();
-    widget.timerFunction(2);
-  }
 }

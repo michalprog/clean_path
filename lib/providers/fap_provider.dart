@@ -1,7 +1,8 @@
 import 'package:clean_path/providers/database_provider.dart';
 import 'package:flutter/material.dart';
-import '../enums/enums.dart';
+import '/enums/enums.dart';
 
+import '/utils_files/timer_utils.dart';
 import '/data_types/record.dart';
 
 class FapProvider extends ChangeNotifier {
@@ -45,5 +46,13 @@ class FapProvider extends ChangeNotifier {
       timerTime = 0;
       notifyListeners();
     }
+  }
+  AssetImage giveWindowImage()
+  {
+    return TimerUtils.giveTimerImage(timerTime);
+  }
+  String getMotivationMsg()
+  {
+    return TimerUtils.giveMotivationMessage();
   }
 }
