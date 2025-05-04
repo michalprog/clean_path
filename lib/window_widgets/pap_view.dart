@@ -37,25 +37,33 @@ class PapView extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 100,
-                  width: 300,
-                  child: Text(
-                    "Stop Smoking with us Today !",
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
+          return Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: papProvider.giveWindowImage(),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 100,
+                    width: 300,
+                    child: Text(
+                      papProvider.getMotivationMsg(),
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 50),
-                TimerWidget(
-                  timerFunction: providerOperation,
-                  startCounter: papProvider.timerTime,
-                ),
-              ],
+                  const SizedBox(height: 50),
+                  TimerWidget(
+                    timerFunction: providerOperation,
+                    startCounter: papProvider.timerTime,
+                  ),
+                ],
+              ),
             ),
           );
         }

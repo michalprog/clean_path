@@ -37,25 +37,33 @@ class AlkView extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 100,
-                  width: 300,
-                  child: Text(
-                    "Stop Drinking Alochol with us Today ",
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
+          return Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: alcocholProvider.giveWindowImage(),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 100,
+                    width: 300,
+                    child: Text(
+                      alcocholProvider.getMotivationMsg(),
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 50),
-                TimerWidget(
-                  timerFunction: providerOperation,
-                  startCounter: alcocholProvider.timerTime,
-                ),
-              ],
+                  const SizedBox(height: 50),
+                  TimerWidget(
+                    timerFunction: providerOperation,
+                    startCounter: alcocholProvider.timerTime,
+                  ),
+                ],
+              ),
             ),
           );
         }
