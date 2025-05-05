@@ -47,8 +47,10 @@ class FapView extends StatelessWidget {
             ),
             child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(height: 10),
                    SizedBox(
                     height: 100,
                     width: 300,
@@ -58,7 +60,7 @@ class FapView extends StatelessWidget {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  const SizedBox(height: 100),
+                  Spacer(),
                   TimerWidget(
                     timerFunction: providerOperation,
                     startCounter: fapProvider.timerTime,

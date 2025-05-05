@@ -48,7 +48,7 @@ class _MainWindowState extends State<MainWindow> {
             )),
         backgroundColor: Colors.greenAccent,
       ),
-      drawer: DrawerWidget(),
+      drawer: DrawerWidget( index: NavigationIndex,),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () => changeWindow(4),

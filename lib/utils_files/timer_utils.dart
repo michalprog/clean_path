@@ -21,7 +21,7 @@ class TimerUtils{
     } else if (days >= 1) {
       imageIndex = 1;
     } else {
-      imageIndex = 3;
+      imageIndex = 0;
     }
 
     return AssetImage("assets/images/clean_path$imageIndex.png");

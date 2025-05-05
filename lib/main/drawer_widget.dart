@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
+  final int index;
+  DrawerWidget({super.key, required this.index, });
 
   @override
   Widget build(BuildContext context) {

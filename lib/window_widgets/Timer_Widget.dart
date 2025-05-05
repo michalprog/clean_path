@@ -102,7 +102,7 @@ class _TimerWidgetState extends State<TimerWidget> {
           },
         ),
 
-        SizedBox(height: 50),
+        SizedBox(height: 150),
 
         StreamBuilder<int>(
           stream: _stopWatchTimer.rawTime,
@@ -117,9 +117,9 @@ class _TimerWidgetState extends State<TimerWidget> {
           },
         ),
 
-        SizedBox(height: 50),
+        SizedBox(height: 20),
         ElevatedButton(onPressed: () => timerFunction(), child: Text(widget.TimerState ? "Reset" : "Start"),),
-
+        SizedBox(height: 30),
       ],
     );
   }

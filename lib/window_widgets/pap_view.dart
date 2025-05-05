@@ -47,8 +47,9 @@ class PapView extends StatelessWidget {
             ),
             child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(height: 10),
                   SizedBox(
                     height: 100,
                     width: 300,
@@ -58,7 +59,7 @@ class PapView extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  Spacer(),
                   TimerWidget(
                     timerFunction: providerOperation,
                     startCounter: papProvider.timerTime,
