@@ -21,7 +21,7 @@ class TimerUtils{
     } else if (days >= 1) {
       imageIndex = 1;
     } else {
-      imageIndex = 0;
+      imageIndex = 3;
     }
 
     return AssetImage("assets/images/clean_path$imageIndex.png");
@@ -64,13 +64,13 @@ static String giveMotivationMessage()
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
-                  Icons.emoji_events,
+                  Icons.build,
                   color: Color(0xFF6B8E23),
                   size: 60,
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  quote,
+                  "You can always begin again. \n Don't lose faith in yourself",
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18,
@@ -79,16 +79,32 @@ static String giveMotivationMessage()
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF6B8E23),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6B8E23),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text('Not Now'),
                     ),
-                  ),
-                  child: const Text('Keep Going'),
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6B8E23),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text('Try Again'),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -55,5 +55,9 @@ class SweetsProvider extends ChangeNotifier {
   {
     return TimerUtils.giveMotivationMessage();
   }
+  void showPopUp(BuildContext context)
+  {
+    TimerUtils.showMotivationPopup(context);
+  }
 
 }

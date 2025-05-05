@@ -23,6 +23,7 @@ class DefaultView extends StatelessWidget {
           {
             if (sweetsProvider.sweetRecord != null) {
               sweetsProvider.resetTimer();
+              sweetsProvider.showPopUp(context);
             }
             break;
           }
