@@ -1,8 +1,8 @@
 import 'package:clean_path/enums/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/fap_provider.dart';
-import 'Timer_Widget.dart';
+import '/providers/fap_provider.dart';
+import '/widgets/Timer_Widget.dart';
 
 class FapView extends StatelessWidget {
   const FapView({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../enums/enums.dart';
-import '../providers/sweets_provider.dart';
-import 'Timer_Widget.dart';
+import '/enums/enums.dart';
+import '/providers/sweets_provider.dart';
+import '/widgets/Timer_Widget.dart';
 
 class DefaultView extends StatelessWidget {
   const DefaultView({super.key});

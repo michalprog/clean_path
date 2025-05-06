@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../enums/enums.dart';
 import '../sqlflite/sql_class.dart';
 import '/data_types/record.dart';
 
@@ -9,9 +8,9 @@ class DatabaseProvider extends ChangeNotifier {
   List<Record> _records = [];
   List<Record> get records => _records;
 
-  Future<void> loadAllRecords() async {
+  Future<List<Record>> loadAllRecords() async {
     _records = await _sqlClass.getAllRecords();
-    notifyListeners();
+    return _records;
   }
 
   Future<Record> createNewRecord(Record newRecord) async {
@@ -23,6 +22,12 @@ class DatabaseProvider extends ChangeNotifier {
 
   Future<Record?> getActiveRecordByType(int type) async {
     return await _sqlClass.getActiveRecordByType(type);
+  }
+  Future<List<Record>> getRecordsByType(int type) async {
+    return await _sqlClass.getRecordsByType(type);
+  }
+  Future<List<Record>> getActiveRecords() async {
+    return await _sqlClass.getActiveRecords();
   }
 
   Future<void> ResetTimer(Record record) async {

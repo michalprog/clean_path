@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../enums/enums.dart';
-import '../providers/alcochol_provider.dart';
-import 'Timer_Widget.dart';
+import '/enums/enums.dart';
+import '/providers/alcochol_provider.dart';
+import '/widgets/Timer_Widget.dart';
 
 class AlkView extends StatelessWidget {
   const AlkView({super.key});

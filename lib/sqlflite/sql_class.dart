@@ -79,6 +79,7 @@ class SqlClass {
     });
   }
 
+
   Future<Record?> getActiveRecordByType(int type) async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
@@ -93,13 +94,25 @@ class SqlClass {
     }
     return null;
   }
-
   Future<List<Record>> getActiveRecords() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       'record',
       where: 'is_active = ?',
       whereArgs: [1],
+    );
+
+    return List.generate(maps.length, (i) {
+      return Record.fromMap(maps[i]);
+    });
+  }
+
+  Future<List<Record>> getRecordsByType(int type) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'record',
+      where: 'type = ? ',
+      whereArgs: [type],
     );
 
     return List.generate(maps.length, (i) {
