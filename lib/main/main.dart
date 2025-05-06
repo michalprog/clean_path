@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/alcochol_provider.dart';
-import '../providers/database_provider.dart';
-import '../providers/fap_provider.dart';
-import '../providers/pap_provider.dart';
-import '../providers/sweets_provider.dart';
+import '/providers/alcochol_provider.dart';
+import '/providers/database_provider.dart';
+import '/providers/fap_provider.dart';
+import '/providers/pap_provider.dart';
+import '/providers/statistics_provider.dart';
+import '/providers/sweets_provider.dart';
 import 'clean_path_main.dart';
 
 void main() {
@@ -27,6 +28,10 @@ void main() {
       ChangeNotifierProxyProvider<DatabaseProvider, SweetsProvider>(
         create: (_) => SweetsProvider(DatabaseProvider()),
         update: (_, databaseProvider, __) => SweetsProvider(databaseProvider),
+      ),
+      ChangeNotifierProxyProvider<DatabaseProvider, StatisticsProvider>(
+        create: (_) => StatisticsProvider(DatabaseProvider()),
+        update: (_, databaseProvider, __) => StatisticsProvider(databaseProvider),
       ),
     ],
     child: CleanPathMain(),

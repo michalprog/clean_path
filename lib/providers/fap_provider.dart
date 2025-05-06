@@ -54,7 +54,6 @@ class FapProvider extends ChangeNotifier {
   String getMotivationMsg()
   {
     return TimerUtils.giveMotivationMessage();
-
   }
   void showPopUp(BuildContext context)
   {

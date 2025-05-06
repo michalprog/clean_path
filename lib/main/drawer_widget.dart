@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../statistc_views/main_Statistic.dart';
+
 class DrawerWidget extends StatelessWidget {
   final int index;
   DrawerWidget({super.key, required this.index, });
@@ -22,7 +24,12 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.show_chart),
             title: Text('Statistics'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainStatistic(index: this.index,)),
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings),
