@@ -126,15 +126,20 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   void timerFunction()
   {
-    if(widget.TimerState)
+    setState(() {
+      if(widget.TimerState)
       {
         _stopWatchTimer.onResetTimer();
         widget.timerFunction(2);
+
       }else
-        {
-          _stopWatchTimer.onStartTimer();
-          widget.timerFunction(1);
-        }
+      {
+        _stopWatchTimer.onStartTimer();
+        widget.timerFunction(1);
+        widget.TimerState = true;
+      }
+    });
+
   }
 
 }

@@ -1,6 +1,6 @@
+import 'package:hugeicons/hugeicons.dart';
 import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../window_widgets/alk_view.dart';
 import '../window_widgets/default_view.dart';
 import '../window_widgets/fap_view.dart';
@@ -77,7 +77,7 @@ class _MainWindowState extends State<MainWindow> {
             IconButton(
                 onPressed: () => changeWindow(2), icon: Icon(Icons.liquor)),
             IconButton(
-                onPressed: () => changeWindow(3), icon: Icon(FontAwesomeIcons.candyCane)),
+                onPressed: () => changeWindow(3), icon: Icon(HugeIcons.strokeRoundedCottonCandy)),
           ],
         ),
       ),

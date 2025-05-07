@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class MainStatistic extends StatefulWidget {
   final int index;
@@ -33,14 +34,30 @@ class _MainStatisticState extends State<MainStatistic> {
               heroTag: "1",
               mini: true,
               onPressed: () {},
-              child: Icon(Icons.home),
+              child: Icon(Icons.girl),
             ),
             SizedBox(height: 8),
             FloatingActionButton(
               heroTag: "2",
               mini: true,
               onPressed: () {},
-              child: Icon(Icons.favorite),
+              child: Icon(Icons.smoking_rooms),
+            ),
+            SizedBox(height: 8),
+            SizedBox(height: 8),
+            FloatingActionButton(
+              heroTag: "2",
+              mini: true,
+              onPressed: () {},
+              child: Icon(Icons.liquor),
+            ),
+            SizedBox(height: 8),
+            SizedBox(height: 8),
+            FloatingActionButton(
+              heroTag: "2",
+              mini: true,
+              onPressed: () {},
+              child: Icon(HugeIcons.strokeRoundedCottonCandy),
             ),
             SizedBox(height: 8),
           ],
@@ -61,7 +78,14 @@ class _MainStatisticState extends State<MainStatistic> {
         notchMargin: 8.0,
         color: Colors.purple.shade50,
         elevation: 5,
-        child: Row(),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(onPressed: (){}, icon: Icon(Icons.home)),
+            IconButton(onPressed: (){}, icon: Icon(Icons.menu)),
+          ],
+        ),
 
       ),
 
