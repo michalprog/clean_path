@@ -3,7 +3,7 @@ import 'package:hugeicons/hugeicons.dart';
 
 class MainStatistic extends StatefulWidget {
   final int index;
-  const MainStatistic({super.key,  required this.index,});
+  const MainStatistic({super.key, required this.index});
 
   @override
   State<MainStatistic> createState() => _MainStatisticState();
@@ -16,15 +16,18 @@ class _MainStatisticState extends State<MainStatistic> {
   int NavigationIndex = 4;
   @override
   void initState() {
-    NavigationIndex=widget.index;
+    NavigationIndex = widget.index;
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(title: Text("Statistic",textAlign: TextAlign.center,),),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Statistic", textAlign: TextAlign.center),
+      ),
       body: Container(),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
@@ -82,16 +85,11 @@ class _MainStatisticState extends State<MainStatistic> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(onPressed: (){}, icon: Icon(Icons.home)),
-            IconButton(onPressed: (){}, icon: Icon(Icons.menu)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.home)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
           ],
         ),
-
       ),
-
-
-
-
     );
   }
 }

@@ -1,1 +1,1 @@
-enum addictionTypes { fap, smoking, alcochol, sweets }
+enum AddictionTypes { fap, smoking, alcochol, sweets }

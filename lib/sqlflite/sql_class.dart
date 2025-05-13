@@ -32,7 +32,7 @@ class SqlClass {
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   type INTEGER NOT NULL,
   is_active INTEGER DEFAULT 1,
-  activeted TEXT NOT NULL,
+  activated TEXT NOT NULL,
   desactivated TEXT
 )
     ''');

@@ -15,7 +15,7 @@ class SweetsProvider extends ChangeNotifier {
     timerTime = getTimerTime();
   }
 
-  Future<void> createNewRecord(addictionTypes type) async {
+  Future<void> createNewRecord(AddictionTypes type) async {
     final DateTime now = DateTime.now();
 
     final Record newRecord = Record(1, type, true, now);

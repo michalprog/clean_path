@@ -15,7 +15,7 @@ class DefaultView extends StatelessWidget {
         case 1: //włączenie
           {
             if (sweetsProvider.sweetRecord == null) {
-              sweetsProvider.createNewRecord(addictionTypes.sweets);
+              sweetsProvider.createNewRecord(AddictionTypes.sweets);
             }
             break;
           }

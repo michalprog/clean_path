@@ -15,7 +15,7 @@ class AlkView extends StatelessWidget {
         case 1: //włączenie
           {
             if (alcocholProvider.alcRecord == null) {
-              alcocholProvider.createNewRecord(addictionTypes.alcochol);
+              alcocholProvider.createNewRecord(AddictionTypes.alcochol);
             }
             break;
           }

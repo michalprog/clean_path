@@ -36,16 +36,7 @@ class MainView extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 10),
-                const SizedBox(
-                  height: 120,
-                  width: 300,
-                  child: Text(
-                    "CleanPath is an application that will professionally help you get rid of your addictions",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+
               ],
             ),
           ),

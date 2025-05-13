@@ -21,15 +21,19 @@ class StatisticsProvider extends ChangeNotifier
     return await databaseProvider.loadAllRecords();
 
   }
-  Future <List<Record>> getActiveRecord(addictionTypes type)
+  Future <List<Record>> getActiveRecord(AddictionTypes type)
   async{
     return await databaseProvider.getActiveRecords();
   }
-  Future <List<Record>> getRecordByType(addictionTypes type)
+  Future <List<Record>> getRecordByType(AddictionTypes type)
   async{
     return await databaseProvider.getRecordsByType(type.index);
   }
+Future <void> provideMainData()
+async {
+  allRecords=await getAllRecord();
 
+}
 
 
 

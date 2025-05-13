@@ -2,7 +2,7 @@ import '../enums/enums.dart';
 
 class Record {
   final int id;
-  final addictionTypes type;
+  final AddictionTypes type;
   final bool isActive;
   final DateTime activated;
   DateTime? desactivated;
@@ -18,9 +18,9 @@ class Record {
   factory Record.fromMap(Map<String, dynamic> map) {
     return Record(
       map['id'] as int,
-      addictionTypes.values[map['type'] as int],
+      AddictionTypes.values[map['type'] as int],
       map['is_active'] == 1,
-      DateTime.parse(map['activeted'] as String),
+      DateTime.parse(map['activated'] as String),
       desactivated:
           map['desactivated'] != null
               ? DateTime.parse(map['desactivated'] as String)
@@ -31,7 +31,7 @@ class Record {
     return {
       'type': type.index,
       'is_active': isActive ? 1 : 0,
-      'activeted': activated.toIso8601String(),
+      'activated': activated.toIso8601String(),
       'desactivated': desactivated?.toIso8601String(),
     };
   }

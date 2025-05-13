@@ -15,7 +15,7 @@ class FapView extends StatelessWidget {
         case 1: //włączenie
           {
             if (fapProvider.fapRecord == null) {
-              fapProvider.createNewRecord(addictionTypes.fap);
+              fapProvider.createNewRecord(AddictionTypes.fap);
             }
             break;
           }

@@ -41,11 +41,10 @@ class _MainWindowState extends State<MainWindow> {
       
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: Center(
-            child: Text(
-              "CleanPath",
-              textAlign: TextAlign.center,
-            )),
+        centerTitle: true,
+        title: Text(
+          "CleanPath",
+        ),
         backgroundColor: Colors.greenAccent,
       ),
       drawer: DrawerWidget( index: NavigationIndex,),

@@ -15,7 +15,7 @@ class PapView extends StatelessWidget {
         case 1: //włączenie
           {
             if (papProvider.papRecord == null) {
-              papProvider.createNewRecord(addictionTypes.smoking);
+              papProvider.createNewRecord(AddictionTypes.smoking);
             }
             break;
           }
