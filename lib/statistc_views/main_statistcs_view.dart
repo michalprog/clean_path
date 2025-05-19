@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/statistics_provider.dart';
+import '/providers/statistics_provider.dart';
+import '/widgets/Statistic_list_tile.dart';
 
 class MainStatistcsView extends StatelessWidget {
   const MainStatistcsView({super.key});
@@ -17,7 +18,16 @@ class MainStatistcsView extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
-          return Container();
+          return Container(child: ListView(
+            children: [
+              Statisticlisttile(),
+              Statisticlisttile(),
+              Statisticlisttile(),
+            ],
+
+
+
+          ),);
         }
       },
     );

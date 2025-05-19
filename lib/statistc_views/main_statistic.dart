@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
+import 'main_statistcs_view.dart';
+
 class MainStatistic extends StatefulWidget {
   final int index;
   const MainStatistic({super.key, required this.index});
@@ -28,7 +30,7 @@ class _MainStatisticState extends State<MainStatistic> {
         centerTitle: true,
         title: Text("Statistic", textAlign: TextAlign.center),
       ),
-      body: Container(),
+      body: MainStatistcsView(),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
