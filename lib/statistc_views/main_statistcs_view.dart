@@ -20,9 +20,7 @@ class MainStatistcsView extends StatelessWidget {
         } else {
           return Container(child: ListView(
             children: [
-              Statisticlisttile(),
-              Statisticlisttile(),
-              Statisticlisttile(),
+             StatisticListTile(mainText: "liczba wszystkich prób", highlightedText:"${ statisticsProvider.allRecorods.length}")
             ],
 
 

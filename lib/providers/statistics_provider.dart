@@ -16,6 +16,10 @@ class StatisticsProvider extends ChangeNotifier
   List<Record> alcRecords=[];
   List<Record> sweetRecords=[];
 
+  get allRecorods => allRecords;
+
+
+
   Future<List<Record>> getAllRecord()
   async{
     return await databaseProvider.loadAllRecords();

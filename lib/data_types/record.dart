@@ -41,7 +41,7 @@ class Record {
       'id': id,
       'type': type.index,
       'is_active': isActive ? 1 : 0,
-      'activeted': activated.toIso8601String(),
+      'activated': activated.toIso8601String(),
       'desactivated': desactivated?.toIso8601String(),
     };
   }
