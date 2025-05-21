@@ -44,6 +44,7 @@ static String giveMotivationMessage()
         "Every day clean is a victory no one can take from you.",
       ];
   var numberMsg = Random().nextInt(9);
+
   return motivationMsg[numberMsg];
 }
 

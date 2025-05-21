@@ -3,16 +3,16 @@ import '/data_types/record.dart';
 import '/enums/enums.dart';
 class StatisticUtils {
 
-  bool isActiveRecord(List<Record> records) {
+  static bool isActiveRecord(List<Record> records) {
     return records.any((record) => record.isActive);
   }
-  List<Record> getActiveRecords(List<Record> records) {
+  static List<Record> getActiveRecords(List<Record> records) {
     return records.where((r) => r.isActive).toList();
   }
-  List<Record> getRecordsByType(List<Record> records, AddictionTypes type) {
+  static List<Record> getRecordsByType(List<Record> records, AddictionTypes type) {
     return records.where((r) => r.type == type).toList();
   }
-  int averageRecordDurationInSeconds(List<Record> records) {
+  static int averageRecordDurationInSeconds(List<Record> records) {
     if (records.isEmpty) return 0;
 
     final totalSeconds = records.map((record) {
@@ -25,7 +25,7 @@ class StatisticUtils {
 
     return totalSeconds ~/ records.length;
   }
-  String formatDurationFromSeconds(int seconds) {
+  static String formatDurationFromSeconds(int seconds) {
     final days = seconds ~/ (24 * 3600);
     seconds %= 24 * 3600;
     final hours = seconds ~/ 3600;

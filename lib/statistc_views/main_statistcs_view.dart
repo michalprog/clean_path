@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '/utils_files/statistic_utils.dart';
 import '/providers/statistics_provider.dart';
 import '/widgets/Statistic_list_tile.dart';
 
 class MainStatistcsView extends StatelessWidget {
+
   const MainStatistcsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     final statisticsProvider = Provider.of<StatisticsProvider>(context);
     return FutureBuilder(
       future: statisticsProvider.provideMainData(),
@@ -20,7 +22,13 @@ class MainStatistcsView extends StatelessWidget {
         } else {
           return Container(child: ListView(
             children: [
-             StatisticListTile(mainText: "liczba wszystkich prób", highlightedText:"${ statisticsProvider.allRecorods.length}")
+             StatisticListTile(mainText: "liczba wszystkich prób", highlightedText:"${ statisticsProvider.allRecorods.length}"),
+            StatisticListTile(
+              mainText: "średni czas próby",
+              highlightedText: StatisticUtils.formatDurationFromSeconds(
+                  StatisticUtils.averageRecordDurationInSeconds(statisticsProvider.allRecords)
+              ),
+            ),
             ],
 
 
@@ -32,4 +40,6 @@ class MainStatistcsView extends StatelessWidget {
 
 
   }
+
+
 }

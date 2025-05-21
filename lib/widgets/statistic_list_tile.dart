@@ -16,7 +16,6 @@ class StatisticListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     Color highlightColor;
 
-    // Możesz dostosować styl w zależności od typu
     switch (typ) {
       case 1:
         highlightColor = Colors.green;
@@ -32,17 +31,17 @@ class StatisticListTile extends StatelessWidget {
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
-        title: Text(mainText),
-        trailing: Text(
+        title: Text(mainText, textAlign: TextAlign.center),
+        subtitle: Text(
           highlightedText,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: highlightColor,
-            fontSize: 16,
+            fontSize: 20,
           ),
         ),
       ),
     );
   }
 }
-
