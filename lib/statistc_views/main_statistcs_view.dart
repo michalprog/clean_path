@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../widgets/statistic_state_tile.dart';
 import '/utils_files/statistic_utils.dart';
 import '/providers/statistics_provider.dart';
 import '/widgets/Statistic_list_tile.dart';
@@ -26,9 +27,15 @@ class MainStatistcsView extends StatelessWidget {
             StatisticListTile(
               mainText: "średni czas próby",
               highlightedText: StatisticUtils.formatDurationFromSeconds(
-                  StatisticUtils.averageRecordDurationInSeconds(statisticsProvider.allRecords)
+                  StatisticUtils.averageRecordDurationInSeconds(statisticsProvider.allRecords),
+
               ),
+
             ),
+              StatisticStateTile(mainText: 'Fap Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.fapRecords) ),
+              StatisticStateTile(mainText: 'Smoking Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.papRecords) ),
+              StatisticStateTile(mainText: 'Alcohol Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.alcRecords) ),
+              StatisticStateTile(mainText: 'Sweet Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.sweetRecords) ),
             ],
 
 
