@@ -12,6 +12,17 @@ class StatisticUtils {
   static List<Record> getRecordsByType(List<Record> records, AddictionTypes type) {
     return records.where((r) => r.type == type).toList();
   }
+  static int getActiveRecordDuration(List<Record> records)
+  {
+      final activeRecords = records.where((r) => r.isActive).toList();
+      if (activeRecords.isEmpty) return 0;
+
+      return activeRecords
+          .map(getRecordDurationInSeconds)
+          .reduce((a, b) => a > b ? a : b);
+    }
+
+
   static int averageRecordDurationInSeconds(List<Record> records) {
     if (records.isEmpty) return 0;
 
@@ -46,7 +57,13 @@ class StatisticUtils {
 
     return '${days}d ${hours}h ${minutes}m ${remainingSeconds}s';
   }
+  static int getRecordDurationInSeconds(Record record) {
+    final end = record.isActive
+        ? DateTime.now()
+        : record.desactivated ?? record.activated;
 
+    return end.difference(record.activated).inSeconds;
+  }
 
 
 

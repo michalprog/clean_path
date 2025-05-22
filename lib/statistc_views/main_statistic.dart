@@ -1,8 +1,9 @@
+import 'package:clean_path/statistc_views/statistics_trails_view.dart';
 import 'package:clean_path/window_widgets/uniwersal_statistics_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-import '../enums/enums.dart';
+import '/enums/enums.dart';
 import 'main_statistcs_view.dart';
 
 class MainStatistic extends StatefulWidget {
@@ -27,6 +28,7 @@ show_views=[
   UniwersalStatisticsView(type: AddictionTypes.alcochol),
   UniwersalStatisticsView(type: AddictionTypes.sweets),
   MainStatistcsView(),
+  StatisticsTrailsView(),
   
 ];
     super.initState();
@@ -97,7 +99,7 @@ show_views=[
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(onPressed: () =>switchViews(4), icon: Icon(Icons.home)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+            IconButton(onPressed: () =>switchViews(5), icon: Icon(Icons.menu)),
           ],
         ),
       ),

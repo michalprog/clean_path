@@ -52,6 +52,9 @@ class UniwersalStatisticsView extends StatelessWidget {
                 StatisticListTile(mainText: "najdłuzszy czas próby", highlightedText: "${StatisticUtils.formatDurationFromSeconds(
                   StatisticUtils.longestRecordDurationInSeconds(getRecordsType()),)}",),
                 StatisticStateTile(mainText: "czy w trakcie", typeState: StatisticUtils.isActiveRecord(getRecordsType()), ),
+                StatisticUtils.isActiveRecord(getRecordsType()) ? StatisticListTile(mainText: "aktualny czas trwania", highlightedText: StatisticUtils.formatDurationFromSeconds(
+                  StatisticUtils.getActiveRecordDuration(getRecordsType()),
+                ),) : SizedBox.shrink(),
               ],
             ),
           );
