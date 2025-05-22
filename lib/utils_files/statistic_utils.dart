@@ -25,6 +25,17 @@ class StatisticUtils {
 
     return totalSeconds ~/ records.length;
   }
+  static int longestRecordDurationInSeconds(List<Record> records) {
+    if (records.isEmpty) return 0;
+
+    return records.map((record) {
+      final end = record.isActive
+          ? DateTime.now()
+          : record.desactivated ?? record.activated;
+
+      return end.difference(record.activated).inSeconds;
+    }).reduce((a, b) => a > b ? a : b);
+  }
   static String formatDurationFromSeconds(int seconds) {
     final days = seconds ~/ (24 * 3600);
     seconds %= 24 * 3600;

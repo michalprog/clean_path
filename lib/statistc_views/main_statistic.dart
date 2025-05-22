@@ -1,6 +1,8 @@
+import 'package:clean_path/window_widgets/uniwersal_statistics_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
+import '../enums/enums.dart';
 import 'main_statistcs_view.dart';
 
 class MainStatistic extends StatefulWidget {
@@ -13,13 +15,20 @@ class MainStatistic extends StatefulWidget {
 
 class _MainStatisticState extends State<MainStatistic> {
   bool isExpanded = false;
-  List<Widget> show_view = [];
+  List<Widget> show_views = [];
   List<String> AppBarTexts = [];
   int NavigationIndex = 4;
   @override
   void initState() {
     NavigationIndex = widget.index;
-
+show_views=[
+  UniwersalStatisticsView(type: AddictionTypes.fap),
+  UniwersalStatisticsView(type: AddictionTypes.smoking),
+  UniwersalStatisticsView(type: AddictionTypes.alcochol),
+  UniwersalStatisticsView(type: AddictionTypes.sweets),
+  MainStatistcsView(),
+  
+];
     super.initState();
   }
 
@@ -30,7 +39,7 @@ class _MainStatisticState extends State<MainStatistic> {
         centerTitle: true,
         title: Text("Statistic", textAlign: TextAlign.center),
       ),
-      body: MainStatistcsView(),
+      body: show_views[NavigationIndex],
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -38,14 +47,14 @@ class _MainStatisticState extends State<MainStatistic> {
             FloatingActionButton(
               heroTag: "1",
               mini: true,
-              onPressed: () {},
+              onPressed: () =>switchViews(0),
               child: Icon(Icons.girl),
             ),
             SizedBox(height: 8),
             FloatingActionButton(
               heroTag: "2",
               mini: true,
-              onPressed: () {},
+              onPressed: () =>switchViews(1),
               child: Icon(Icons.smoking_rooms),
             ),
             SizedBox(height: 8),
@@ -53,7 +62,7 @@ class _MainStatisticState extends State<MainStatistic> {
             FloatingActionButton(
               heroTag: "2",
               mini: true,
-              onPressed: () {},
+              onPressed: () =>switchViews(2),
               child: Icon(Icons.liquor),
             ),
             SizedBox(height: 8),
@@ -61,7 +70,7 @@ class _MainStatisticState extends State<MainStatistic> {
             FloatingActionButton(
               heroTag: "2",
               mini: true,
-              onPressed: () {},
+              onPressed: () =>switchViews(3),
               child: Icon(HugeIcons.strokeRoundedCottonCandy),
             ),
             SizedBox(height: 8),
@@ -87,11 +96,17 @@ class _MainStatisticState extends State<MainStatistic> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.home)),
+            IconButton(onPressed: () =>switchViews(4), icon: Icon(Icons.home)),
             IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
           ],
         ),
       ),
     );
+  }
+  void switchViews(int view)
+  {
+    setState(() {
+      NavigationIndex=view;
+    });
   }
 }

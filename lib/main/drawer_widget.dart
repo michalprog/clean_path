@@ -4,7 +4,7 @@ import '../statistc_views/main_Statistic.dart';
 
 class DrawerWidget extends StatelessWidget {
   final int index;
-  DrawerWidget({super.key, required this.index, });
+  const DrawerWidget({super.key, required this.index,});
 
   @override
   Widget build(BuildContext context) {
