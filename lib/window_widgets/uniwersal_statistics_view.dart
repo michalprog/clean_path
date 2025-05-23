@@ -41,18 +41,18 @@ class UniwersalStatisticsView extends StatelessWidget {
             child: ListView(
               children: [
                 StatisticListTile(
-                  mainText: "Liczba podjętych prób",
+                  mainText: "Total number of attempts",
                   highlightedText: "${getRecordsType().length}",
                 ),
                 StatisticListTile(
-                  mainText: "średni czas prób",
+                  mainText: "Average attempt time",
                   highlightedText: "${StatisticUtils.formatDurationFromSeconds(
                     StatisticUtils.averageRecordDurationInSeconds(getRecordsType()),)}",
                 ),
-                StatisticListTile(mainText: "najdłuzszy czas próby", highlightedText: "${StatisticUtils.formatDurationFromSeconds(
+                StatisticListTile(mainText: "Longest attempt time", highlightedText: "${StatisticUtils.formatDurationFromSeconds(
                   StatisticUtils.longestRecordDurationInSeconds(getRecordsType()),)}",),
-                StatisticStateTile(mainText: "czy w trakcie", typeState: StatisticUtils.isActiveRecord(getRecordsType()), ),
-                StatisticUtils.isActiveRecord(getRecordsType()) ? StatisticListTile(mainText: "aktualny czas trwania", highlightedText: StatisticUtils.formatDurationFromSeconds(
+                StatisticStateTile(mainText: "Is attempt active?", typeState: StatisticUtils.isActiveRecord(getRecordsType()), ),
+                StatisticUtils.isActiveRecord(getRecordsType()) ? StatisticListTile(mainText: "Current duration", highlightedText: StatisticUtils.formatDurationFromSeconds(
                   StatisticUtils.getActiveRecordDuration(getRecordsType()),
                 ),) : SizedBox.shrink(),
               ],

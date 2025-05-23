@@ -47,6 +47,7 @@ AppBarTexts=
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
         centerTitle: true,
         title: Text(AppBarTexts[NavigationIndex], textAlign: TextAlign.center),
       ),

@@ -23,9 +23,9 @@ class MainStatistcsView extends StatelessWidget {
         } else {
           return Container(child: ListView(
             children: [
-             StatisticListTile(mainText: "liczba wszystkich prób", highlightedText:"${ statisticsProvider.allRecorods.length}"),
+             StatisticListTile(mainText: "Total attempts", highlightedText:"${ statisticsProvider.allRecorods.length}"),
             StatisticListTile(
-              mainText: "średni czas próby",
+              mainText: "Average attempt time",
               highlightedText: StatisticUtils.formatDurationFromSeconds(
                   StatisticUtils.averageRecordDurationInSeconds(statisticsProvider.allRecords),
 
