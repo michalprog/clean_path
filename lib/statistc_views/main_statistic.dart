@@ -16,20 +16,29 @@ class MainStatistic extends StatefulWidget {
 
 class _MainStatisticState extends State<MainStatistic> {
   bool isExpanded = false;
-  List<Widget> show_views = [];
+  List<Widget> showViews = [];
   List<String> AppBarTexts = [];
   int NavigationIndex = 4;
   @override
   void initState() {
     NavigationIndex = widget.index;
-show_views=[
+showViews=[
   UniwersalStatisticsView(type: AddictionTypes.fap),
   UniwersalStatisticsView(type: AddictionTypes.smoking),
   UniwersalStatisticsView(type: AddictionTypes.alcochol),
   UniwersalStatisticsView(type: AddictionTypes.sweets),
   MainStatistcsView(),
   StatisticsTrailsView(),
-  
+];
+AppBarTexts=
+[
+
+  "Fap statistics",
+  "smoking statistics",
+  "alcohol statistics",
+  "sweets statistics",
+  "Overall statistics",
+  "all attempts"
 ];
     super.initState();
   }
@@ -39,9 +48,9 @@ show_views=[
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Statistic", textAlign: TextAlign.center),
+        title: Text(AppBarTexts[NavigationIndex], textAlign: TextAlign.center),
       ),
-      body: show_views[NavigationIndex],
+      body: showViews[NavigationIndex],
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '/data_types/record.dart';
 import '../providers/statistics_provider.dart';
 
 class StatisticsTrailsView extends StatelessWidget {
