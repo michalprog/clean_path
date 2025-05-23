@@ -36,6 +36,15 @@ class SqlClass {
   desactivated TEXT
 )
     ''');
+    await db.execute('''
+    CREATE TABLE achievement_record (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      is_achieved INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      achievement_date TEXT
+    )
+  ''');
   }
 
   Future<Record> insertRecord(Record record) async {

@@ -4,30 +4,55 @@ import 'package:flutter/material.dart';
 
 class TimerUtils{
 
-  static AssetImage giveTimerImage(int time)
-  {
-    int days = time ~/ 86400000;
+  static AssetImage giveTimerImage(int time) {
+    int days = time ~/ 86400000; // convert ms to days
+    int hours = (time ~/ 3600000); // convert ms to hours
 
     int imageIndex;
 
-    if (days >= 30) {
-      imageIndex = 5;
-    } else if (days >= 14) {
-      imageIndex = 4;
-    } else if (days >= 7) {
-      imageIndex = 3;
-    } else if (days >= 3) {
-      imageIndex = 2;
-    } else if (days >= 1) {
-      imageIndex = 1;
-    } else {
+    if (hours < 4) {
       imageIndex = 0;
+    } else if (hours < 12) {
+      imageIndex = 1;
+    } else if (days < 1) {
+      imageIndex = 2;
+    } else if (days < 2) {
+      imageIndex = 3;
+    } else if (days < 7) {
+      imageIndex = 4;
+    } else if (days < 14) {
+      imageIndex = 5;
+    } else if (days < 21) {
+      imageIndex = 6;
+    } else if (days < 28) {
+      imageIndex = 7;
+    } else if (days < 42) {
+      imageIndex = 8;
+    } else if (days < 56) {
+      imageIndex = 9;
+    } else if (days < 84) {
+      imageIndex = 10;
+    } else if (days < 112) {
+      imageIndex = 11;
+    } else if (days < 180) {
+      imageIndex = 12;
+    } else if (days < 240) {
+      imageIndex = 13;
+    } else if (days < 270) {
+      imageIndex = 14;
+    } else if (days < 300) {
+      imageIndex = 15;
+    } else if (days < 330) {
+      imageIndex = 16;
+    } else if (days < 365) {
+      imageIndex = 17;
+    } else {
+      imageIndex = 18; // 365 days and beyond
     }
 
     return AssetImage("assets/images/clean_path$imageIndex.png");
-
-
   }
+
 static String giveMotivationMessage()
 {
   const List<String> motivationMsg=
