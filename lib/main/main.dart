@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/achievment_provider.dart';
 import '/providers/alcochol_provider.dart';
 import '/providers/database_provider.dart';
 import '/providers/fap_provider.dart';
@@ -33,13 +34,17 @@ void main() {
         create: (_) => StatisticsProvider(DatabaseProvider()),
         update: (_, databaseProvider, __) => StatisticsProvider(databaseProvider),
       ),
+      ChangeNotifierProxyProvider<DatabaseProvider, AchievementProvider>(
+        create: (_) => AchievementProvider(DatabaseProvider()),
+        update: (_, databaseProvider, __) => AchievementProvider(databaseProvider),
+      ),
+
+
+
     ],
     child: CleanPathMain(),
   ),
   );
 }
-/*runApp(
-      CleanPathMain());
 
 
-*/
