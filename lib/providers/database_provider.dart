@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data_types/achievement_record.dart';
 import '../sqlflite/sql_class.dart';
 import '/data_types/record.dart';
 
@@ -39,5 +40,12 @@ class DatabaseProvider extends ChangeNotifier {
       desactivated: DateTime.now(),
     );
     await _sqlClass.updateRecord(updatedRecord);
+  }
+  Future<List<AchievementRecord>> getAllAchievements() async {
+    return await _sqlClass.getAllAchievements();
+  }
+
+  Future<void> activateAchievement(int id) async {
+    await _sqlClass.activateAchievement(id);
   }
 }

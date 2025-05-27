@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import '../data_types/achievement_record.dart';
+import '../data_types/achivement_data.dart';
 import '/data_types/record.dart';
 
 class SqlClass {
@@ -45,6 +47,7 @@ class SqlClass {
       achievement_date TEXT
     )
   ''');
+    insertAchievements(startingAchievements);
   }
 
   Future<Record> insertRecord(Record record) async {
@@ -139,4 +142,37 @@ class SqlClass {
       whereArgs: [record.id],
     );
   }
+  Future<void> insertAchievements(List<AchievementRecord> achievements) async {
+    final db = await database;
+
+    for (var achievement in achievements) {
+      await db.insert(
+        'achievement_record',
+        achievement.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace, // Zapobiega duplikatom
+      );
+    }
+  }
+  Future<List<AchievementRecord>> getAllAchievements() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('achievement_record');
+
+    return List.generate(maps.length, (i) {
+      return AchievementRecord.fromMap(maps[i]);
+    });
+  }
+  Future<void> activateAchievement(int id) async {
+    final db = await database;
+
+    await db.update(
+      'achievement_record',
+      {
+        'is_achieved': 1,
+        'achievement_date': DateTime.now().toIso8601String(),
+      },
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
 }
