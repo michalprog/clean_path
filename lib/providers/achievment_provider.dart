@@ -1,6 +1,7 @@
 import 'package:clean_path/providers/database_provider.dart';
 import 'package:flutter/material.dart';
 import '../data_types/achievement_record.dart';
+import '../utils_files/achievment_utils.dart';
 import '/enums/enums.dart';
 
 class AchievementProvider extends ChangeNotifier {
@@ -20,6 +21,10 @@ class AchievementProvider extends ChangeNotifier {
     await databaseProvider.activateAchievement(id);
     await fetchAchievements();
   }
+  Future<void> statisticInicjalization()
+  async {
+    await fetchAchievements();
+}
 
 
 
