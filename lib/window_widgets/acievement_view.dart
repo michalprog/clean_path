@@ -30,7 +30,7 @@ class AchievementView extends StatelessWidget {
                     itemCount: achievementProvider.achievements.length,
                     itemBuilder: (context, index) {
                       final record = achievementProvider.achievements[index];
-                      return AchivementWidget(record: record);
+                      return AchievementWidget(record: record);
                     },
                   );
                 }

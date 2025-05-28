@@ -56,4 +56,10 @@ List<AchievementRecord> startingAchievements = [
     description:
         '365 dni walki, wzrostu i przemiany. Jesteś przykładem siły i determinacji!',
   ),
+  AchievementRecord(
+    id: 10,
+    isAchieved: true,
+    title: 'minuta mineła',
+    description: 'testowe osiągniecie do sprawdzania.',
+  ),
 ];

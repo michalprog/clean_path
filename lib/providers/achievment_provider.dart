@@ -6,21 +6,29 @@ import '/enums/enums.dart';
 
 class AchievementProvider extends ChangeNotifier {
   late final DatabaseProvider databaseProvider;
-  List<AchievementRecord> allAchievements = [];
-  bool isLoading = false;
-
+  List<AchievementRecord> _achievements = [];
+  List<AchievementRecord> activeAchievements = [];
+  List<AchievementRecord> unsactiveAchievements = [];
+  List<AchievementRecord> showAchievements = [];
   AchievementProvider(this.databaseProvider);
 
-  List<AchievementRecord> get achievements => allAchievements;
+  List<AchievementRecord> get achievements => _achievements;
 
   Future<void> fetchAchievements() async {
-    isLoading = true;
-    notifyListeners();
+    _achievements = await databaseProvider.getAllAchievements();
+    notifyListeners(); // Aktualizacja widoków
+  }
 
-    allAchievements = await databaseProvider.getAllAchievements();
+  Future<void> activateAchievement(int id) async {
+    await databaseProvider.activateAchievement(id);
+    await fetchAchievements();
+  }
 
-    isLoading = false;
+  Future<void> statisticInicjalization() async {
+    await fetchAchievements();
+    activeAchievements = AchievmentUtils.getActiveRecords(_achievements);
+    unsactiveAchievements = AchievmentUtils.getUnactiveRecords(_achievements);
+    showAchievements=activeAchievements+unsactiveAchievements;
     notifyListeners();
   }
 }
-
