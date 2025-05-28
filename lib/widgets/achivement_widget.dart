@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../data_types/achievement_record.dart';
 class AchivementWidget extends StatelessWidget {
-  const AchivementWidget({Key? key, required AchievementRecord record }): super(key: key);
+  final AchievementRecord record;
+  const AchivementWidget({Key? key, required this.record }): super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -11,6 +11,7 @@ import '/providers/sweets_provider.dart';
 import 'clean_path_main.dart';
 
 void main() {
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => DatabaseProvider()),

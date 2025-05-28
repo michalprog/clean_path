@@ -47,7 +47,16 @@ class SqlClass {
       achievement_date TEXT
     )
   ''');
-    insertAchievements(startingAchievements);
+    for (var achievement in startingAchievements) {
+      await db.insert(
+        'achievement_record',
+        achievement.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      print("Dodano: ${achievement.title}");
+    }
+    final List<Map<String, dynamic>> records = await db.query('achievement_record');
+    print("Zawartość tabeli achievement_record: $records");
   }
 
   Future<Record> insertRecord(Record record) async {
@@ -149,7 +158,6 @@ class SqlClass {
       await db.insert(
         'achievement_record',
         achievement.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace, // Zapobiega duplikatom
       );
     }
   }

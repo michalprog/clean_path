@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../statistc_views/main_Statistic.dart';
+import '../window_widgets/acievement_view.dart';
 
 class DrawerWidget extends StatelessWidget {
   final int index;
@@ -44,10 +45,16 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.emoji_events),
             title: Text('Achievements'),
-            onTap: () {},
+            onTap:  () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => AchievementView()),
+    );
+    },
           ),
         ],
       ),
     );
   }
+
 }
