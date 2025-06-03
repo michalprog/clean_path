@@ -9,36 +9,40 @@ class AchievementWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
-      color: Colors.transparent,
+      color: record.isAchieved ? Colors.amber.shade100 : Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         leading: Icon(
-          record.isAchieved ? Icons.emoji_events : Icons.help_outline, // Znak zapytania dla nieaktywnych
-          color: record.isAchieved ? Colors.amber : Colors.grey, // Kolor dla aktywnych/niedostępnych
+          record.isAchieved ? Icons.emoji_events : Icons.help_outline,
+          color: record.isAchieved ? Colors.amber.shade800 : Colors.grey,
           size: 40,
         ),
-        title: Text(
-          record.isAchieved ? record.title : "Nieznane osiągnięcie", // Ukrycie nazwy, jeśli nie zdobyte
+        title: record.isAchieved
+            ? Text(
+          record.title,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: record.isAchieved ? Colors.white : Colors.grey,
+            color: Colors.black87,
           ),
-        ),
-        subtitle: Text(
-          record.isAchieved ? record.description : "Zdobyj to osiągnięcie, aby odkryć jego szczegóły!",
+        )
+            : null, // Nie pokazuj tytułu, jeśli nieosiągnięte
+        subtitle: record.isAchieved
+            ? Text(
+          record.description,
           style: TextStyle(
             fontSize: 14,
             fontStyle: FontStyle.italic,
-            color: record.isAchieved ? Colors.white70 : Colors.grey,
+            color: Colors.black54,
           ),
-        ),
+        )
+            : null, // Nie pokazuj opisu, jeśli nieosiągnięte
         trailing: record.isAchieved
             ? Text(
           "🎉",
           style: TextStyle(fontSize: 30),
         )
-            : null, // Nie pokazuj nic dla nieaktywnych
+            : null,
       ),
     );
   }

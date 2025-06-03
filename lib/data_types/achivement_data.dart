@@ -58,7 +58,7 @@ List<AchievementRecord> startingAchievements = [
   ),
   AchievementRecord(
     id: 10,
-    isAchieved: true,
+    isAchieved: false,
     title: 'minuta mineła',
     description: 'testowe osiągniecie do sprawdzania.',
   ),

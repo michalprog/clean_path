@@ -1,5 +1,6 @@
 import 'package:clean_path/providers/database_provider.dart';
 import 'package:flutter/material.dart';
+import '../achievement/achievement_checker.dart';
 import '../data_types/achievement_record.dart';
 import '../utils_files/achievment_utils.dart';
 import '/enums/enums.dart';
@@ -16,7 +17,7 @@ class AchievementProvider extends ChangeNotifier {
 
   Future<void> fetchAchievements() async {
     _achievements = await databaseProvider.getAllAchievements();
-    notifyListeners(); // Aktualizacja widoków
+    notifyListeners();
   }
 
   Future<void> activateAchievement(int id) async {
@@ -25,10 +26,15 @@ class AchievementProvider extends ChangeNotifier {
   }
 
   Future<void> statisticInicjalization() async {
+    await checkAchievements();
     await fetchAchievements();
     activeAchievements = AchievmentUtils.getActiveRecords(_achievements);
     unsactiveAchievements = AchievmentUtils.getUnactiveRecords(_achievements);
     showAchievements=activeAchievements+unsactiveAchievements;
     notifyListeners();
+  }
+  Future<void> checkAchievements() async {
+    final checker = AchievementChecker(databaseProvider);
+    await checker.checkAchievements();
   }
 }

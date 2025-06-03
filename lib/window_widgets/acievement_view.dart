@@ -12,7 +12,7 @@ class AchievementView extends StatelessWidget {
     final achievementProvider = Provider.of<AchievementProvider>(context, listen: false);
 
     return FutureBuilder(
-      future: achievementProvider.fetchAchievements(), // Pobranie danych
+      future: achievementProvider.statisticInicjalization(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -23,13 +23,13 @@ class AchievementView extends StatelessWidget {
             appBar: AppBar(centerTitle: true, title: const Text("Osiągnięcia")),
             body: Consumer<AchievementProvider>(
               builder: (context, achievementProvider, child) {
-                if (achievementProvider.achievements.isEmpty) {
+                if (achievementProvider.showAchievements.isEmpty) {
                   return const Center(child: Text("Brak osiągnięć"));
                 } else {
                   return ListView.builder(
-                    itemCount: achievementProvider.achievements.length,
+                    itemCount: achievementProvider.showAchievements.length,
                     itemBuilder: (context, index) {
-                      final record = achievementProvider.achievements[index];
+                      final record = achievementProvider.showAchievements[index];
                       return AchievementWidget(record: record);
                     },
                   );
@@ -40,5 +40,6 @@ class AchievementView extends StatelessWidget {
         }
       },
     );
+
   }
 }
