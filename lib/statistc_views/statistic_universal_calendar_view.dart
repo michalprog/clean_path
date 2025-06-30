@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../utils_files/statistic_utils.dart';
+import '/enums/enums.dart';
+import '/utils_files/statistic_utils.dart';
 import 'trial_widget.dart';
 import '/data_types/record.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../providers/statistics_provider.dart';
+import '/providers/statistics_provider.dart';
 
-class StatisticsTrailsView extends StatefulWidget {
-  const StatisticsTrailsView({super.key});
+
+
+class StatisticUniversalCalendarView extends StatefulWidget {
+  final AddictionTypes type;
+  const StatisticUniversalCalendarView({Key? key, required this.type})
+      : super(key: key);
 
   @override
-  State<StatisticsTrailsView> createState() => _StatisticsTrailsViewState();
+  State<StatisticUniversalCalendarView> createState() => _StatisticUniversalCalendarViewState();
 }
 
-class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
+class _StatisticUniversalCalendarViewState extends State<StatisticUniversalCalendarView> {
+
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -27,7 +33,7 @@ class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
     final provider = Provider.of<StatisticsProvider>(context, listen: false);
     provider.provideMainData().then((_) {
       setState(() {
-        _allRecords = StatisticUtils.getUnactiveRecords(provider.allRecords);
+        _allRecords = StatisticUtils.getRecordsByType(provider.allRecords, widget.type);
         _selectedDayRecords = _getRecordsForDay(_selectedDay);
       });
     });
@@ -94,5 +100,5 @@ class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
       ],
     );
   }
-}
 
+}

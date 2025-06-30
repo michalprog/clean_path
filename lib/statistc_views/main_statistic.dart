@@ -1,9 +1,11 @@
+import 'package:clean_path/statistc_views/statistic_universal_calendar_view.dart';
 import 'package:clean_path/statistc_views/statistics_trails_view.dart';
 import 'package:clean_path/window_widgets/uniwersal_statistics_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '/enums/enums.dart';
+import 'all_attemps_list.dart';
 import 'main_statistcs_view.dart';
 
 class MainStatistic extends StatefulWidget {
@@ -22,24 +24,27 @@ class _MainStatisticState extends State<MainStatistic> {
   @override
   void initState() {
     NavigationIndex = widget.index;
-showViews=[
-  UniwersalStatisticsView(type: AddictionTypes.fap),
-  UniwersalStatisticsView(type: AddictionTypes.smoking),
-  UniwersalStatisticsView(type: AddictionTypes.alcochol),
-  UniwersalStatisticsView(type: AddictionTypes.sweets),
-  MainStatistcsView(),
-  StatisticsTrailsView(),
-];
-AppBarTexts=
-[
+    showViews = [
+      //StatisticUniversalCalendarView()
 
-  "Fap statistics",
-  "smoking statistics",
-  "alcohol statistics",
-  "sweets statistics",
-  "Overall statistics",
-  "all attempts"
-];
+
+
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.fap),StatisticUniversalCalendarView(type:AddictionTypes.fap)]),
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.smoking),StatisticUniversalCalendarView(type:AddictionTypes.smoking)]),
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.alcochol),StatisticUniversalCalendarView(type:AddictionTypes.alcochol)]),
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.sweets),StatisticUniversalCalendarView(type:AddictionTypes.sweets)]),
+
+      MainStatistcsView(),
+      PageView(children: const [StatisticsTrailsView(), AllAttempsList()]),
+    ];
+    AppBarTexts = [
+      "Fap statistics",
+      "smoking statistics",
+      "alcohol statistics",
+      "sweets statistics",
+      "Overall statistics",
+      "all attempts",
+    ];
     super.initState();
   }
 
@@ -59,14 +64,14 @@ AppBarTexts=
             FloatingActionButton(
               heroTag: "1",
               mini: true,
-              onPressed: () =>switchViews(0),
+              onPressed: () => switchViews(0),
               child: Icon(Icons.girl),
             ),
             SizedBox(height: 8),
             FloatingActionButton(
               heroTag: "2",
               mini: true,
-              onPressed: () =>switchViews(1),
+              onPressed: () => switchViews(1),
               child: Icon(Icons.smoking_rooms),
             ),
             SizedBox(height: 8),
@@ -74,7 +79,7 @@ AppBarTexts=
             FloatingActionButton(
               heroTag: "2",
               mini: true,
-              onPressed: () =>switchViews(2),
+              onPressed: () => switchViews(2),
               child: Icon(Icons.liquor),
             ),
             SizedBox(height: 8),
@@ -82,7 +87,7 @@ AppBarTexts=
             FloatingActionButton(
               heroTag: "2",
               mini: true,
-              onPressed: () =>switchViews(3),
+              onPressed: () => switchViews(3),
               child: Icon(HugeIcons.strokeRoundedCottonCandy),
             ),
             SizedBox(height: 8),
@@ -108,17 +113,17 @@ AppBarTexts=
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(onPressed: () =>switchViews(4), icon: Icon(Icons.home)),
-            IconButton(onPressed: () =>switchViews(5), icon: Icon(Icons.menu)),
+            IconButton(onPressed: () => switchViews(4), icon: Icon(Icons.home)),
+            IconButton(onPressed: () => switchViews(5), icon: Icon(Icons.menu)),
           ],
         ),
       ),
     );
   }
-  void switchViews(int view)
-  {
+
+  void switchViews(int view) {
     setState(() {
-      NavigationIndex=view;
+      NavigationIndex = view;
     });
   }
 }

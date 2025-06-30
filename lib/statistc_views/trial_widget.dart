@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import '../utils_files/statistic_utils.dart';
 import '/data_types/record.dart';
+import 'package:intl/intl.dart';
 
 class TrialWidget extends StatelessWidget {
   final Record record;
   const TrialWidget({Key? key, required this.record}) : super(key: key);
 
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$hours:$minutes:$seconds";
+  }
+
   @override
   Widget build(BuildContext context) {
+    final duration = Duration(
+      seconds: StatisticUtils.getRecordDurationInSeconds(record),
+    );
 
     return Container(
       decoration: BoxDecoration(
@@ -21,7 +33,7 @@ class TrialWidget extends StatelessWidget {
         child: ListTile(
           leading: Icon(StatisticUtils.getIconForAddiction(record.type)),
           title: Text(
-            "Attemp number : ${record.id}  ",
+            "Attempt number : ${record.id}",
             textAlign: TextAlign.center,
           ),
           subtitle: Column(
@@ -29,7 +41,9 @@ class TrialWidget extends StatelessWidget {
             children: [
               const SizedBox(height: 4),
               Text(
-                "fail date: ${record.desactivated}",
+                record.isActive
+                    ? "Start date: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(record.activated)}"
+                    : "Fail date: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(record.desactivated!)}",
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 12, color: Colors.black54),
               ),
@@ -41,15 +55,14 @@ class TrialWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 13),
               ),
-
             ],
           ),
           trailing: Container(
             width: 40,
             height: 60,
             decoration: BoxDecoration(
-              color: record.isActive ?  Colors.blue : Colors.red,
-              borderRadius: BorderRadius.circular(3), // lekko zaokrąglone rogi
+              color: record.isActive ? Colors.blue : Colors.red,
+              borderRadius: BorderRadius.circular(3),
             ),
           ),
         ),
