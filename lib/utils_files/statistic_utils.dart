@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
+
 import '/data_types/record.dart';
 import '/enums/enums.dart';
 class StatisticUtils {
@@ -9,6 +11,10 @@ class StatisticUtils {
   static List<Record> getActiveRecords(List<Record> records) {
     return records.where((r) => r.isActive).toList();
   }
+  static List<Record> getUnactiveRecords(List<Record> records) {
+    return records.where((r) => !r.isActive).toList();
+  }
+
   static List<Record> getRecordsByType(List<Record> records, AddictionTypes type) {
     return records.where((r) => r.type == type).toList();
   }
@@ -66,7 +72,20 @@ class StatisticUtils {
   }
 
 
-
+  static IconData getIconForAddiction(AddictionTypes type) {
+    switch (type) {
+      case AddictionTypes.fap:
+        return Icons.self_improvement;
+      case AddictionTypes.smoking:
+        return Icons.smoking_rooms;
+      case AddictionTypes.alcochol:
+        return Icons.local_bar;
+      case AddictionTypes.sweets:
+        return Icons.cake;
+      default:
+        return Icons.help_outline;
+    }
+  }
 
 
 

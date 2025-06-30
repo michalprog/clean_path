@@ -1,38 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../widgets/trial_widget.dart';
+import '../utils_files/statistic_utils.dart';
+import 'all_attemps_calendar.dart';
 import '/data_types/record.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../providers/statistics_provider.dart';
 
-class StatisticsTrailsView extends StatelessWidget {
+class StatisticsTrailsView extends StatefulWidget {
   const StatisticsTrailsView({super.key});
 
   @override
+  State<StatisticsTrailsView> createState() => _StatisticsTrailsViewState();
+}
+
+class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
+  DateTime _focusedDay = DateTime.now();
+  DateTime _selectedDay = DateTime.now();
+  CalendarFormat _calendarFormat = CalendarFormat.week;
+
+  List<Record> _allRecords = [];
+  List<Record> _selectedDayRecords = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final provider = Provider.of<StatisticsProvider>(context, listen: false);
+    provider.provideMainData().then((_) {
+      setState(() {
+        _allRecords = StatisticUtils.getUnactiveRecords(provider.allRecords);
+        _selectedDayRecords = _getRecordsForDay(_selectedDay);
+      });
+    });
+  }
+
+  List<Record> _getRecordsForDay(DateTime day) {
+    return _allRecords.where((record) {
+      return isSameDay(record.desactivated, day);
+    }).toList();
+  }
+
+  void _cycleCalendarFormat() {
+    setState(() {
+      if (_calendarFormat == CalendarFormat.twoWeeks) {
+        _calendarFormat = CalendarFormat.month;
+
+      } else if (_calendarFormat == CalendarFormat.week) {
+        _calendarFormat = CalendarFormat.twoWeeks;
+
+      } else {
+        _calendarFormat = CalendarFormat.week;
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final statisticsProvider = Provider.of<StatisticsProvider>(context);
-    return FutureBuilder(
-      future: statisticsProvider.provideMainData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text("Błąd: ${snapshot.error}"));
-        } else {
-          final records = statisticsProvider.allRecords;
+    return _allRecords.isEmpty
+        ? const Center(child: CircularProgressIndicator())
+        : Column(
+      children: [
+        TableCalendar(
+          firstDay: DateTime.utc(2010, 1, 1),
+          lastDay: DateTime.utc(2030, 12, 31),
+          focusedDay: _focusedDay,
+          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              _selectedDay = selectedDay;
+              _focusedDay = focusedDay;
+              _selectedDayRecords = _getRecordsForDay(selectedDay);
+            });
 
-          if (records.isEmpty) {
-            return Center(child: Text("No Records"));
-          }
-
-          return ListView.builder(
-            itemCount: records.length,
+          },
+          calendarFormat: _calendarFormat,
+          onFormatChanged: (format) {
+            setState(() {
+              _calendarFormat = format;
+            });
+          },
+          eventLoader: _getRecordsForDay,
+        ),
+        const SizedBox(height: 16),
+        Expanded(
+          child: _selectedDayRecords.isEmpty
+              ? const Center(child: Text("Brak rekordów na ten dzień"))
+              : ListView.builder(
+            itemCount: _selectedDayRecords.length,
             itemBuilder: (context, index) {
-              final record = records[index];
-              return TrialWidget(record: record);
+              return TrialWidget(record: _selectedDayRecords[index]);
             },
-          );
-        }
-      },
+          ),
+        ),
+      ],
     );
   }
 }
+

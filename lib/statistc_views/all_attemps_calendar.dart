@@ -8,40 +8,20 @@ class TrialWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Gradient backgroundGradient = record.isActive
-        ? LinearGradient(
-      colors: [
-        Colors.green.shade100,
-        Colors.green.shade400,
-        Colors.grey.shade200,
-      ],
-      stops: [0.0, 0.5, 1.0],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-    )
-        : LinearGradient(
-      colors: [
-        Colors.grey.shade300,
-        Colors.grey.shade500,
-        Colors.white,
-      ],
-      stops: [0.0, 0.5, 1.0],
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-    );
+
     return Container(
       decoration: BoxDecoration(
-        gradient: backgroundGradient,
         borderRadius: BorderRadius.circular(12),
       ),
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Card(
         elevation: 3,
-        color: Colors.transparent,
+        color: Colors.grey,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: ListTile(
+          leading: Icon(StatisticUtils.getIconForAddiction(record.type)),
           title: Text(
-            "#id: ${record.id}  type: ${record.type.name}",
+            "Attemp number : ${record.id}  ",
             textAlign: TextAlign.center,
           ),
           subtitle: Column(
@@ -49,7 +29,7 @@ class TrialWidget extends StatelessWidget {
             children: [
               const SizedBox(height: 4),
               Text(
-                "Start: ${record.activated}",
+                "fail date: ${record.desactivated}",
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 12, color: Colors.black54),
               ),
@@ -61,7 +41,16 @@ class TrialWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 13),
               ),
+
             ],
+          ),
+          trailing: Container(
+            width: 40,
+            height: 60,
+            decoration: BoxDecoration(
+              color: record.isActive ?  Colors.blue : Colors.red,
+              borderRadius: BorderRadius.circular(3), // lekko zaokrąglone rogi
+            ),
           ),
         ),
       ),
