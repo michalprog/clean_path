@@ -37,7 +37,7 @@ class MainStatistcsView extends StatelessWidget {
               StatisticStateTile(mainText: 'Smoking Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.papRecords) ),
               StatisticStateTile(mainText: 'Alcohol Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.alcRecords) ),
               StatisticStateTile(mainText: 'Sweet Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.sweetRecords) ),
-              FlchartWidget(records: statisticsProvider.allRecords,),
+              FlchartWidget(records: statisticsProvider.allRecords, titleText: 'times of trials',),
               const SizedBox(height: 50),
             ],
 
