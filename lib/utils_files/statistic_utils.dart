@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '/data_types/record.dart';
@@ -86,15 +87,19 @@ class StatisticUtils {
         return Icons.help_outline;
     }
   }
-
-
-
-
-
-
-
-
-
-
+  static double getRecordDurationInDays(Record record) {
+    final seconds = getRecordDurationInSeconds(record);
+    return seconds / (24 * 60 * 60);
+  }
+  static List<double> getAverageRecordsDuration(List<Record> records) {
+    return records.map((r) => getRecordDurationInDays(r)).toList();
+  }
+  static List<FlSpot> convertRecordsToFlSpots(List<Record> records) {
+    return List.generate(records.length, (index) {
+      final record = records[index];
+      final durationInDays = getRecordDurationInDays(record);
+      return FlSpot(index.toDouble(), durationInDays);
+    });
+  }
 
 }

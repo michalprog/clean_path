@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../widgets/flchart_widget.dart';
 import '../widgets/statistic_state_tile.dart';
 import '/utils_files/statistic_utils.dart';
 import '/providers/statistics_provider.dart';
@@ -21,7 +22,7 @@ class MainStatistcsView extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
-          return Container(child: ListView(
+          return ListView(
             children: [
              StatisticListTile(mainText: "Total attempts", highlightedText:"${ statisticsProvider.allRecorods.length}"),
             StatisticListTile(
@@ -36,11 +37,13 @@ class MainStatistcsView extends StatelessWidget {
               StatisticStateTile(mainText: 'Smoking Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.papRecords) ),
               StatisticStateTile(mainText: 'Alcohol Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.alcRecords) ),
               StatisticStateTile(mainText: 'Sweet Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.sweetRecords) ),
+              FlchartWidget(records: statisticsProvider.allRecords,),
+              const SizedBox(height: 50),
             ],
 
 
 
-          ),);
+          );
         }
       },
     );
