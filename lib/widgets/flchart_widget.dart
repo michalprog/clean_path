@@ -35,7 +35,7 @@ class FlchartWidget extends StatelessWidget {
             ? 1
             : spots.map((s) => s.x).reduce((a, b) => a > b ? a : b);
     final intervalY = (maxY / 5).ceilToDouble().clamp(1, double.infinity);
-    return Align(
+    return records.length>=2 ?Align(
       alignment: Alignment.center,
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -155,6 +155,6 @@ class FlchartWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ):Container();
   }
 }

@@ -7,19 +7,18 @@ import '/data_types/record.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '/providers/statistics_provider.dart';
 
-
-
 class StatisticUniversalCalendarView extends StatefulWidget {
   final AddictionTypes type;
   const StatisticUniversalCalendarView({Key? key, required this.type})
       : super(key: key);
 
   @override
-  State<StatisticUniversalCalendarView> createState() => _StatisticUniversalCalendarViewState();
+  State<StatisticUniversalCalendarView> createState() =>
+      _StatisticUniversalCalendarViewState();
 }
 
-class _StatisticUniversalCalendarViewState extends State<StatisticUniversalCalendarView> {
-
+class _StatisticUniversalCalendarViewState
+    extends State<StatisticUniversalCalendarView> {
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -33,7 +32,8 @@ class _StatisticUniversalCalendarViewState extends State<StatisticUniversalCalen
     final provider = Provider.of<StatisticsProvider>(context, listen: false);
     provider.provideMainData().then((_) {
       setState(() {
-        _allRecords = StatisticUtils.getRecordsByType(provider.allRecords, widget.type);
+        _allRecords = StatisticUtils.getRecordsByType(
+            provider.allRecords, widget.type);
         _selectedDayRecords = _getRecordsForDay(_selectedDay);
       });
     });
@@ -49,10 +49,8 @@ class _StatisticUniversalCalendarViewState extends State<StatisticUniversalCalen
     setState(() {
       if (_calendarFormat == CalendarFormat.twoWeeks) {
         _calendarFormat = CalendarFormat.month;
-
       } else if (_calendarFormat == CalendarFormat.week) {
         _calendarFormat = CalendarFormat.twoWeeks;
-
       } else {
         _calendarFormat = CalendarFormat.week;
       }
@@ -76,7 +74,6 @@ class _StatisticUniversalCalendarViewState extends State<StatisticUniversalCalen
               _focusedDay = focusedDay;
               _selectedDayRecords = _getRecordsForDay(selectedDay);
             });
-
           },
           calendarFormat: _calendarFormat,
           onFormatChanged: (format) {
@@ -85,6 +82,30 @@ class _StatisticUniversalCalendarViewState extends State<StatisticUniversalCalen
             });
           },
           eventLoader: _getRecordsForDay,
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (context, day, events) {
+              if (events.isNotEmpty) {
+                return Positioned(
+                  bottom: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(events.length.clamp(1, 3), (index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                        width: 6,
+                        height: 6,
+                        decoration: const BoxDecoration(
+                          color: Colors.red, // 🔴 czerwone kropki
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
         const SizedBox(height: 16),
         Expanded(
@@ -100,5 +121,4 @@ class _StatisticUniversalCalendarViewState extends State<StatisticUniversalCalen
       ],
     );
   }
-
 }

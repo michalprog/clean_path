@@ -6,6 +6,7 @@ import '../enums/enums.dart';
 import '../providers/statistics_provider.dart';
 import '../utils_files/statistic_utils.dart';
 import '../widgets/Statistic_list_tile.dart';
+import '../widgets/flchart_widget.dart';
 import '../widgets/statistic_state_tile.dart';
 
 class UniwersalStatisticsView extends StatelessWidget {
@@ -55,7 +56,9 @@ class UniwersalStatisticsView extends StatelessWidget {
                 StatisticUtils.isActiveRecord(getRecordsType()) ? StatisticListTile(mainText: "Current duration", highlightedText: StatisticUtils.formatDurationFromSeconds(
                   StatisticUtils.getActiveRecordDuration(getRecordsType()),
                 ),) : SizedBox.shrink(),
-              ],
+                const SizedBox(height: 10),
+                FlchartWidget(records: getRecordsType(), titleText: 'times of trials',),
+                const SizedBox(height: 50),],
             ),
           );
         }
