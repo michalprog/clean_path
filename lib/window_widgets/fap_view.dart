@@ -40,35 +40,66 @@ class FapView extends StatelessWidget {
         } else {
           return Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: fapProvider.giveWindowImage(),
-                fit: BoxFit.cover,
-              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
             ),
-            child: Center(
-              child: Column(
-
-                mainAxisAlignment: MainAxisAlignment.start,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Stack(
                 children: [
-                  SizedBox(height: 10),
-                   SizedBox(
-                    height: 100,
-                    width: 300,
-                    child: Text(
-                      fapProvider.getMotivationMsg(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20),
+                  // Obrazek w tle
+                  Positioned.fill(
+                    child: Image(
+                      image: fapProvider.giveWindowImage(),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  Spacer(),
-                  TimerWidget(
-                    timerFunction: providerOperation,
-                    startCounter: fapProvider.timerTime,
+
+                  // Pasek tła od dołu
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 50, // wysokość paska
+                        color: Color(0xFFF7F2E8), // albo inny kolor
+                    ),
+                  ),
+
+                  // Treść
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10),
+                        SizedBox(
+                          height: 100,
+                          width: 300,
+                          child: Text(
+                            fapProvider.getMotivationMsg(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Spacer(),
+                        TimerWidget(
+                          timerFunction: providerOperation,
+                          startCounter: fapProvider.timerTime,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           );
+
         }
       },
     );

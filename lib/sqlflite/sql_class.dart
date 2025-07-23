@@ -24,9 +24,37 @@ class SqlClass {
     String dbPath = await getDatabasesPath();
     String path = join(dbPath, 'notes.db');
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    final db = await openDatabase(path, version: 1, onCreate: _onCreate);
+
+    // Upewnij się, że tabela z osiągnięciami istnieje
+    await _ensureAchievementTableExists(db);
+
+    return db;
   }
 
+  Future<void> _ensureAchievementTableExists(Database db) async {
+    await db.execute('''
+    CREATE TABLE IF NOT EXISTS achievement_record (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      is_achieved INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      achievement_date TEXT
+    )
+  ''');
+
+    final existing = await db.query('achievement_record');
+    if (existing.isEmpty) {
+      for (var achievement in startingAchievements) {
+        await db.insert(
+          'achievement_record',
+          achievement.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+        print("Dodano: ${achievement.title}");
+      }
+    }
+  }
   // Tworzenie tabeli przy pierwszym uruchomieniu
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''

@@ -88,6 +88,13 @@ flutter:
     - "assets/images/clean_path1.png"
     - "assets/images/clean_path2.png"
     - "assets/images/clean_path3.png"
+    - "assets/images/clean_path4.png"
+    - "assets/images/clean_path5.png"
+    - "assets/images/clean_path6.png"
+    - "assets/images/clean_path7.png"
+    - "assets/images/clean_path8.png"
+    - "assets/images/clean_path9.png"
+    - "assets/images/clean_path10.png"
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

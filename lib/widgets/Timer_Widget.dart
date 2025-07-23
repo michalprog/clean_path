@@ -102,22 +102,7 @@ class _TimerWidgetState extends State<TimerWidget> {
           },
         ),
 
-        SizedBox(height: 150),
-
-        StreamBuilder<int>(
-          stream: _stopWatchTimer.rawTime,
-          builder: (context, snapshot) {
-            final value = snapshot.data ?? widget.startCounter;
-            final countdownTime = countdownStart - value;
-
-            return Text(
-              "To next Achievement: ${_formatTime(countdownTime)}",
-              style: TextStyle(fontSize: 18, color: Colors.grey),
-            );
-          },
-        ),
-
-        SizedBox(height: 20),
+        SizedBox(height: 250),
         ElevatedButton(onPressed: () => timerFunction(), child: Text(widget.TimerState ? "Reset" : "Start"),),
         SizedBox(height: 30),
       ],
