@@ -45,4 +45,20 @@ class Record {
       'desactivated': desactivated?.toIso8601String(),
     };
   }
+  Record copyWith({
+    int? id,
+    AddictionTypes? type,
+    bool? isActive,
+    DateTime? activated,
+    DateTime? desactivated,
+  }) {
+    return Record(
+      id ?? this.id,
+      type ?? this.type,
+      isActive ?? this.isActive,
+      activated ?? this.activated,
+      desactivated: desactivated ?? this.desactivated,
+    );
+  }
+
 }
