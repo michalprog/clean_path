@@ -38,10 +38,10 @@ class _MainStatisticState extends State<MainStatistic> {
       PageView(children: const [StatisticsTrailsView(), AllAttempsList()]),
     ];
     AppBarTexts = [
-      "Fap statistics",
-      "smoking statistics",
-      "alcohol statistics",
-      "sweets statistics",
+      "No Fap statistics",
+      "No smoking statistics",
+      "No alcohol statistics",
+      "No sweets statistics",
       "Overall statistics",
       "all attempts",
     ];

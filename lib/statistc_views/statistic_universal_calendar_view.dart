@@ -37,7 +37,8 @@ class _StatisticUniversalCalendarViewState
 
     final provider = Provider.of<StatisticsProvider>(context, listen: false);
     provider.provideMainData().then((_) {
-      final records = StatisticUtils.getRecordsByType(provider.allRecords, widget.type);
+      final records = StatisticUtils.getRecordsByType(
+          provider.allRecords, widget.type);
       final grouped = _groupRecords(records);
       final activeDays = provider.getActiveDaysForType(widget.type);
       final failDays = StatisticUtils.getFailDaysFromRecords(records);
@@ -70,6 +71,51 @@ class _StatisticUniversalCalendarViewState
     return _groupedRecords[key] ?? [];
   }
 
+  Widget _buildDayCell(
+      DateTime day, {
+        bool isOutside = false,
+        bool isSelected = false,
+        bool isToday = false,
+      }) {
+    final key = DateTime(day.year, day.month, day.day);
+    final isActiveDay = _activeDays.contains(key);
+    final isFailDay = _failDays.contains(key) && !isActiveDay;
+
+    final Color? bgColor = isSelected
+        ? Theme.of(context).colorScheme.primary.withOpacity(0.85)
+        : (isFailDay
+        ? Colors.red.withOpacity(0.25)
+        : (isActiveDay ? Colors.green.withOpacity(0.25) : null));
+
+    final Color textColor = isSelected
+        ? Colors.white
+        : isOutside
+        ? Colors.grey
+        : Colors.black87;
+
+    return Container(
+      margin: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(8),
+        border: isToday && !isSelected
+            ? Border.all(
+          color: Theme.of(context).colorScheme.primary,
+          width: 1.5,
+        )
+            : null,
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        '${day.day}',
+        style: TextStyle(
+          color: textColor,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return _allRecords.isEmpty
@@ -96,28 +142,14 @@ class _StatisticUniversalCalendarViewState
           },
           eventLoader: _getRecordsForDay,
           calendarBuilders: CalendarBuilders(
-            markerBuilder: (context, day, events) {
-              final key = DateTime(day.year, day.month, day.day);
-              final isActiveDay = _activeDays.contains(key);
-              final isFailDay = _failDays.contains(key) ;
-
-              if (isFailDay || isActiveDay) {
-                return Positioned(
-                  bottom: 1,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: isFailDay ? Colors.red : Colors.green,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                );
-              }
-
-              return const SizedBox.shrink();
-            },
-
+            defaultBuilder: (context, day, focusedDay) =>
+                _buildDayCell(day),
+            outsideBuilder: (context, day, focusedDay) =>
+                _buildDayCell(day, isOutside: true),
+            todayBuilder: (context, day, focusedDay) =>
+                _buildDayCell(day, isToday: true),
+            selectedBuilder: (context, day, focusedDay) =>
+                _buildDayCell(day, isSelected: true),
           ),
         ),
         const SizedBox(height: 16),

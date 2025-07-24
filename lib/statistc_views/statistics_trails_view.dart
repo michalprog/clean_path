@@ -70,7 +70,6 @@ class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
               _focusedDay = focusedDay;
               _selectedDayRecords = _getRecordsForDay(selectedDay);
             });
-
           },
           calendarFormat: _calendarFormat,
           onFormatChanged: (format) {
@@ -78,8 +77,33 @@ class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
               _calendarFormat = format;
             });
           },
-          eventLoader: _getRecordsForDay,
+          eventLoader: _getRecordsForDay, // Wczytujemy eventy (czyli wpadki)
+          calendarBuilders: CalendarBuilders(
+            markerBuilder: (context, day, events) {
+              if (events.isNotEmpty) {
+                return Positioned(
+                  bottom: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(events.length.clamp(1, 5), (index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                        width: 6,
+                        height: 6,
+                        decoration: const BoxDecoration(
+                          color: Colors.red, // 🔴 czerwone kropki – wpadki
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
+
         const SizedBox(height: 16),
         Expanded(
           child: _selectedDayRecords.isEmpty
