@@ -44,6 +44,9 @@ class DatabaseProvider extends ChangeNotifier {
     );
     await _recordDao.update(updated);
   }
+  Future<void> updateRecord(Record record) async {
+    await _recordDao.update(record);
+  }
 
   // === ACHIEVEMENTS ===
 

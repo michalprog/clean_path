@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils_files/statistic_utils.dart';
+import '../widgets/change_comment_dialog.dart';
 import '/data_types/record.dart';
 import 'package:intl/intl.dart';
 
@@ -27,10 +28,18 @@ class TrialWidget extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: Card(
+
         elevation: 3,
         color: Colors.grey,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: ListTile(
+          onLongPress: () {
+            showDialog(
+              context: context,
+              builder: (_) => ChangeCommentDialog(record: record),
+            );
+          },
+
           leading: Icon(StatisticUtils.getIconForAddiction(record.type)),
           title: Text(
             "Attempt number : ${record.id}",

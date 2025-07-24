@@ -47,4 +47,9 @@ class StatisticsProvider extends ChangeNotifier {
     final filtered = StatisticUtils.getRecordsByType(allRecords, type);
     return StatisticUtils.getFailDaysFromRecords(filtered);
   }
+  Future<void> editRecordComment(Record updatedRecord) async {
+    await _databaseProvider.updateRecord(updatedRecord);
+    await provideMainData(); // przeładuj dane
+    notifyListeners();
+  }
 }

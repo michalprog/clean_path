@@ -18,22 +18,28 @@ class DatabaseManager {
     await db.close();
     _database = null;
   }
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute("ALTER TABLE record ADD COLUMN comment TEXT");
+    }
+  }
 
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'notes.db');
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(path, version: 2, onCreate: _onCreate,onUpgrade: _onUpgrade,);
   }
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE record (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        type INTEGER NOT NULL,
-        is_active INTEGER DEFAULT 1,
-        activated TEXT NOT NULL,
-        desactivated TEXT
-      )
+       CREATE TABLE record (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      type INTEGER NOT NULL,
+      is_active INTEGER DEFAULT 1,
+      activated TEXT NOT NULL,
+      desactivated TEXT,
+      comment TEXT
+    )
     ''');
 
     await db.execute('''
