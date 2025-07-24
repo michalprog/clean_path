@@ -44,7 +44,14 @@ async {
 
 }
 
-
+  Set<DateTime> getActiveDaysForType(AddictionTypes type) {
+    final filtered = StatisticUtils.getRecordsByType(allRecords, type);
+    return StatisticUtils.getActiveDaysFromRecords(filtered);
+  }
+  Set<DateTime> getFailDaysForType(AddictionTypes type) {
+    final filtered = StatisticUtils.getRecordsByType(allRecords, type);
+    return StatisticUtils.getFailDaysFromRecords(filtered);
+  }
 
 
 

@@ -83,9 +83,7 @@ class StatisticUtils {
         return Icons.local_bar;
       case AddictionTypes.sweets:
         return Icons.cake;
-      default:
-        return Icons.help_outline;
-    }
+      }
   }
   static double getRecordDurationInDays(Record record) {
     final seconds = getRecordDurationInSeconds(record);
@@ -100,6 +98,40 @@ class StatisticUtils {
       final durationInDays = getRecordDurationInDays(record);
       return FlSpot(index.toDouble(), durationInDays);
     });
+  }
+  static Set<DateTime> getActiveDaysFromRecords(List<Record> records) {
+    final activeDays = <DateTime>{};
+
+    for (var record in records) {
+      final start = DateTime(record.activated.year, record.activated.month, record.activated.day);
+      final endRaw = record.isActive ? DateTime.now() : record.desactivated!;
+      final end = DateTime(endRaw.year, endRaw.month, endRaw.day);
+
+      DateTime current = start;
+      // Dodaj dni do dnia *przed* końcem
+      while (current.isBefore(end)) {
+        activeDays.add(DateTime(current.year, current.month, current.day));
+        current = current.add(const Duration(days: 1));
+      }
+    }
+
+    return activeDays;
+  }
+  static Set<DateTime> getFailDaysFromRecords(List<Record> records) {
+    final failDays = <DateTime>{};
+
+    for (var record in records) {
+      if (!record.isActive && record.desactivated != null) {
+        final failDate = DateTime(
+          record.desactivated!.year,
+          record.desactivated!.month,
+          record.desactivated!.day,
+        );
+        failDays.add(failDate);
+      }
+    }
+
+    return failDays;
   }
 
 }

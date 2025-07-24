@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
+
 import '/enums/enums.dart';
 import '/utils_files/statistic_utils.dart';
-import 'trial_widget.dart';
 import '/data_types/record.dart';
-import 'package:table_calendar/table_calendar.dart';
 import '/providers/statistics_provider.dart';
+import 'trial_widget.dart';
 
 class StatisticUniversalCalendarView extends StatefulWidget {
   final AddictionTypes type;
+
   const StatisticUniversalCalendarView({Key? key, required this.type})
       : super(key: key);
 
@@ -25,36 +27,47 @@ class _StatisticUniversalCalendarViewState
 
   List<Record> _allRecords = [];
   List<Record> _selectedDayRecords = [];
+  Map<DateTime, List<Record>> _groupedRecords = {};
+  Set<DateTime> _activeDays = {};
+  Set<DateTime> _failDays = {};
 
   @override
   void initState() {
     super.initState();
+
     final provider = Provider.of<StatisticsProvider>(context, listen: false);
     provider.provideMainData().then((_) {
+      final records = StatisticUtils.getRecordsByType(provider.allRecords, widget.type);
+      final grouped = _groupRecords(records);
+      final activeDays = provider.getActiveDaysForType(widget.type);
+      final failDays = StatisticUtils.getFailDaysFromRecords(records);
+
       setState(() {
-        _allRecords = StatisticUtils.getRecordsByType(
-            provider.allRecords, widget.type);
+        _allRecords = records;
+        _groupedRecords = grouped;
+        _activeDays = activeDays;
+        _failDays = failDays;
         _selectedDayRecords = _getRecordsForDay(_selectedDay);
       });
     });
   }
 
-  List<Record> _getRecordsForDay(DateTime day) {
-    return _allRecords.where((record) {
-      return isSameDay(record.desactivated, day);
-    }).toList();
+  Map<DateTime, List<Record>> _groupRecords(List<Record> records) {
+    final Map<DateTime, List<Record>> grouped = {};
+    for (var record in records) {
+      final date = DateTime(
+        (record.desactivated ?? DateTime.now()).year,
+        (record.desactivated ?? DateTime.now()).month,
+        (record.desactivated ?? DateTime.now()).day,
+      );
+      grouped.putIfAbsent(date, () => []).add(record);
+    }
+    return grouped;
   }
 
-  void _cycleCalendarFormat() {
-    setState(() {
-      if (_calendarFormat == CalendarFormat.twoWeeks) {
-        _calendarFormat = CalendarFormat.month;
-      } else if (_calendarFormat == CalendarFormat.week) {
-        _calendarFormat = CalendarFormat.twoWeeks;
-      } else {
-        _calendarFormat = CalendarFormat.week;
-      }
-    });
+  List<Record> _getRecordsForDay(DateTime day) {
+    final key = DateTime(day.year, day.month, day.day);
+    return _groupedRecords[key] ?? [];
   }
 
   @override
@@ -84,27 +97,27 @@ class _StatisticUniversalCalendarViewState
           eventLoader: _getRecordsForDay,
           calendarBuilders: CalendarBuilders(
             markerBuilder: (context, day, events) {
-              if (events.isNotEmpty) {
+              final key = DateTime(day.year, day.month, day.day);
+              final isActiveDay = _activeDays.contains(key);
+              final isFailDay = _failDays.contains(key) ;
+
+              if (isFailDay || isActiveDay) {
                 return Positioned(
                   bottom: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(events.length.clamp(1, 3), (index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 0.5),
-                        width: 6,
-                        height: 6,
-                        decoration: const BoxDecoration(
-                          color: Colors.red, // 🔴 czerwone kropki
-                          shape: BoxShape.circle,
-                        ),
-                      );
-                    }),
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: isFailDay ? Colors.red : Colors.green,
+                      shape: BoxShape.circle,
+                    ),
                   ),
                 );
               }
+
               return const SizedBox.shrink();
             },
+
           ),
         ),
         const SizedBox(height: 16),
