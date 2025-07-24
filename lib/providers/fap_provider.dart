@@ -1,15 +1,19 @@
-import 'package:clean_path/providers/database_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:clean_path/providers/database_provider.dart';
 import '/enums/enums.dart';
-
 import '/utils_files/timer_utils.dart';
 import '/data_types/record.dart';
 
 class FapProvider extends ChangeNotifier {
-  final DatabaseProvider databaseProvider;
-  FapProvider(this.databaseProvider);
+  late DatabaseProvider _databaseProvider;
+
   Record? fapRecord;
   int timerTime = 0;
+
+  void update(DatabaseProvider dbProvider) {
+    _databaseProvider = dbProvider;
+  }
+
   Future<void> provideData() async {
     await getRecord();
     timerTime = getTimerTime();
@@ -17,46 +21,43 @@ class FapProvider extends ChangeNotifier {
 
   Future<void> createNewRecord(AddictionTypes type) async {
     final DateTime now = DateTime.now();
-
-    final Record newRecord = Record(1, type, true, now);
+    final newRecord = Record(1, type, true, now);
     fapRecord = newRecord;
-    await databaseProvider.createNewRecord(newRecord);
+    await _databaseProvider.createNewRecord(newRecord);
+    notifyListeners();
   }
 
   Future<Record?> getRecord() async {
-    fapRecord = await databaseProvider.getActiveRecordByType(0);
-
+    fapRecord = await _databaseProvider.getActiveRecordByType(0);
     return fapRecord;
   }
 
   int getTimerTime() {
     if (fapRecord != null && fapRecord!.isActive) {
-      final DateTime now = DateTime.now();
-      final recordTime = fapRecord!.activated;
-      return now.difference(recordTime).inMilliseconds;
-    } else {
-      return 0;
+      final now = DateTime.now();
+      return now.difference(fapRecord!.activated).inMilliseconds;
     }
+    return 0;
   }
 
   Future<void> resetTimer() async {
     if (fapRecord != null) {
-      await databaseProvider.ResetTimer(fapRecord!);
+      await _databaseProvider.resetTimer(fapRecord!);
       fapRecord = null;
       timerTime = 0;
       notifyListeners();
     }
   }
-  AssetImage giveWindowImage()
-  {
+
+  AssetImage giveWindowImage() {
     return TimerUtils.giveTimerImage(timerTime);
   }
-  String getMotivationMsg()
-  {
+
+  String getMotivationMsg() {
     return TimerUtils.giveMotivationMessage();
   }
-  void showPopUp(BuildContext context)
-  {
+
+  void showPopUp(BuildContext context) {
     TimerUtils.showMotivationPopup(context);
   }
 }

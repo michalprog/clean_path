@@ -11,41 +11,47 @@ import '/providers/sweets_provider.dart';
 import 'clean_path_main.dart';
 
 void main() {
-
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => DatabaseProvider()),
-      ChangeNotifierProxyProvider<DatabaseProvider, FapProvider>(
-        create: (_) => FapProvider(DatabaseProvider()),
-        update: (_, databaseProvider, __) => FapProvider(databaseProvider),
-      ),
-      ChangeNotifierProxyProvider<DatabaseProvider, PapProvider>(
-        create: (_) => PapProvider(DatabaseProvider()),
-        update: (_, databaseProvider, __) => PapProvider(databaseProvider),
-      ),
-      ChangeNotifierProxyProvider<DatabaseProvider, AlcocholProvider>(
-        create: (_) => AlcocholProvider(DatabaseProvider()),
-        update: (_, databaseProvider, __) => AlcocholProvider(databaseProvider),
-      ),
-      ChangeNotifierProxyProvider<DatabaseProvider, SweetsProvider>(
-        create: (_) => SweetsProvider(DatabaseProvider()),
-        update: (_, databaseProvider, __) => SweetsProvider(databaseProvider),
-      ),
-      ChangeNotifierProxyProvider<DatabaseProvider, StatisticsProvider>(
-        create: (_) => StatisticsProvider(DatabaseProvider()),
-        update: (_, databaseProvider, __) => StatisticsProvider(databaseProvider),
-      ),
-      ChangeNotifierProxyProvider<DatabaseProvider, AchievementProvider>(
-        create: (_) => AchievementProvider(DatabaseProvider()),
-        update: (_, databaseProvider, __) => AchievementProvider(databaseProvider),
-      ),
-
-
-
-    ],
-    child: CleanPathMain(),
-  ),
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DatabaseProvider>(
+          create: (_) => DatabaseProvider(),
+        ),
+        ChangeNotifierProxyProvider<DatabaseProvider, FapProvider>(
+          create: (_) => FapProvider(),
+          update: (_, dbProvider, fapProvider) =>
+          fapProvider!..update(dbProvider),
+        ),
+        ChangeNotifierProxyProvider<DatabaseProvider, PapProvider>(
+          create: (_) => PapProvider(),
+          update: (_, dbProvider, papProvider) =>
+          papProvider!..update(dbProvider),
+        ),
+        ChangeNotifierProxyProvider<DatabaseProvider, AlcocholProvider>(
+          create: (_) => AlcocholProvider(),
+          update: (_, dbProvider, alcProvider) =>
+          alcProvider!..update(dbProvider),
+        ),
+        ChangeNotifierProxyProvider<DatabaseProvider, SweetsProvider>(
+          create: (_) => SweetsProvider(),
+          update: (_, dbProvider, sweetsProvider) =>
+          sweetsProvider!..update(dbProvider),
+        ),
+        ChangeNotifierProxyProvider<DatabaseProvider, StatisticsProvider>(
+          create: (_) => StatisticsProvider(),
+          update: (_, dbProvider, statsProvider) =>
+          statsProvider!..update(dbProvider),
+        ),
+        ChangeNotifierProxyProvider<DatabaseProvider, AchievementProvider>(
+          create: (_) => AchievementProvider(),
+          update: (_, dbProvider, achProvider) =>
+          achProvider!..update(dbProvider),
+        ),
+      ],
+      child: CleanPathMain(),
+    ),
   );
 }
+
 
 

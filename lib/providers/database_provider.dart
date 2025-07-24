@@ -15,37 +15,33 @@ class DatabaseProvider extends ChangeNotifier {
   }
 
   Future<Record> createNewRecord(Record newRecord) async {
-    Record record = await _sqlClass.insertRecord(newRecord);
-    // Odświeżamy listę rekordów
-    await loadAllRecords();
+    final record = await _sqlClass.insertRecord(newRecord);
+    await loadAllRecords(); // aktualizacja listy
     return record;
   }
 
-  Future<Record?> getActiveRecordByType(int type) async {
-    return await _sqlClass.getActiveRecordByType(type);
-  }
-  Future<List<Record>> getRecordsByType(int type) async {
-    return await _sqlClass.getRecordsByType(type);
-  }
-  Future<List<Record>> getActiveRecords() async {
-    return await _sqlClass.getActiveRecords();
-  }
+  Future<Record?> getActiveRecordByType(int type) =>
+      _sqlClass.getActiveRecordByType(type);
 
-  Future<void> ResetTimer(Record record) async {
-    Record updatedRecord = Record(
+  Future<List<Record>> getRecordsByType(int type) =>
+      _sqlClass.getRecordsByType(type);
+
+  Future<List<Record>> getActiveRecords() => _sqlClass.getActiveRecords();
+
+  Future<void> resetTimer(Record record) async {
+    final updated = Record(
       record.id,
       record.type,
       false,
       record.activated,
       desactivated: DateTime.now(),
     );
-    await _sqlClass.updateRecord(updatedRecord);
-  }
-  Future<List<AchievementRecord>> getAllAchievements() async {
-    return await _sqlClass.getAllAchievements();
+    await _sqlClass.updateRecord(updated);
   }
 
-  Future<void> activateAchievement(int id) async {
-    await _sqlClass.activateAchievement(id);
-  }
+  Future<List<AchievementRecord>> getAllAchievements() =>
+      _sqlClass.getAllAchievements();
+
+  Future<void> activateAchievement(int id) =>
+      _sqlClass.activateAchievement(id);
 }
