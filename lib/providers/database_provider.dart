@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
+import '../data_types/record.dart';
 import '../data_types/achievement_record.dart';
-import '../sqlflite/sql_class.dart';
-import '/data_types/record.dart';
+import '../sqlflite/achievement_dao.dart';
+import '../sqlflite/record_dao.dart';
 
 class DatabaseProvider extends ChangeNotifier {
-  final SqlClass _sqlClass = SqlClass.instance;
+  final RecordDao _recordDao = RecordDao();
+  final AchievementDao _achievementDao = AchievementDao();
+
 
   List<Record> _records = [];
   List<Record> get records => _records;
 
+  // === RECORDS ===
+
   Future<List<Record>> loadAllRecords() async {
-    _records = await _sqlClass.getAllRecords();
+    _records = await _recordDao.getAll();
     return _records;
   }
 
   Future<Record> createNewRecord(Record newRecord) async {
-    final record = await _sqlClass.insertRecord(newRecord);
+    final record = await _recordDao.insert(newRecord);
     await loadAllRecords(); // aktualizacja listy
     return record;
   }
 
   Future<Record?> getActiveRecordByType(int type) =>
-      _sqlClass.getActiveRecordByType(type);
+      _recordDao.getActiveByType(type);
 
   Future<List<Record>> getRecordsByType(int type) =>
-      _sqlClass.getRecordsByType(type);
+      _recordDao.getByType(type);
 
-  Future<List<Record>> getActiveRecords() => _sqlClass.getActiveRecords();
+  Future<List<Record>> getActiveRecords() =>
+      _recordDao.getAllActive();
 
   Future<void> resetTimer(Record record) async {
     final updated = Record(
@@ -36,12 +42,14 @@ class DatabaseProvider extends ChangeNotifier {
       record.activated,
       desactivated: DateTime.now(),
     );
-    await _sqlClass.updateRecord(updated);
+    await _recordDao.update(updated);
   }
 
+  // === ACHIEVEMENTS ===
+
   Future<List<AchievementRecord>> getAllAchievements() =>
-      _sqlClass.getAllAchievements();
+      _achievementDao.getAll();
 
   Future<void> activateAchievement(int id) =>
-      _sqlClass.activateAchievement(id);
+      _achievementDao.activate(id);
 }

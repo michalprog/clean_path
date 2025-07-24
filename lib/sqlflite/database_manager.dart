@@ -2,9 +2,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseManager {
+
   static final DatabaseManager instance = DatabaseManager._internal();
   static Database? _database;
-
   DatabaseManager._internal();
 
   Future<Database> get database async {

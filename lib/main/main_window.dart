@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,21 @@ class _MainWindowState extends State<MainWindow> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-                onPressed: () => changeWindow(0), icon: Icon(Icons.girl)),
+              onPressed: () => changeWindow(0),
+              icon: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6.0), // lekko przesunięta lewa ikona
+                    child: FaIcon(FontAwesomeIcons.mars, /*color: Colors.blue*/),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6.0), // lekko przesunięta prawa ikona
+                    child: FaIcon(FontAwesomeIcons.venus, /*color: Colors.pink*/),
+                  ),
+                ],
+              ),
+            ),
             IconButton(onPressed: () => changeWindow(1),
                 icon: Icon(Icons.smoking_rooms)),
             SizedBox(width: 40),
