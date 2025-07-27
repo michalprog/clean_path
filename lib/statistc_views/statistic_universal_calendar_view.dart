@@ -142,15 +142,35 @@ class _StatisticUniversalCalendarViewState
           },
           eventLoader: _getRecordsForDay,
           calendarBuilders: CalendarBuilders(
-            defaultBuilder: (context, day, focusedDay) =>
-                _buildDayCell(day),
-            outsideBuilder: (context, day, focusedDay) =>
-                _buildDayCell(day, isOutside: true),
-            todayBuilder: (context, day, focusedDay) =>
-                _buildDayCell(day, isToday: true),
-            selectedBuilder: (context, day, focusedDay) =>
-                _buildDayCell(day, isSelected: true),
+            markerBuilder: (context, day, events) {
+              final key = DateTime(day.year, day.month, day.day);
+              final isActiveDay = _activeDays.contains(key);
+              final isFailDay = _failDays.contains(key) && !isActiveDay;
+
+              if (isActiveDay || isFailDay) {
+                return Positioned(
+                  bottom: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(1, (_) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: isFailDay ? Colors.red : Colors.green,
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
+                  ),
+                );
+              }
+
+              return const SizedBox.shrink();
+            },
           ),
+
         ),
         const SizedBox(height: 16),
         Expanded(
