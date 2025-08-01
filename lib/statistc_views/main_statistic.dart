@@ -29,10 +29,22 @@ class _MainStatisticState extends State<MainStatistic> {
 
 
 
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.fap),StatisticUniversalCalendarView(type:AddictionTypes.fap)]),
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.smoking),StatisticUniversalCalendarView(type:AddictionTypes.smoking)]),
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.alcochol),StatisticUniversalCalendarView(type:AddictionTypes.alcochol)]),
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.sweets),StatisticUniversalCalendarView(type:AddictionTypes.sweets)]),
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.fap),StatisticUniversalCalendarView(
+        key: const ValueKey(AddictionTypes.fap),
+        type: AddictionTypes.fap,
+      )]),
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.smoking),StatisticUniversalCalendarView(
+        key: const ValueKey(AddictionTypes.smoking),
+        type: AddictionTypes.smoking,
+      )]),
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.alcochol),StatisticUniversalCalendarView(
+        key: const ValueKey(AddictionTypes.alcochol),
+        type: AddictionTypes.alcochol,
+      )]),
+      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.sweets),StatisticUniversalCalendarView(
+        key: const ValueKey(AddictionTypes.sweets),
+        type: AddictionTypes.sweets,
+      )]),
 
       MainStatistcsView(),
       PageView(children: const [StatisticsTrailsView(), AllAttempsList()]),
