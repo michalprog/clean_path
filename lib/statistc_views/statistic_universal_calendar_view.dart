@@ -30,6 +30,7 @@ class _StatisticUniversalCalendarViewState
   Map<DateTime, List<Record>> _groupedRecords = {};
   Set<DateTime> _activeDays = {};
   Set<DateTime> _failDays = {};
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -49,6 +50,7 @@ class _StatisticUniversalCalendarViewState
         _activeDays = activeDays;
         _failDays = failDays;
         _selectedDayRecords = _getRecordsForDay(_selectedDay);
+        _isLoading = false;
       });
     });
   }
@@ -118,9 +120,11 @@ class _StatisticUniversalCalendarViewState
 
   @override
   Widget build(BuildContext context) {
-    return _allRecords.isEmpty
-        ? const Center(child: CircularProgressIndicator())
-        : Column(
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return Column(
       children: [
         TableCalendar(
           firstDay: DateTime.utc(2010, 1, 1),
@@ -170,7 +174,6 @@ class _StatisticUniversalCalendarViewState
               return const SizedBox.shrink();
             },
           ),
-
         ),
         const SizedBox(height: 16),
         Expanded(
