@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
-import '../data_types/achievement_record.dart';
-import '../data_types/achivement_data.dart';
+import '/data_types/achievement_record.dart';
+import '/data_types/achivement_data.dart';
 import 'database_manager.dart';
 
 class AchievementDao {

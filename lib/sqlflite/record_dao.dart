@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../data_types/record.dart';
+import '/data_types/record.dart';
 import 'database_manager.dart';
 
 class RecordDao {

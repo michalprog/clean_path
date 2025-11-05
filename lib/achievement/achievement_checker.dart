@@ -1,7 +1,7 @@
-import '../data_types/achievement_record.dart';
-import '../data_types/record.dart';
-import '../providers/database_provider.dart';
-import '../utils_files/achievment_utils.dart';
+import '/data_types/achievement_record.dart';
+import '/data_types/record.dart';
+import '/providers/database_provider.dart';
+import '/utils_files/achievment_utils.dart';
 
 class AchievementChecker {
   final DatabaseProvider databaseProvider;

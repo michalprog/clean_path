@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data_types/achievement_record.dart';
+import '/data_types/achievement_record.dart';
 
 class AchievementWidget extends StatelessWidget {
   final AchievementRecord record;

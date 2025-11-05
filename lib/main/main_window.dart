@@ -19,7 +19,7 @@ class _MainWindowState extends State<MainWindow> {
 
   List<Widget> show_view = [];
   List<String> AppBarText = [];
-  int NavigationIndex = 4;
+  int navigationIndex = 4;
 
   @override
   void initState() {
@@ -48,18 +48,18 @@ class _MainWindowState extends State<MainWindow> {
         ),
         backgroundColor: Colors.greenAccent,
       ),
-      drawer: DrawerWidget( index: NavigationIndex,),
+      drawer: DrawerWidget( index: navigationIndex,),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () => changeWindow(4),
-        child: const Icon(Icons.home, color: Colors.purple),
         backgroundColor: Colors.purple.shade100,
         shape: CircleBorder(
 
         ),
         elevation: 5,
+        child: const Icon(Icons.home, color: Colors.purple),
       ),
-      body: show_view[NavigationIndex],
+      body: show_view[navigationIndex],
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
@@ -100,7 +100,7 @@ class _MainWindowState extends State<MainWindow> {
 
   void changeWindow(int page) {
     setState(() {
-      NavigationIndex = page;
+      navigationIndex = page;
     });
   }
 }

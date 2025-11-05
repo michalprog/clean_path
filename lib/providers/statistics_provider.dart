@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:clean_path/data_types/record.dart';
 import 'package:clean_path/providers/database_provider.dart';
-import '../utils_files/statistic_utils.dart';
+import '/utils_files/statistic_utils.dart';
 import '/enums/enums.dart';
 
 class StatisticsProvider extends ChangeNotifier {

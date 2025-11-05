@@ -1,7 +1,7 @@
 import 'package:clean_path/statistc_views/trial_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/statistics_provider.dart';
+import '/providers/statistics_provider.dart';
 
 class AllAttempsList extends StatelessWidget {
   const AllAttempsList({super.key});

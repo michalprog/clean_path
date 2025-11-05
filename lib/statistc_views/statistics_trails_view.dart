@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../utils_files/statistic_utils.dart';
+import '/utils_files/statistic_utils.dart';
 import 'trial_widget.dart';
 import '/data_types/record.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../providers/statistics_provider.dart';
+import '/providers/statistics_provider.dart';
 
 class StatisticsTrailsView extends StatefulWidget {
   const StatisticsTrailsView({super.key});

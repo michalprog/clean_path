@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:clean_path/providers/database_provider.dart';
-import '../achievement/achievement_checker.dart';
-import '../data_types/achievement_record.dart';
-import '../utils_files/achievment_utils.dart';
+import '/achievement/achievement_checker.dart';
+import '/data_types/achievement_record.dart';
+import '/utils_files/achievment_utils.dart';
 
 class AchievementProvider extends ChangeNotifier {
   late DatabaseProvider _databaseProvider;

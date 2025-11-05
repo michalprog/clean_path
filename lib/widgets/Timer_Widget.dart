@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-import '../providers/database_provider.dart';
+import '/providers/database_provider.dart';
 
 class TimerWidget extends StatefulWidget {
   final Function(int option) timerFunction;
-  bool TimerState=false;
+  bool timerState=false;
   final int startCounter;
   TimerWidget({
     super.key,
@@ -32,7 +32,7 @@ class _TimerWidgetState extends State<TimerWidget> {
     );
     if (widget.startCounter > 0) {
       _stopWatchTimer.onStartTimer();
-      widget.TimerState=true;
+      widget.timerState=true;
     }
   }
 
@@ -103,7 +103,7 @@ class _TimerWidgetState extends State<TimerWidget> {
         ),
 
         SizedBox(height: 250),
-        ElevatedButton(onPressed: () => timerFunction(), child: Text(widget.TimerState ? "Reset" : "Start"),),
+        ElevatedButton(onPressed: () => timerFunction(), child: Text(widget.timerState ? "Reset" : "Start"),),
         SizedBox(height: 30),
       ],
     );
@@ -112,7 +112,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   void timerFunction()
   {
     setState(() {
-      if(widget.TimerState)
+      if(widget.timerState)
       {
         _stopWatchTimer.onResetTimer();
         widget.timerFunction(2);
@@ -121,7 +121,7 @@ class _TimerWidgetState extends State<TimerWidget> {
       {
         _stopWatchTimer.onStartTimer();
         widget.timerFunction(1);
-        widget.TimerState = true;
+        widget.timerState = true;
       }
     });
 

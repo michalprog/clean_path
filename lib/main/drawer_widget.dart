@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../statistc_views/main_Statistic.dart';
-import '../window_widgets/acievement_view.dart';
+import '/statistc_views/main_Statistic.dart';
+import '/window_widgets/acievement_view.dart';
 
 class DrawerWidget extends StatelessWidget {
   final int index;
@@ -28,7 +28,7 @@ class DrawerWidget extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainStatistic(index: this.index,)),
+                MaterialPageRoute(builder: (context) => MainStatistic(index: index,)),
               );
             },
           ),

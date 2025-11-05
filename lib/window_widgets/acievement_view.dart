@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/achievment_provider.dart';
-import '../widgets/achivement_widget.dart';
+import '/providers/achievment_provider.dart';
+import '/widgets/achivement_widget.dart';
 
 class AchievementView extends StatelessWidget {
   const AchievementView({Key? key}) : super(key: key);
