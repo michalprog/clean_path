@@ -1,9 +1,10 @@
 import 'package:sqflite/sqflite.dart';
 import '/data_types/record.dart';
 import 'database_manager.dart';
+import '/main/service_locator.dart';
 
 class RecordDao {
-  final DatabaseManager _dbManager = DatabaseManager.instance;
+  final DatabaseManager _dbManager = getIt<DatabaseManager>();
 
   Future<Record> insert(Record record) async {
     final db = await _dbManager.database;

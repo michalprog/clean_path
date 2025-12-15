@@ -2,9 +2,10 @@ import 'package:sqflite/sqflite.dart';
 import '/data_types/achievement_record.dart';
 import '/data_types/achivement_data.dart';
 import 'database_manager.dart';
+import '/main/service_locator.dart';
 
 class AchievementDao {
-  final DatabaseManager _dbManager = DatabaseManager.instance;
+  final DatabaseManager _dbManager = getIt<DatabaseManager>();
 
   Future<void> ensureInitialized() async {
     final db = await _dbManager.database;

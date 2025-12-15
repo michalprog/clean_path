@@ -9,8 +9,11 @@ import '/providers/pap_provider.dart';
 import '/providers/statistics_provider.dart';
 import '/providers/sweets_provider.dart';
 import 'clean_path_main.dart';
+import '/main/service_locator.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupServiceLocator();
   runApp(
     MultiProvider(
       providers: [
