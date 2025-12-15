@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:clean_path/providers/database_provider.dart';
 import '/enums/enums.dart';
 import '/utils_files/timer_utils.dart';
 import '/data_types/record.dart';
+import '/sqlflite/record_dao.dart';
 
 class SweetsProvider extends ChangeNotifier {
-  late DatabaseProvider _databaseProvider;
+  final RecordDao _recordDao = RecordDao();
 
   Record? sweetRecord;
   int timerTime = 0;
-
-  void update(DatabaseProvider dbProvider) {
-    _databaseProvider = dbProvider;
-  }
 
   Future<void> provideData() async {
     await getRecord();
@@ -23,11 +19,11 @@ class SweetsProvider extends ChangeNotifier {
     final now = DateTime.now();
     final newRecord = Record(1, type, true, now);
     sweetRecord = newRecord;
-    await _databaseProvider.createNewRecord(newRecord);
+    sweetRecord = await _recordDao.insert(newRecord);
   }
 
   Future<Record?> getRecord() async {
-    sweetRecord = await _databaseProvider.getActiveRecordByType(3);
+    sweetRecord = await _recordDao.getActiveByType(3);
     return sweetRecord;
   }
 
@@ -40,7 +36,11 @@ class SweetsProvider extends ChangeNotifier {
 
   Future<void> resetTimer() async {
     if (sweetRecord != null) {
-      await _databaseProvider.resetTimer(sweetRecord!);
+      final updated = sweetRecord!.copyWith(
+        isActive: false,
+        desactivated: DateTime.now(),
+      );
+      await _recordDao.update(updated);
       sweetRecord = null;
       timerTime = 0;
       notifyListeners();

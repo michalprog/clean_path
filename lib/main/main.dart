@@ -20,35 +20,23 @@ Future<void> main() async {
         ChangeNotifierProvider<DatabaseProvider>(
           create: (_) => DatabaseProvider(),
         ),
-        ChangeNotifierProxyProvider<DatabaseProvider, FapProvider>(
+        ChangeNotifierProvider<FapProvider>(
           create: (_) => FapProvider(),
-          update: (_, dbProvider, fapProvider) =>
-          fapProvider!..update(dbProvider),
         ),
-        ChangeNotifierProxyProvider<DatabaseProvider, PapProvider>(
+        ChangeNotifierProvider<PapProvider>(
           create: (_) => PapProvider(),
-          update: (_, dbProvider, papProvider) =>
-          papProvider!..update(dbProvider),
         ),
-        ChangeNotifierProxyProvider<DatabaseProvider, AlcocholProvider>(
+        ChangeNotifierProvider<AlcocholProvider>(
           create: (_) => AlcocholProvider(),
-          update: (_, dbProvider, alcProvider) =>
-          alcProvider!..update(dbProvider),
         ),
-        ChangeNotifierProxyProvider<DatabaseProvider, SweetsProvider>(
+        ChangeNotifierProvider<SweetsProvider>(
           create: (_) => SweetsProvider(),
-          update: (_, dbProvider, sweetsProvider) =>
-          sweetsProvider!..update(dbProvider),
         ),
-        ChangeNotifierProxyProvider<DatabaseProvider, StatisticsProvider>(
+        ChangeNotifierProvider<StatisticsProvider>(
           create: (_) => StatisticsProvider(),
-          update: (_, dbProvider, statsProvider) =>
-          statsProvider!..update(dbProvider),
         ),
-        ChangeNotifierProxyProvider<DatabaseProvider, AchievementProvider>(
+        ChangeNotifierProvider<AchievementProvider>(
           create: (_) => AchievementProvider(),
-          update: (_, dbProvider, achProvider) =>
-          achProvider!..update(dbProvider),
         ),
       ],
       child: CleanPathMain(),

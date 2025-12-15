@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:clean_path/data_types/record.dart';
-import 'package:clean_path/providers/database_provider.dart';
 import '/utils_files/statistic_utils.dart';
 import '/enums/enums.dart';
+import '/sqlflite/record_dao.dart';
 
 class StatisticsProvider extends ChangeNotifier {
-  late DatabaseProvider _databaseProvider;
+  final RecordDao _recordDao = RecordDao();
 
   List<Record> allRecords = [];
   List<Record> activeRecords = [];
@@ -14,20 +14,16 @@ class StatisticsProvider extends ChangeNotifier {
   List<Record> alcRecords = [];
   List<Record> sweetRecords = [];
 
-  void update(DatabaseProvider dbProvider) {
-    _databaseProvider = dbProvider;
-  }
-
   Future<List<Record>> getAllRecord() async {
-    return await _databaseProvider.loadAllRecords();
+    return await _recordDao.getAll();
   }
 
   Future<List<Record>> getActiveRecord(AddictionTypes type) async {
-    return await _databaseProvider.getActiveRecords();
+    return await _recordDao.getAllActive();
   }
 
   Future<List<Record>> getRecordByType(AddictionTypes type) async {
-    return await _databaseProvider.getRecordsByType(type.index);
+    return await _recordDao.getByType(type.index);
   }
 
   Future<void> provideMainData() async {
@@ -48,7 +44,7 @@ class StatisticsProvider extends ChangeNotifier {
     return StatisticUtils.getFailDaysFromRecords(filtered);
   }
   Future<void> editRecordComment(Record updatedRecord) async {
-    await _databaseProvider.updateRecord(updatedRecord);
+    await _recordDao.update(updatedRecord);
     await provideMainData(); // przeładuj dane
     notifyListeners();
   }

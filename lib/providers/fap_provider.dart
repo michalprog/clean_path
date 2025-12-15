@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:clean_path/providers/database_provider.dart';
 import '/enums/enums.dart';
 import '/utils_files/timer_utils.dart';
 import '/data_types/record.dart';
+import '/sqlflite/record_dao.dart';
 
 class FapProvider extends ChangeNotifier {
-  late DatabaseProvider _databaseProvider;
+  final RecordDao _recordDao = RecordDao();
 
   Record? fapRecord;
   int timerTime = 0;
-
-  void update(DatabaseProvider dbProvider) {
-    _databaseProvider = dbProvider;
-  }
 
   Future<void> provideData() async {
     await getRecord();
@@ -23,12 +19,12 @@ class FapProvider extends ChangeNotifier {
     final DateTime now = DateTime.now();
     final newRecord = Record(1, type, true, now);
     fapRecord = newRecord;
-    await _databaseProvider.createNewRecord(newRecord);
+    fapRecord = await _recordDao.insert(newRecord);
     notifyListeners();
   }
 
   Future<Record?> getRecord() async {
-    fapRecord = await _databaseProvider.getActiveRecordByType(0);
+    fapRecord = await _recordDao.getActiveByType(0);
     return fapRecord;
   }
 
@@ -42,7 +38,11 @@ class FapProvider extends ChangeNotifier {
 
   Future<void> resetTimer() async {
     if (fapRecord != null) {
-      await _databaseProvider.resetTimer(fapRecord!);
+      final updated = fapRecord!.copyWith(
+        isActive: false,
+        desactivated: DateTime.now(),
+      );
+      await _recordDao.update(updated);
       fapRecord = null;
       timerTime = 0;
       notifyListeners();

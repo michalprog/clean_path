@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:clean_path/providers/database_provider.dart';
 import '/enums/enums.dart';
 import '/utils_files/timer_utils.dart';
 import '/data_types/record.dart';
+import '/sqlflite/record_dao.dart';
 
 class PapProvider extends ChangeNotifier {
-  late DatabaseProvider _databaseProvider;
+  final RecordDao _recordDao = RecordDao();
 
   Record? papRecord;
   int timerTime = 0;
-
-  void update(DatabaseProvider dbProvider) {
-    _databaseProvider = dbProvider;
-  }
 
   Future<void> provideData() async {
     await getRecord();
@@ -23,11 +19,11 @@ class PapProvider extends ChangeNotifier {
     final now = DateTime.now();
     final newRecord = Record(1, type, true, now);
     papRecord = newRecord;
-    await _databaseProvider.createNewRecord(newRecord);
+    papRecord = await _recordDao.insert(newRecord);
   }
 
   Future<Record?> getRecord() async {
-    papRecord = await _databaseProvider.getActiveRecordByType(1);
+    papRecord = await _recordDao.getActiveByType(1);
     return papRecord;
   }
 
@@ -40,7 +36,11 @@ class PapProvider extends ChangeNotifier {
 
   Future<void> resetTimer() async {
     if (papRecord != null) {
-      await _databaseProvider.resetTimer(papRecord!);
+      final updated = papRecord!.copyWith(
+        isActive: false,
+        desactivated: DateTime.now(),
+      );
+      await _recordDao.update(updated);
       papRecord = null;
       timerTime = 0;
       notifyListeners();
