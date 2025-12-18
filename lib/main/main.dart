@@ -1,3 +1,4 @@
+import 'package:clean_path/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider<AchievementProvider>(
           create: (_) => AchievementProvider(),
+        ),
+        ChangeNotifierProvider<SettingsProvider>(
+          create: (_) => SettingsProvider(),
         ),
       ],
       child: CleanPathMain(),
