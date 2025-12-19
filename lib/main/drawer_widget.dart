@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '/window_widgets/settings_view.dart';
 import '/statistc_views/main_Statistic.dart';
 import '/window_widgets/acievement_view.dart';
 
@@ -35,7 +35,14 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsView(),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: Icon(Icons.forum),
