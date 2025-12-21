@@ -1,0 +1,179 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appTitle => 'CleanPath';
+
+  @override
+  String get drawerOptions => 'Options';
+
+  @override
+  String get drawerStatistics => 'Statistics';
+
+  @override
+  String get drawerSettings => 'Settings';
+
+  @override
+  String get drawerForum => 'Forum';
+
+  @override
+  String get drawerAchievements => 'Achievements';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get languageSectionTitle => 'Language';
+
+  @override
+  String get appLanguageTitle => 'App language';
+
+  @override
+  String get appLanguageSubtitle => 'Select your preferred language';
+
+  @override
+  String errorWithMessage(Object message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String get achievementsTitle => 'Achievements';
+
+  @override
+  String get noAchievements => 'No achievements';
+
+  @override
+  String get noRecordsForDay => 'No records for this day';
+
+  @override
+  String get motivationPopupDescription =>
+      'You can always begin again.\\nDon\'t lose faith in yourself';
+
+  @override
+  String get notNow => 'Not Now';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
+  String get commentLabel => 'Comment';
+
+  @override
+  String get failDateLabel => 'Fail date';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get noRecords => 'No Records';
+
+  @override
+  String get mainTagline => 'Get rid of addictions with us today!';
+
+  @override
+  String get addictionPornography => 'Pornography';
+
+  @override
+  String get addictionSmoking => 'Smoking';
+
+  @override
+  String get addictionDrinking => 'Drinking';
+
+  @override
+  String get addictionSweets => 'Sweets';
+
+  @override
+  String get editRecordTitle => 'Edit Record';
+
+  @override
+  String get commentHint => 'Write comment...';
+
+  @override
+  String get dateHint => 'Choose date';
+
+  @override
+  String get motivationMessage1 => 'One day at a time — that\'s enough.';
+
+  @override
+  String get motivationMessage2 =>
+      'You don’t have to be perfect, just persistent.';
+
+  @override
+  String get motivationMessage3 => 'Every no is a step toward freedom.';
+
+  @override
+  String get motivationMessage4 =>
+      'Your strength is built in silence — keep going.';
+
+  @override
+  String get motivationMessage5 =>
+      'A setback doesn’t erase your progress. Getting back up proves your power.';
+
+  @override
+  String get motivationMessage6 => 'You are not alone. What you feel matters.';
+
+  @override
+  String get motivationMessage7 =>
+      'Your tomorrow depends on the choices you make today.';
+
+  @override
+  String get motivationMessage8 =>
+      'Recovery isn’t weakness. It’s a sign of courage.';
+
+  @override
+  String get motivationMessage9 =>
+      'Peace in your mind is possible — and it’s worth the fight.';
+
+  @override
+  String get motivationMessage10 =>
+      'Every day clean is a victory no one can take from you.';
+
+  @override
+  String get totalAttempts => 'Total attempts';
+
+  @override
+  String get averageAttemptTime => 'Average attempt time';
+
+  @override
+  String get noFapStatus => 'No Fap Status';
+
+  @override
+  String get noSmokingStatus => 'No Smoking Status';
+
+  @override
+  String get noAlcoholStatus => 'No Alcohol Status';
+
+  @override
+  String get noSweetStatus => 'No Sweet Status';
+
+  @override
+  String get timesOfTrials => 'Times of trials';
+
+  @override
+  String get totalNumberOfAttempts => 'Total number of attempts';
+
+  @override
+  String get longestAttemptTime => 'Longest attempt time';
+
+  @override
+  String get isAttemptActive => 'Is attempt active?';
+
+  @override
+  String get currentDuration => 'Current duration';
+
+  @override
+  String get statusActive => 'active';
+
+  @override
+  String get statusNotActive => 'not active';
+}
