@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '/l10n/app_localizations.dart';
 import '/widgets/flchart_widget.dart';
 import '/widgets/statistic_state_tile.dart';
 import '/utils_files/statistic_utils.dart';
@@ -14,36 +16,60 @@ class MainStatistcsView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final statisticsProvider = Provider.of<StatisticsProvider>(context);
+    final l10n = AppLocalizations.of(context)!;
     return FutureBuilder(
       future: statisticsProvider.provideMainData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text("Błąd: ${snapshot.error}"));
+          return Center(child: Text("Error: ${snapshot.error}"));
         } else {
           return ListView(
             children: [
-             StatisticListTile(mainText: "Total attempts", highlightedText:"${ statisticsProvider.allRecords.length}"),
-            StatisticListTile(
-              mainText: "Average attempt time",
-              highlightedText: StatisticUtils.formatDurationFromSeconds(
-                  StatisticUtils.averageRecordDurationInSeconds(statisticsProvider.allRecords),
-
+              StatisticListTile(
+                mainText: l10n.totalAttempts,
+                highlightedText: "${statisticsProvider.allRecords.length}",
               ),
-
-            ),
-              StatisticStateTile(mainText: 'No Fap Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.fapRecords) ),
-              StatisticStateTile(mainText: 'No Smoking Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.papRecords) ),
-              StatisticStateTile(mainText: 'No Alcohol Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.alcRecords) ),
-              StatisticStateTile(mainText: 'No Sweet Status', typeState: StatisticUtils.isActiveRecord(statisticsProvider.sweetRecords) ),
+              StatisticListTile(
+                mainText: l10n.averageAttemptTime,
+                highlightedText: StatisticUtils.formatDurationFromSeconds(
+                  StatisticUtils.averageRecordDurationInSeconds(
+                    statisticsProvider.allRecords,
+                  ),
+                ),
+              ),
+              StatisticStateTile(
+                mainText: l10n.noFapStatus,
+                typeState: StatisticUtils.isActiveRecord(
+                  statisticsProvider.fapRecords,
+                ),
+              ),
+              StatisticStateTile(
+                mainText: l10n.noSmokingStatus,
+                typeState: StatisticUtils.isActiveRecord(
+                  statisticsProvider.papRecords,
+                ),
+              ),
+              StatisticStateTile(
+                mainText: l10n.noAlcoholStatus,
+                typeState: StatisticUtils.isActiveRecord(
+                  statisticsProvider.alcRecords,
+                ),
+              ),
+              StatisticStateTile(
+                mainText: l10n.noSweetStatus,
+                typeState: StatisticUtils.isActiveRecord(
+                  statisticsProvider.sweetRecords,
+                ),
+              ),
               const SizedBox(height: 10),
-              FlchartWidget(records: statisticsProvider.allRecords, titleText: 'times of trials',),
+              FlchartWidget(
+                records: statisticsProvider.allRecords,
+                titleText: l10n.timesOfTrials,
+              ),
               const SizedBox(height: 50),
             ],
-
-
-
           );
         }
       },

@@ -7,6 +7,7 @@ import '../window_widgets/default_view.dart';
 import '../window_widgets/fap_view.dart';
 import '../window_widgets/pap_view.dart';
 import 'main_view.dart';
+import '/l10n/app_localizations.dart';
 
 class MainWindow extends StatefulWidget {
   const MainWindow({super.key});
@@ -38,13 +39,14 @@ class _MainWindowState extends State<MainWindow> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "CleanPath",
+          l10n.appTitle,
         ),
         backgroundColor: Colors.greenAccent,
       ),

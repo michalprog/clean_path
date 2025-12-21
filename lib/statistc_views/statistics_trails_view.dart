@@ -5,7 +5,7 @@ import 'trial_widget.dart';
 import '/data_types/record.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '/providers/statistics_provider.dart';
-
+import '/l10n/app_localizations.dart';
 class StatisticsTrailsView extends StatefulWidget {
   const StatisticsTrailsView({super.key});
 
@@ -55,6 +55,7 @@ class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return _allRecords.isEmpty
         ? const Center(child: CircularProgressIndicator())
         : Column(
@@ -107,7 +108,7 @@ class _StatisticsTrailsViewState extends State<StatisticsTrailsView> {
         const SizedBox(height: 16),
         Expanded(
           child: _selectedDayRecords.isEmpty
-              ? const Center(child: Text("Brak rekordów na ten dzień"))
+              ? Center(child: Text(l10n.noRecordsForDay))
               : ListView.builder(
             itemCount: _selectedDayRecords.length,
             itemBuilder: (context, index) {

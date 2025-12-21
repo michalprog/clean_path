@@ -3,7 +3,7 @@ import 'package:clean_path/statistc_views/statistics_trails_view.dart';
 import 'package:clean_path/window_widgets/uniwersal_statistics_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-
+import '/l10n/app_localizations.dart';
 import '/enums/enums.dart';
 import 'all_attemps_list.dart';
 import 'main_statistcs_view.dart';
@@ -49,24 +49,26 @@ class _MainStatisticState extends State<MainStatistic> {
       MainStatistcsView(),
       PageView(children: const [StatisticsTrailsView(), AllAttempsList()]),
     ];
-    AppBarTexts = [
-      "No Fap statistics",
-      "No smoking statistics",
-      "No alcohol statistics",
-      "No sweets statistics",
-      "Overall statistics",
-      "all attempts",
-    ];
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final appBarTexts = [
+      l10n.noFapStatus,
+      l10n.noSmokingStatus,
+      l10n.noAlcoholStatus,
+      l10n.noSweetStatus,
+      l10n.drawerStatistics,
+      l10n.timesOfTrials,
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.greenAccent,
         centerTitle: true,
-        title: Text(AppBarTexts[NavigationIndex], textAlign: TextAlign.center),
+        title: Text(appBarTexts[NavigationIndex], textAlign: TextAlign.center),
       ),
       body: showViews[NavigationIndex],
       floatingActionButton: Column(

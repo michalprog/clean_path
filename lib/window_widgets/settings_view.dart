@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/l10n/app_localizations.dart';
 import '../providers/settings_provider.dart';
 
 class SettingsView extends StatelessWidget {
@@ -22,10 +23,12 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
         centerTitle: true,
-        title: const Text('Settings'),
+        title: Text(l10n.settingsTitle),
       ),
       body: Consumer<SettingsProvider>(
         builder: (context, provider, _) {
@@ -44,15 +47,15 @@ class SettingsView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Language',
+                          l10n.languageSectionTitle,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(height: 12),
                         ListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: const Text('App language'),
+                          title: Text(l10n.appLanguageTitle),
                           subtitle:
-                          const Text('Select your preferred language'),
+                          Text(l10n.appLanguageSubtitle),
                           trailing: DropdownButton<Locale>(
                             value: provider.locale,
                             underline: const SizedBox.shrink(),

@@ -1,12 +1,15 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
+import '/l10n/app_localizations.dart';
+
 
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: Stack(
         children: [
@@ -31,7 +34,7 @@ class MainView extends StatelessWidget {
                   height: 100,
                   width: 300,
                   child: Text(
-                    "Get rid of addictions with us today !",
+                    l10n.mainTagline,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
@@ -58,10 +61,10 @@ class MainView extends StatelessWidget {
 
                   child: AnimatedTextKit(
                     animatedTexts: [
-                      RotateAnimatedText("Pornography"),
-                      RotateAnimatedText("Smoking"),
-                      RotateAnimatedText("Drinking"),
-                      RotateAnimatedText("Sweets"),
+                      RotateAnimatedText(l10n.addictionPornography),
+                      RotateAnimatedText(l10n.addictionSmoking),
+                      RotateAnimatedText(l10n.addictionDrinking),
+                      RotateAnimatedText(l10n.addictionSweets),
                     ],
                   ),
                 ),

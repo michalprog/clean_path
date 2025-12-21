@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/data_types/record.dart';
 import '/providers/statistics_provider.dart';
-
+import '/l10n/app_localizations.dart';
 class ChangeCommentDialog extends StatefulWidget {
   final Record record;
 
@@ -75,6 +75,7 @@ class _ChangeCommentDialogState extends State<ChangeCommentDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
@@ -84,28 +85,28 @@ class _ChangeCommentDialogState extends State<ChangeCommentDialog> {
           children: [
             // Header with icon and title
             Row(
-              children: const [
-                Icon(Icons.edit_note_rounded, color: Colors.blueAccent, size: 24),
-                SizedBox(width: 8),
+              children: [
+                const Icon(Icons.edit_note_rounded, color: Colors.blueAccent, size: 24),
+                const SizedBox(width: 8),
                 Text(
-                  "Edit Record",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  l10n.editRecordTitle,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
             const SizedBox(height: 20),
 
             // Comment field
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text("Comment", style: TextStyle(fontWeight: FontWeight.w600)),
+              child: Text(l10n.commentLabel, style: const TextStyle(fontWeight: FontWeight.w600)),
             ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _commentController,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: "Write comment...",
+                hintText: l10n.commentHint,
                 filled: true,
                 fillColor: Colors.grey[200],
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -114,16 +115,16 @@ class _ChangeCommentDialogState extends State<ChangeCommentDialog> {
             const SizedBox(height: 16),
 
             // Date field
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text("Fail date", style: TextStyle(fontWeight: FontWeight.w600)),
+              child: Text(l10n.failDateLabel, style: const TextStyle(fontWeight: FontWeight.w600)),
             ),
             const SizedBox(height: 8),
             TextFormField(
               readOnly: true,
               controller: _dateController,
               decoration: InputDecoration(
-                hintText: "Choose date",
+                hintText: l10n.dateHint,
                 filled: true,
                 fillColor: Colors.grey[200],
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -139,7 +140,7 @@ class _ChangeCommentDialogState extends State<ChangeCommentDialog> {
               children: [
                 TextButton(
                   onPressed: _cancelChanges,
-                  child: const Text("Cancel"),
+                  child: Text(l10n.cancel),
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
@@ -149,7 +150,7 @@ class _ChangeCommentDialogState extends State<ChangeCommentDialog> {
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  child: const Text("Save"),
+                  child: Text(l10n.save),
                 ),
               ],
             ),
