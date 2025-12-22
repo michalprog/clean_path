@@ -21,6 +21,13 @@ class SettingsView extends StatelessWidget {
     'de': 'Deutsch',
   };
 
+  static const Map<String, String> _languageFlags = {
+    'pl': '🇵🇱',
+    'en': '🇬🇧',
+    'es': '🇪🇸',
+    'de': '🇩🇪',
+  };
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -35,7 +42,7 @@ class SettingsView extends StatelessWidget {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Card(
                   shape: RoundedRectangleBorder(
@@ -44,7 +51,7 @@ class SettingsView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           l10n.languageSectionTitle,
@@ -54,8 +61,7 @@ class SettingsView extends StatelessWidget {
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(l10n.appLanguageTitle),
-                          subtitle:
-                          Text(l10n.appLanguageSubtitle),
+                          subtitle: Text(l10n.appLanguageSubtitle),
                           trailing: DropdownButton<Locale>(
                             value: provider.locale,
                             underline: const SizedBox.shrink(),
@@ -63,7 +69,17 @@ class SettingsView extends StatelessWidget {
                                 .map(
                                   (locale) => DropdownMenuItem<Locale>(
                                 value: locale,
-                                child: Text(_languageLabel(locale)),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      _languageFlag(locale),
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(_languageLabel(locale)),
+                                  ],
+                                ),
                               ),
                             )
                                 .toList(),
@@ -89,5 +105,9 @@ class SettingsView extends StatelessWidget {
   static String _languageLabel(Locale locale) {
     return _languageNames[locale.languageCode] ??
         locale.languageCode.toUpperCase();
+  }
+
+  static String _languageFlag(Locale locale) {
+    return _languageFlags[locale.languageCode] ?? '🏳️';
   }
 }
