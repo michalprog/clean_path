@@ -44,6 +44,75 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get achievement1Title => 'Zaczynamy!';
+
+  @override
+  String get achievement1Description =>
+      'Rozpocznij dowolną walkę z uzależnieniem.';
+
+  @override
+  String get achievement2Title => 'Pierwszy dzień podróży';
+
+  @override
+  String get achievement2Description =>
+      'Pierwsze 24 godziny za Tobą. Każdy krok się liczy!';
+
+  @override
+  String get achievement3Title => '3 dni wolności';
+
+  @override
+  String get achievement3Description =>
+      'Trzy dni wytrwałości! Budujesz swoją nową przyszłość.';
+
+  @override
+  String get achievement4Title => '7 dni czystości';
+
+  @override
+  String get achievement4Description =>
+      'Pierwszy tydzień za Tobą. Jesteś silniejszy, niż myślisz!';
+
+  @override
+  String get achievement5Title => 'Dwa tygodnie wytrwałości';
+
+  @override
+  String get achievement5Description =>
+      'Już dwa tygodnie na nowej drodze. Możesz być dumny!';
+
+  @override
+  String get achievement6Title => 'Miesiąc nowego życia';
+
+  @override
+  String get achievement6Description =>
+      '30 dni zmiany! Twoja determinacja robi różnicę.';
+
+  @override
+  String get achievement7Title => '60 dni siły';
+
+  @override
+  String get achievement7Description =>
+      'Już dwa miesiące. Twoja konsekwencja zasługuje na uznanie!';
+
+  @override
+  String get achievement8Title => '100 dni zwycięstwa';
+
+  @override
+  String get achievement8Description =>
+      'To już ponad trzy miesiące. Wytrwałość staje się Twoją siłą!';
+
+  @override
+  String get achievement9Title => 'Rok wolności';
+
+  @override
+  String get achievement9Description =>
+      '365 dni walki, wzrostu i przemiany. Jesteś przykładem siły i determinacji!';
+
+  @override
+  String get achievement10Title => 'Minuta minęła';
+
+  @override
+  String get achievement10Description => 'Testowe osiągnięcie do sprawdzania.';
+
+  @override
   String get achievementsTitle => 'Osiągnięcia';
 
   @override

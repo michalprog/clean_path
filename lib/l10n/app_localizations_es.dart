@@ -44,6 +44,75 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get achievement1Title => '¡Empecemos!';
+
+  @override
+  String get achievement1Description =>
+      'Empieza cualquier lucha contra una adicción.';
+
+  @override
+  String get achievement2Title => 'Primer día del viaje';
+
+  @override
+  String get achievement2Description =>
+      'Las primeras 24 horas ya pasaron. ¡Cada paso cuenta!';
+
+  @override
+  String get achievement3Title => '3 días de libertad';
+
+  @override
+  String get achievement3Description =>
+      '¡Tres días de perseverancia! Estás construyendo tu nuevo futuro.';
+
+  @override
+  String get achievement4Title => '7 días limpio';
+
+  @override
+  String get achievement4Description =>
+      'La primera semana quedó atrás. ¡Eres más fuerte de lo que crees!';
+
+  @override
+  String get achievement5Title => 'Dos semanas de perseverancia';
+
+  @override
+  String get achievement5Description =>
+      'Ya son dos semanas en el nuevo camino. ¡Puedes estar orgulloso!';
+
+  @override
+  String get achievement6Title => 'Un mes de nueva vida';
+
+  @override
+  String get achievement6Description =>
+      '¡30 días de cambio! Tu determinación marca la diferencia.';
+
+  @override
+  String get achievement7Title => '60 días de fuerza';
+
+  @override
+  String get achievement7Description =>
+      'Ya dos meses. ¡Tu constancia merece reconocimiento!';
+
+  @override
+  String get achievement8Title => '100 días de victoria';
+
+  @override
+  String get achievement8Description =>
+      'Más de tres meses. ¡La perseverancia se está convirtiendo en tu fuerza!';
+
+  @override
+  String get achievement9Title => 'Año de libertad';
+
+  @override
+  String get achievement9Description =>
+      '365 días de lucha, crecimiento y transformación. ¡Eres un ejemplo de fuerza y determinación!';
+
+  @override
+  String get achievement10Title => 'Pasó un minuto';
+
+  @override
+  String get achievement10Description => 'Logro de prueba para verificación.';
+
+  @override
   String get achievementsTitle => 'Logros';
 
   @override

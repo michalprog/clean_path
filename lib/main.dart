@@ -9,7 +9,7 @@ import '/providers/fap_provider.dart';
 import '/providers/pap_provider.dart';
 import '/providers/statistics_provider.dart';
 import '/providers/sweets_provider.dart';
-import 'clean_path_main.dart';
+import 'main/clean_path_main.dart';
 import '/main/service_locator.dart';
 
 Future<void> main() async {

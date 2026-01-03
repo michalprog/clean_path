@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/l10n/app_localizations.dart';
 import '/data_types/achievement_record.dart';
 
 class AchievementWidget extends StatelessWidget {
@@ -7,6 +8,62 @@ class AchievementWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    String localizedTitle() {
+      switch (record.id) {
+        case 1:
+          return l10n.achievement1Title;
+        case 2:
+          return l10n.achievement2Title;
+        case 3:
+          return l10n.achievement3Title;
+        case 4:
+          return l10n.achievement4Title;
+        case 5:
+          return l10n.achievement5Title;
+        case 6:
+          return l10n.achievement6Title;
+        case 7:
+          return l10n.achievement7Title;
+        case 8:
+          return l10n.achievement8Title;
+        case 9:
+          return l10n.achievement9Title;
+        case 10:
+          return l10n.achievement10Title;
+        default:
+          return record.title;
+      }
+    }
+
+    String localizedDescription() {
+      switch (record.id) {
+        case 1:
+          return l10n.achievement1Description;
+        case 2:
+          return l10n.achievement2Description;
+        case 3:
+          return l10n.achievement3Description;
+        case 4:
+          return l10n.achievement4Description;
+        case 5:
+          return l10n.achievement5Description;
+        case 6:
+          return l10n.achievement6Description;
+        case 7:
+          return l10n.achievement7Description;
+        case 8:
+          return l10n.achievement8Description;
+        case 9:
+          return l10n.achievement9Description;
+        case 10:
+          return l10n.achievement10Description;
+        default:
+          return record.description;
+      }
+    }
+
     return Card(
       elevation: 3,
       color: record.isAchieved ? Colors.amber.shade100 : Colors.transparent,
@@ -19,7 +76,7 @@ class AchievementWidget extends StatelessWidget {
         ),
         title: record.isAchieved
             ? Text(
-          record.title,
+          localizedTitle(),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -29,7 +86,7 @@ class AchievementWidget extends StatelessWidget {
             : null, // Nie pokazuj tytułu, jeśli nieosiągnięte
         subtitle: record.isAchieved
             ? Text(
-          record.description,
+          localizedDescription(),
           style: TextStyle(
             fontSize: 14,
             fontStyle: FontStyle.italic,

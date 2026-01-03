@@ -44,6 +44,74 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get achievement1Title => 'Let\'s get started!';
+
+  @override
+  String get achievement1Description => 'Begin any fight with an addiction.';
+
+  @override
+  String get achievement2Title => 'First day of the journey';
+
+  @override
+  String get achievement2Description =>
+      'The first 24 hours are behind you. Every step counts!';
+
+  @override
+  String get achievement3Title => '3 days of freedom';
+
+  @override
+  String get achievement3Description =>
+      'Three days of perseverance! You\'re building your new future.';
+
+  @override
+  String get achievement4Title => '7 days clean';
+
+  @override
+  String get achievement4Description =>
+      'The first week is behind you. You\'re stronger than you think!';
+
+  @override
+  String get achievement5Title => 'Two weeks of perseverance';
+
+  @override
+  String get achievement5Description =>
+      'Two weeks on the new path already. You can be proud!';
+
+  @override
+  String get achievement6Title => 'A month of new life';
+
+  @override
+  String get achievement6Description =>
+      '30 days of change! Your determination makes a difference.';
+
+  @override
+  String get achievement7Title => '60 days of strength';
+
+  @override
+  String get achievement7Description =>
+      'Two months already. Your consistency deserves recognition!';
+
+  @override
+  String get achievement8Title => '100 days of victory';
+
+  @override
+  String get achievement8Description =>
+      'Over three months now. Perseverance is becoming your strength!';
+
+  @override
+  String get achievement9Title => 'Year of freedom';
+
+  @override
+  String get achievement9Description =>
+      '365 days of struggle, growth, and transformation. You\'re an example of strength and determination!';
+
+  @override
+  String get achievement10Title => 'One minute passed';
+
+  @override
+  String get achievement10Description => 'Test achievement for verification.';
+
+  @override
   String get achievementsTitle => 'Achievements';
 
   @override

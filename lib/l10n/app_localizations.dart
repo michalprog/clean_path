@@ -168,6 +168,126 @@ abstract class AppLocalizations {
   /// **'Error: {message}'**
   String errorWithMessage(Object message);
 
+  /// No description provided for @achievement1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s get started!'**
+  String get achievement1Title;
+
+  /// No description provided for @achievement1Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Begin any fight with an addiction.'**
+  String get achievement1Description;
+
+  /// No description provided for @achievement2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'First day of the journey'**
+  String get achievement2Title;
+
+  /// No description provided for @achievement2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'The first 24 hours are behind you. Every step counts!'**
+  String get achievement2Description;
+
+  /// No description provided for @achievement3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'3 days of freedom'**
+  String get achievement3Title;
+
+  /// No description provided for @achievement3Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Three days of perseverance! You\'re building your new future.'**
+  String get achievement3Description;
+
+  /// No description provided for @achievement4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'7 days clean'**
+  String get achievement4Title;
+
+  /// No description provided for @achievement4Description.
+  ///
+  /// In en, this message translates to:
+  /// **'The first week is behind you. You\'re stronger than you think!'**
+  String get achievement4Description;
+
+  /// No description provided for @achievement5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Two weeks of perseverance'**
+  String get achievement5Title;
+
+  /// No description provided for @achievement5Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Two weeks on the new path already. You can be proud!'**
+  String get achievement5Description;
+
+  /// No description provided for @achievement6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'A month of new life'**
+  String get achievement6Title;
+
+  /// No description provided for @achievement6Description.
+  ///
+  /// In en, this message translates to:
+  /// **'30 days of change! Your determination makes a difference.'**
+  String get achievement6Description;
+
+  /// No description provided for @achievement7Title.
+  ///
+  /// In en, this message translates to:
+  /// **'60 days of strength'**
+  String get achievement7Title;
+
+  /// No description provided for @achievement7Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Two months already. Your consistency deserves recognition!'**
+  String get achievement7Description;
+
+  /// No description provided for @achievement8Title.
+  ///
+  /// In en, this message translates to:
+  /// **'100 days of victory'**
+  String get achievement8Title;
+
+  /// No description provided for @achievement8Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Over three months now. Perseverance is becoming your strength!'**
+  String get achievement8Description;
+
+  /// No description provided for @achievement9Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Year of freedom'**
+  String get achievement9Title;
+
+  /// No description provided for @achievement9Description.
+  ///
+  /// In en, this message translates to:
+  /// **'365 days of struggle, growth, and transformation. You\'re an example of strength and determination!'**
+  String get achievement9Description;
+
+  /// No description provided for @achievement10Title.
+  ///
+  /// In en, this message translates to:
+  /// **'One minute passed'**
+  String get achievement10Title;
+
+  /// No description provided for @achievement10Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Test achievement for verification.'**
+  String get achievement10Description;
+
   /// No description provided for @achievementsTitle.
   ///
   /// In en, this message translates to:
