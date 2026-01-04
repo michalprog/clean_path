@@ -10,6 +10,7 @@
   "appLanguageTitle": "App language",
   "appLanguageSubtitle": "Select your preferred language",
   "errorWithMessage": "Error: {message}",
+  "selectedLanguageLabel": "Currently selected",
   "@errorWithMessage": {
     "placeholders": {
       "message": {}

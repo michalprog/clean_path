@@ -44,6 +44,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get selectedLanguageLabel => 'Aktuelle Sprache';
+
+  @override
   String get achievement1Title => 'Los geht\'s!';
 
   @override

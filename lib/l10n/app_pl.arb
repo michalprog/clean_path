@@ -9,6 +9,7 @@
   "languageSectionTitle": "Język",
   "appLanguageTitle": "Język aplikacji",
   "appLanguageSubtitle": "Wybierz preferowany język",
+  "selectedLanguageLabel": "Aktualny język",
   "errorWithMessage": "Błąd: {message}",
   "achievementsTitle": "Osiągnięcia",
   "achievement1Title": "Zaczynamy!",

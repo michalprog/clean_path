@@ -10,6 +10,7 @@
   "appLanguageTitle": "App-Sprache",
   "appLanguageSubtitle": "Wähle deine bevorzugte Sprache",
   "errorWithMessage": "Fehler: {message}",
+  "selectedLanguageLabel": "Aktuelle Sprache",
   "achievement1Title": "Los geht's!",
   "achievement1Description": "Beginne einen beliebigen Kampf gegen eine Sucht.",
   "achievement2Title": "Erster Tag der Reise",

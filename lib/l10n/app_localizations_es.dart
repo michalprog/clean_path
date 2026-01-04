@@ -44,6 +44,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get selectedLanguageLabel => 'Idioma seleccionado';
+
+  @override
   String get achievement1Title => '¡Empecemos!';
 
   @override

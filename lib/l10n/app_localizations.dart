@@ -168,6 +168,12 @@ abstract class AppLocalizations {
   /// **'Error: {message}'**
   String errorWithMessage(Object message);
 
+  /// No description provided for @selectedLanguageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Currently selected'**
+  String get selectedLanguageLabel;
+
   /// No description provided for @achievement1Title.
   ///
   /// In en, this message translates to:

@@ -3,30 +3,18 @@ import 'package:provider/provider.dart';
 
 import '/l10n/app_localizations.dart';
 import '../providers/settings_provider.dart';
+import '../widgets/language_tile.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
-  static const List<Locale> _languageOptions = [
-    Locale('pl'),
-    Locale('en'),
-    Locale('es'),
-    Locale('de'),
+  static const List<({Locale locale, String name, String flag})>
+  _languageOptions = [
+    (locale: Locale('pl'), name: 'Polski', flag: '🇵🇱'),
+    (locale: Locale('en'), name: 'English', flag: '🇬🇧'),
+    (locale: Locale('es'), name: 'Español', flag: '🇪🇸'),
+    (locale: Locale('de'), name: 'Deutsch', flag: '🇩🇪'),
   ];
-
-  static const Map<String, String> _languageNames = {
-    'pl': 'Polski',
-    'en': 'English',
-    'es': 'Español',
-    'de': 'Deutsch',
-  };
-
-  static const Map<String, String> _languageFlags = {
-    'pl': '🇵🇱',
-    'en': '🇬🇧',
-    'es': '🇪🇸',
-    'de': '🇩🇪',
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -44,55 +32,27 @@ class SettingsView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          l10n.languageSectionTitle,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                Text(
+                  l10n.languageSectionTitle,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  children: [
+                    for (final option in _languageOptions) ...[
+                      LanguageTile(
+                        name: option.name,
+                        flag: option.flag,
+                        locale: option.locale,
+                        isSelected: provider.locale == option.locale,
+                        selectedLabel: l10n.selectedLanguageLabel,
+                        onTap:
+                            () => provider.updateLocale(option.locale),
+                      ),
+                      if (option != _languageOptions.last)
                         const SizedBox(height: 12),
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(l10n.appLanguageTitle),
-                          subtitle: Text(l10n.appLanguageSubtitle),
-                          trailing: DropdownButton<Locale>(
-                            value: provider.locale,
-                            underline: const SizedBox.shrink(),
-                            items: _languageOptions
-                                .map(
-                                  (locale) => DropdownMenuItem<Locale>(
-                                value: locale,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      _languageFlag(locale),
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(_languageLabel(locale)),
-                                  ],
-                                ),
-                              ),
-                            )
-                                .toList(),
-                            onChanged: (locale) {
-                              if (locale != null) {
-                                provider.updateLocale(locale);
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                    ],
+                  ],
                 ),
               ],
             ),
@@ -100,14 +60,5 @@ class SettingsView extends StatelessWidget {
         },
       ),
     );
-  }
-
-  static String _languageLabel(Locale locale) {
-    return _languageNames[locale.languageCode] ??
-        locale.languageCode.toUpperCase();
-  }
-
-  static String _languageFlag(Locale locale) {
-    return _languageFlags[locale.languageCode] ?? '🏳️';
   }
 }
