@@ -83,7 +83,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   Widget build(BuildContext context) {
     final database = Provider.of<DatabaseProvider>(context);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         StreamBuilder<int>(
           stream: _stopWatchTimer.rawTime,
