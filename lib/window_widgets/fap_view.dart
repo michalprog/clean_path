@@ -81,11 +81,6 @@ class FapView extends StatelessWidget {
                         SizedBox(
                           height: 100,
                           width: 300,
-                          child: Text(
-                            fapProvider.getMotivationMsg(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20),
-                          ),
                         ),
                         Spacer(),
                         TimerWidget(

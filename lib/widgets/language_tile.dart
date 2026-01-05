@@ -29,7 +29,7 @@ class LanguageTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         onTap: onTap,
         child: Container(
-          width: 300,
+          width: 400,
           padding: const EdgeInsets.symmetric(
             horizontal: 12,
             vertical: 16,

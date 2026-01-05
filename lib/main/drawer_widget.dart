@@ -36,8 +36,8 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text(l10n.drawerSettings),
+            leading: Icon(Icons.language),
+            title: Text(l10n.languageSectionTitle),
             onTap: () {
               Navigator.push(
                 context,

@@ -23,7 +23,7 @@ class SettingsView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.greenAccent,
         centerTitle: true,
-        title: Text(l10n.settingsTitle),
+        title: Text(l10n.languageSectionTitle),
       ),
       body: Consumer<SettingsProvider>(
         builder: (context, provider, _) {
@@ -32,10 +32,6 @@ class SettingsView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  l10n.languageSectionTitle,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
                 const SizedBox(height: 20),
                 Column(
                   children: [
@@ -46,8 +42,7 @@ class SettingsView extends StatelessWidget {
                         locale: option.locale,
                         isSelected: provider.locale == option.locale,
                         selectedLabel: l10n.selectedLanguageLabel,
-                        onTap:
-                            () => provider.updateLocale(option.locale),
+                        onTap: () => provider.updateLocale(option.locale),
                       ),
                       if (option != _languageOptions.last)
                         const SizedBox(height: 12),

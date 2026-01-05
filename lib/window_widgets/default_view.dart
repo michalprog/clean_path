@@ -53,11 +53,7 @@ class DefaultView extends StatelessWidget {
                   SizedBox(
                     height: 100,
                     width: 300,
-                    child: Text(
-                      sweetsProvider.getMotivationMsg(),
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      textAlign: TextAlign.center,
-                    ),
+
                   ),
                   Spacer(),
                   TimerWidget(
