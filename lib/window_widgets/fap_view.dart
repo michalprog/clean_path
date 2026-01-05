@@ -38,60 +38,39 @@ class FapView extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
+          final screenHeight = MediaQuery.of(context).size.height;
           return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
+            color: Color(0xFFF7F2E8),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: screenHeight * 0.7,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: fapProvider.giveWindowImage(),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 24.0),
+                      child: TimerWidget(
+                        timerFunction: providerOperation,
+                        startCounter: fapProvider.timerTime,
+                      ),
+                    ),
+                  ),
                 ),
               ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Stack(
-                children: [
-                  // Obrazek w tle
-                  Positioned.fill(
-                    child: Image(
-                      image: fapProvider.giveWindowImage(),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-
-                  // Pasek tła od dołu
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      height: 50, // wysokość paska
-                        color: Color(0xFFF7F2E8), // albo inny kolor
-                    ),
-                  ),
-
-                  // Treść
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 10),
-                        SizedBox(
-                          height: 100,
-                          width: 300,
-                        ),
-                        Spacer(),
-                        TimerWidget(
-                          timerFunction: providerOperation,
-                          startCounter: fapProvider.timerTime,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
             ),
           );
 

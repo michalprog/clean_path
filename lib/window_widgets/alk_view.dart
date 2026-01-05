@@ -38,29 +38,39 @@ class AlkView extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
+          final screenHeight = MediaQuery.of(context).size.height;
           return Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: alcocholProvider.giveWindowImage(),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10),
-                  SizedBox(
-                    height: 100,
-                    width: 300,
+            color: Color(0xFFF7F2E8),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: screenHeight * 0.7,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: alcocholProvider.giveWindowImage(),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                      ),
+                    ),
                   ),
-                  Spacer(),
-                  TimerWidget(
-                    timerFunction: providerOperation,
-                    startCounter: alcocholProvider.timerTime,
+                ),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 24.0),
+                      child: TimerWidget(
+                        timerFunction: providerOperation,
+                        startCounter: alcocholProvider.timerTime,
+                      ),
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         }
