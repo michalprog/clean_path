@@ -102,9 +102,9 @@ class _TimerWidgetState extends State<TimerWidget> {
           },
         ),
 
-        SizedBox(height: 250),
+        SizedBox(height: 200),
         ElevatedButton(onPressed: () => timerFunction(), child: Text(widget.timerState ? "Reset" : "Start"),),
-        SizedBox(height: 30),
+        SizedBox(height: 90),
       ],
     );
   }

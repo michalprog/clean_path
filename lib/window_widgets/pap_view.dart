@@ -47,7 +47,7 @@ class PapView extends StatelessWidget {
                   top: 0,
                   left: 0,
                   right: 0,
-                  height: screenHeight * 0.7,
+                  height: screenHeight * 0.6,
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(

@@ -62,6 +62,11 @@ class DrawerWidget extends StatelessWidget {
               );
             },
           ),
+          ListTile(
+            leading: Icon(Icons.check_box),
+            title: Text("Wyzwania dzienne"),
+            onTap: () {},
+          ),
         ],
       ),
     );
