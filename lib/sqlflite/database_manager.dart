@@ -14,16 +14,34 @@ class DatabaseManager {
     await db.close();
     _database = null;
   }
+
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      await db.execute("ALTER TABLE record ADD COLUMN comment TEXT");
+    if (oldVersion < 3) {
+      await db.execute('''
+      CREATE TABLE IF NOT EXISTS daily_tasks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type INTEGER NOT NULL,
+        date TEXT NOT NULL,
+        UNIQUE(type, date)
+      )
+    ''');
+
+      await db.execute('''
+      CREATE INDEX IF NOT EXISTS idx_daily_tasks_date
+      ON daily_tasks(date)
+    ''');
     }
   }
 
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'notes.db');
-    return await openDatabase(path, version: 2, onCreate: _onCreate,onUpgrade: _onUpgrade,);
+    return await openDatabase(
+      path,
+      version: 3,
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+    );
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -46,6 +64,13 @@ class DatabaseManager {
         description TEXT NOT NULL,
         achievement_date TEXT
       )
+    ''');
+    await db.execute('''
+    CREATE TABLE daily_tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    type INTEGER NOT NULL,
+    date TEXT NOT NULL
+    )
     ''');
   }
 }
