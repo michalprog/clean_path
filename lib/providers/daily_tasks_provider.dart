@@ -20,15 +20,11 @@ class DailyTasksProvider extends ChangeNotifier {
   }
 
   Future<void> saveTask(DailyTask task) async {
-    if (task.id == null) {
-      final created = await _dailyTasksDao.insert(task);
-      _tasks = [..._tasks, created];
-    } else {
-      await _dailyTasksDao.update(task);
-      _tasks = _tasks
-          .map((existing) => existing.id == task.id ? task : existing)
-          .toList();
-    }
+    final updated = await _dailyTasksDao.insert(task);
+    _tasks = _tasks
+        .map((existing) =>
+    existing.type == updated.type ? updated : existing)
+        .toList();
     notifyListeners();
   }
 
@@ -36,7 +32,8 @@ class DailyTasksProvider extends ChangeNotifier {
     final updated = task.copyWith(lastCompleted: DateTime.now());
     await _dailyTasksDao.update(updated);
     _tasks = _tasks
-        .map((existing) => existing.id == task.id ? updated : existing)
+        .map((existing) =>
+    existing.type == task.type ? updated : existing)
         .toList();
     notifyListeners();
   }

@@ -1,10 +1,10 @@
 class DailyTask {
-  final int? id;
+  final int type;
   final String title;
   final DateTime? lastCompleted;
 
   const DailyTask({
-    this.id,
+    required this.type,
     required this.title,
     this.lastCompleted,
   });
@@ -18,32 +18,19 @@ class DailyTask {
   }
 
   DailyTask copyWith({
-    int? id,
-    String? title,
     DateTime? lastCompleted,
   }) {
     return DailyTask(
-      id: id ?? this.id,
-      title: title ?? this.title,
+      type: type,
+      title: title,
       lastCompleted: lastCompleted ?? this.lastCompleted,
     );
   }
 
-  Map<String, Object?> toMap() {
+  Map<String, Object?> toCompletionMap(DateTime completionDate) {
     return {
-      'id': id,
-      'title': title,
-      'last_completed': lastCompleted?.toIso8601String(),
+      'type': type,
+      'date': completionDate.toIso8601String(),
     };
-  }
-
-  factory DailyTask.fromMap(Map<String, Object?> map) {
-    return DailyTask(
-      id: map['id'] as int?,
-      title: map['title'] as String,
-      lastCompleted: map['last_completed'] != null
-          ? DateTime.parse(map['last_completed'] as String)
-          : null,
-    );
   }
 }

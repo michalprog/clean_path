@@ -15,45 +15,79 @@ class DailyTasksDao {
 
   Future<void> ensureInitialized() async {
     final db = await _dbManager.database;
-    await db.execute('''
-      CREATE TABLE IF NOT EXISTS daily_task (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        last_completed TEXT
-      )
-    ''');
+    final legacyTable = await db.query(
+      'sqlite_master',
+      columns: ['name'],
+      where: 'type = ? AND name = ?',
+      whereArgs: ['table', 'daily_task'],
+      limit: 1,
+    );
 
-    final existing = await db.query('daily_task');
-    if (existing.isEmpty) {
-      for (final title in _defaultTasks) {
-        await db.insert(
-          'daily_task',
-          {'title': title},
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        );
-      }
+    if (legacyTable.isEmpty) {
+      return;
     }
+
+    final legacyRows = await db.query('daily_task');
+    for (final row in legacyRows) {
+      final title = row['title'] as String?;
+      final lastCompleted = row['last_completed'] as String?;
+      final typeIndex = _defaultTasks.indexOf(title ?? '');
+      if (typeIndex == -1 || lastCompleted == null) {
+        continue;
+      }
+      await db.insert(
+        'daily_tasks',
+        {
+          'type': typeIndex + 1,
+          'date': lastCompleted,
+        },
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+    }
+
+    await db.execute('DROP TABLE IF EXISTS daily_task');
   }
 
   Future<List<DailyTask>> getAll() async {
     final db = await _dbManager.database;
-    final maps = await db.query('daily_task');
-    return maps.map(DailyTask.fromMap).toList();
+    final rows = await db.query(
+      'daily_tasks',
+      columns: ['type', 'date'],
+      orderBy: 'date DESC',
+    );
+
+    final Map<int, DateTime> latestByType = {};
+    for (final row in rows) {
+      final type = row['type'] as int?;
+      final dateValue = row['date'] as String?;
+      if (type == null || dateValue == null) {
+        continue;
+      }
+      latestByType.putIfAbsent(type, () => DateTime.parse(dateValue));
+    }
+
+    return List<DailyTask>.generate(_defaultTasks.length, (index) {
+      final type = index + 1;
+      return DailyTask(
+        type: type,
+        title: _defaultTasks[index],
+        lastCompleted: latestByType[type],
+      );
+    });
   }
 
   Future<DailyTask> insert(DailyTask task) async {
     final db = await _dbManager.database;
-    final id = await db.insert('daily_task', task.toMap());
-    return task.copyWith(id: id);
+    final completionDate = task.lastCompleted ?? DateTime.now();
+    await db.insert(
+      'daily_tasks',
+      task.toCompletionMap(completionDate),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
+    return task.copyWith(lastCompleted: completionDate);
   }
 
   Future<void> update(DailyTask task) async {
-    final db = await _dbManager.database;
-    await db.update(
-      'daily_task',
-      task.toMap(),
-      where: 'id = ?',
-      whereArgs: [task.id],
-    );
+    await insert(task);
   }
 }
