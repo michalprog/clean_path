@@ -1,39 +1,33 @@
 import 'package:flutter/material.dart';
 
-import '../enums/enums.dart';
-
-
-
-class DailyTaskTile extends StatefulWidget {
+class DailyTaskTile extends StatelessWidget {
   const DailyTaskTile({
     super.key,
     required this.taskIcon,
-    required this.type,
     required this.taskTitle,
+    required this.isCompleted,
+    required this.onCompleted,
   });
 
   final Icon taskIcon;
-  final DailyTaskType type;
   final String taskTitle;
-
-  @override
-  State<DailyTaskTile> createState() => _DailyTaskTileState();
-}
-
-class _DailyTaskTileState extends State<DailyTaskTile> {
-  bool checked = false;
+  final bool isCompleted;
+  final VoidCallback onCompleted;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: widget.taskIcon,
-      title: Text(widget.taskTitle),
+      leading: taskIcon,
+      title: Text(taskTitle),
+      subtitle: Text(isCompleted ? 'Wykonane' : 'Nie wykonane'),
       trailing: Checkbox(
-        value: checked,
-        onChanged: (value) {
-          setState(() {
-            checked = value ?? false;
-          });
+        value: isCompleted,
+        onChanged: isCompleted
+            ? null
+            : (value) {
+          if (value == true) {
+            onCompleted();
+          }
         },
       ),
     );

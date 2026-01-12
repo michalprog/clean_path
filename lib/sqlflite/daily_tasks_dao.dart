@@ -7,11 +7,12 @@ class DailyTasksDao {
   final DatabaseManager _dbManager = getIt<DatabaseManager>();
 
   static const List<String> _defaultTasks = [
-    'Daily task 1',
-    'Daily task 2',
-    'Daily task 3',
-    'Daily task 4',
+    'hydration',
+    'workout',
+    'meditation',
+    'learning',
   ];
+
 
   Future<void> ensureInitialized() async {
     final db = await _dbManager.database;

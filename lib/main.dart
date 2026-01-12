@@ -1,3 +1,4 @@
+import 'package:clean_path/providers/daily_tasks_provider.dart';
 import 'package:clean_path/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider<SettingsProvider>(
           create: (_) => SettingsProvider(),
+        ),
+        ChangeNotifierProvider<DailyTasksProvider>(
+          create: (_) => DailyTasksProvider()..initialize(),
         ),
       ],
       child: CleanPathMain(),
