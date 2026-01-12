@@ -25,7 +25,11 @@ class DailyTaskView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: const Text("zadanie codzienne")),
+      appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
+        centerTitle: true,
+        title: const Text("zadanie codzienne"),
+      ),
       body: Consumer<DailyTasksProvider>(
         builder: (context, provider, _) {
           final tasks = provider.tasks;
