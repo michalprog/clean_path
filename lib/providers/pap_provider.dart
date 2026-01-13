@@ -49,5 +49,7 @@ class PapProvider extends ChangeNotifier {
 
   AssetImage giveWindowImage() => TimerUtils.giveTimerImage(timerTime);
   String getMotivationMsg() => TimerUtils.giveMotivationMessage();
-  void showPopUp(BuildContext context) => TimerUtils.showMotivationPopup(context);
+  void showPopUp(BuildContext context, {required VoidCallback onTryAgain}) {
+    TimerUtils.showMotivationPopup(context, onTryAgain: onTryAgain);
+  }
 }

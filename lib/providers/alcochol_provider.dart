@@ -57,7 +57,7 @@ class AlcocholProvider extends ChangeNotifier {
     return TimerUtils.giveMotivationMessage();
   }
 
-  void showPopUp(BuildContext context) {
-    TimerUtils.showMotivationPopup(context);
+  void showPopUp(BuildContext context, {required VoidCallback onTryAgain}) {
+    TimerUtils.showMotivationPopup(context, onTryAgain: onTryAgain);
   }
 }

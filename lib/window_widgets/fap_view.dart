@@ -23,7 +23,7 @@ class FapView extends StatelessWidget {
           {
             if (fapProvider.fapRecord != null) {
               fapProvider.resetTimer();
-              fapProvider.showPopUp(context);
+
             }
             break;
           }

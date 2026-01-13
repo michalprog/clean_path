@@ -31,7 +31,9 @@ class FapProvider extends ChangeNotifier {
   int getTimerTime() {
     if (fapRecord != null && fapRecord!.isActive) {
       final now = DateTime.now();
-      return now.difference(fapRecord!.activated).inMilliseconds;
+      return now
+          .difference(fapRecord!.activated)
+          .inMilliseconds;
     }
     return 0;
   }
@@ -57,7 +59,7 @@ class FapProvider extends ChangeNotifier {
     return TimerUtils.giveMotivationMessage();
   }
 
-  void showPopUp(BuildContext context) {
-    TimerUtils.showMotivationPopup(context);
+  void showPopUp(BuildContext context, {required VoidCallback onTryAgain}) {
+    TimerUtils.showMotivationPopup(context, onTryAgain: onTryAgain);
   }
 }

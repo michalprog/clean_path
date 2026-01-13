@@ -73,7 +73,10 @@ static String giveMotivationMessage()
   return motivationMsg[numberMsg];
 }
 
-  static void showMotivationPopup(BuildContext context) {
+  static void showMotivationPopup(
+      BuildContext context, {
+        required VoidCallback onTryAgain,
+      }) {
     final quote=giveMotivationMessage();
     showDialog(
       context: context,
@@ -129,7 +132,10 @@ static String giveMotivationMessage()
                       ),
                       const Spacer(),
                       ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          onTryAgain();
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF6B8E23),
                           foregroundColor: Colors.white,

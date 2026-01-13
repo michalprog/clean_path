@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-
+import '/utils_files/timer_utils.dart';
 import '/providers/database_provider.dart';
 
 class TimerWidget extends StatefulWidget {
@@ -103,28 +103,79 @@ class _TimerWidgetState extends State<TimerWidget> {
         ),
 
         SizedBox(height: 200),
-        ElevatedButton(onPressed: () => timerFunction(), child: Text(widget.timerState ? "Reset" : "Start"),),
+        ElevatedButton(
+          onPressed: () => timerFunction(),
+          child: Text(widget.timerState ? "Reset" : "Start"),
+        ),
         SizedBox(height: 90),
       ],
     );
   }
 
-  void timerFunction()
-  {
+  Future<void> timerFunction() async {
+    if (widget.timerState) {
+      final shouldReset = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            title: const Text(
+              "Are you sure?",
+              textAlign: TextAlign.center,
+            ),
+            content: const Text(
+              "Do you want to reset the timer?",
+              textAlign: TextAlign.center,
+            ),
+            actionsAlignment: MainAxisAlignment.center,
+            actionsPadding: const EdgeInsets.only(bottom: 12),
+            actions: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.grey.shade700,
+                ),
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text("Cancel"),
+              ),
+              const SizedBox(width: 12),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green.shade400,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 2,
+                ),
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text("Reset"),
+              ),
+            ],
+          );
+        },
+      );
+
+      if (shouldReset != true) {
+        return;
+      }
+    }
+
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
-      if(widget.timerState)
-      {
+      if (widget.timerState) {
         _stopWatchTimer.onResetTimer();
         widget.timerFunction(2);
-
-      }else
-      {
+      } else {
         _stopWatchTimer.onStartTimer();
         widget.timerFunction(1);
         widget.timerState = true;
       }
     });
-
   }
 
 }

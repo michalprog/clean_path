@@ -23,7 +23,7 @@ class PapView extends StatelessWidget {
           {
             if (papProvider.papRecord != null) {
               papProvider.resetTimer();
-              papProvider.showPopUp(context);
+
             }
             break;
           }
