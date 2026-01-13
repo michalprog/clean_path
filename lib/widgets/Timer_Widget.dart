@@ -113,7 +113,8 @@ class _TimerWidgetState extends State<TimerWidget> {
   }
 
   Future<void> timerFunction() async {
-    if (widget.timerState) {
+    final wasRunning = widget.timerState;
+    if (wasRunning) {
       final shouldReset = await showDialog<bool>(
         context: context,
         builder: (context) {
@@ -165,16 +166,33 @@ class _TimerWidgetState extends State<TimerWidget> {
     if (!mounted) {
       return;
     }
-
-    setState(() {
-      if (widget.timerState) {
+    if (wasRunning) {
+      setState(() {
         _stopWatchTimer.onResetTimer();
         widget.timerFunction(2);
-      } else {
-        _stopWatchTimer.onStartTimer();
-        widget.timerFunction(1);
-        widget.timerState = true;
-      }
+        widget.timerState = false;
+      });
+      TimerUtils.showMotivationPopup(
+        context,
+        onTryAgain: () {
+          _startTimerAfterReset();
+        },
+      );
+      return;
+    }
+
+    _startTimerAfterReset();
+  }
+
+  void _startTimerAfterReset() {
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _stopWatchTimer.onResetTimer();
+      _stopWatchTimer.onStartTimer();
+      widget.timerFunction(1);
+      widget.timerState = true;
     });
   }
 

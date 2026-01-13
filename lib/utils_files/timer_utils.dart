@@ -134,7 +134,9 @@ static String giveMotivationMessage()
                       ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pop();
-                          onTryAgain();
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            onTryAgain();
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF6B8E23),
