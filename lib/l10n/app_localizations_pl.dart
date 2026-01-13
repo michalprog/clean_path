@@ -247,4 +247,25 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get statusNotActive => 'nieaktywne';
+
+  @override
+  String get dailyTaskTitle => 'Zadania codzienne';
+
+  @override
+  String get dailyTaskHydration => 'Nawodnienie';
+
+  @override
+  String get dailyTaskWorkout => 'Trening';
+
+  @override
+  String get dailyTaskMeditation => 'Medytacja';
+
+  @override
+  String get dailyTaskLearning => 'Nauka';
+
+  @override
+  String get dailyTaskCompleted => 'Wykonane';
+
+  @override
+  String get dailyTaskNotCompleted => 'Nie wykonane';
 }

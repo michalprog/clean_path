@@ -80,12 +80,25 @@ class DailyTasksDao {
   Future<DailyTask> insert(DailyTask task) async {
     final db = await _dbManager.database;
     final completionDate = task.lastCompleted ?? DateTime.now();
+    final normalizedDate = DateTime(
+      completionDate.year,
+      completionDate.month,
+      completionDate.day,
+    );
+    final startOfDay = normalizedDate.toIso8601String();
+    final startOfNextDay =
+    normalizedDate.add(const Duration(days: 1)).toIso8601String();
+    await db.delete(
+      'daily_tasks',
+      where: 'type = ? AND date >= ? AND date < ?',
+      whereArgs: [task.type, startOfDay, startOfNextDay],
+    );
     await db.insert(
       'daily_tasks',
-      task.toCompletionMap(completionDate),
+      task.toCompletionMap(normalizedDate),
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
-    return task.copyWith(lastCompleted: completionDate);
+    return task.copyWith(lastCompleted: normalizedDate);
   }
 
   Future<void> update(DailyTask task) async {

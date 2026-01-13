@@ -545,6 +545,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'not active'**
   String get statusNotActive;
+
+  /// No description provided for @dailyTaskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily tasks'**
+  String get dailyTaskTitle;
+
+  /// No description provided for @dailyTaskHydration.
+  ///
+  /// In en, this message translates to:
+  /// **'Hydration'**
+  String get dailyTaskHydration;
+
+  /// No description provided for @dailyTaskWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout'**
+  String get dailyTaskWorkout;
+
+  /// No description provided for @dailyTaskMeditation.
+  ///
+  /// In en, this message translates to:
+  /// **'Meditation'**
+  String get dailyTaskMeditation;
+
+  /// No description provided for @dailyTaskLearning.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning'**
+  String get dailyTaskLearning;
+
+  /// No description provided for @dailyTaskCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get dailyTaskCompleted;
+
+  /// No description provided for @dailyTaskNotCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not completed'**
+  String get dailyTaskNotCompleted;
 }
 
 class _AppLocalizationsDelegate

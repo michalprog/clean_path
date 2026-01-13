@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
+
 class DailyTaskTile extends StatelessWidget {
   const DailyTaskTile({
     super.key,
@@ -18,6 +20,7 @@ class DailyTaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -62,7 +65,7 @@ class DailyTaskTile extends StatelessWidget {
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 6),
           child: Text(
-            isCompleted ? 'Wykonane' : 'Nie wykonane',
+            isCompleted ? l10n.dailyTaskCompleted : l10n.dailyTaskNotCompleted,
             style: theme.textTheme.bodySmall?.copyWith(
               color: isCompleted ? cs.primary : cs.onSurfaceVariant,
               fontWeight: FontWeight.w600,

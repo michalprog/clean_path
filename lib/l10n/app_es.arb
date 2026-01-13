@@ -72,5 +72,12 @@
   "isAttemptActive": "¿Está activo el intento?",
   "currentDuration": "Duración actual",
   "statusActive": "activo",
-  "statusNotActive": "inactivo"
+  "statusNotActive": "inactivo",
+  "dailyTaskTitle": "Tareas diarias",
+  "dailyTaskHydration": "Hidratación",
+  "dailyTaskWorkout": "Entrenamiento",
+  "dailyTaskMeditation": "Meditación",
+  "dailyTaskLearning": "Aprendizaje",
+  "dailyTaskCompleted": "Completada",
+  "dailyTaskNotCompleted": "No completada"
 }
