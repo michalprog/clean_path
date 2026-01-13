@@ -15,7 +15,7 @@ class DailyTasksProvider extends ChangeNotifier {
   }
 
   Future<void> fetchTasks() async {
-    _tasks = await _dailyTasksDao.getAll();
+    _tasks = await _dailyTasksDao.getDailyTasks();
     notifyListeners();
   }
 

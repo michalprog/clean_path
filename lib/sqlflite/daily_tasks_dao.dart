@@ -49,11 +49,19 @@ class DailyTasksDao {
     await db.execute('DROP TABLE IF EXISTS daily_task');
   }
 
-  Future<List<DailyTask>> getAll() async {
+  Future<List<DailyTask>> getDailyTasks() async {
     final db = await _dbManager.database;
+    final today = DateTime.now();
+    final startOfDay = DateTime(today.year, today.month, today.day);
+    final startOfNextDay = startOfDay.add(const Duration(days: 1));
     final rows = await db.query(
       'daily_tasks',
       columns: ['type', 'date'],
+      where: 'date >= ? AND date < ?',
+      whereArgs: [
+        startOfDay.toIso8601String(),
+        startOfNextDay.toIso8601String(),
+      ],
       orderBy: 'date DESC',
     );
 
