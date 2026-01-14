@@ -20,6 +20,7 @@ class PapProvider extends ChangeNotifier {
     final newRecord = Record(1, type, true, now);
     papRecord = newRecord;
     papRecord = await _recordDao.insert(newRecord);
+    notifyListeners();
   }
 
   Future<Record?> getRecord() async {
@@ -35,21 +36,24 @@ class PapProvider extends ChangeNotifier {
   }
 
   Future<void> resetTimer() async {
-    if (papRecord != null) {
-      final updated = papRecord!.copyWith(
+    final record = papRecord;
+    if (record != null) {
+      papRecord = null;
+      timerTime = 0;
+      notifyListeners();
+      final updated = record.copyWith(
         isActive: false,
         desactivated: DateTime.now(),
       );
       await _recordDao.update(updated);
-      papRecord = null;
-      timerTime = 0;
-      notifyListeners();
     }
   }
-
   AssetImage giveWindowImage() => TimerUtils.giveTimerImage(timerTime);
   String getMotivationMsg() => TimerUtils.giveMotivationMessage();
-  void showPopUp(BuildContext context, {required VoidCallback onTryAgain}) {
-    TimerUtils.showMotivationPopup(context, onTryAgain: onTryAgain);
+  void showPopUp(BuildContext context, AddictionTypes type) {
+    TimerUtils.showMotivationPopup(
+      context,
+      onTryAgain: () => createNewRecord(type),
+    );
   }
 }

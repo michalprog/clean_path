@@ -20,6 +20,7 @@ class SweetsProvider extends ChangeNotifier {
     final newRecord = Record(1, type, true, now);
     sweetRecord = newRecord;
     sweetRecord = await _recordDao.insert(newRecord);
+    notifyListeners();
   }
 
   Future<Record?> getRecord() async {
@@ -35,21 +36,25 @@ class SweetsProvider extends ChangeNotifier {
   }
 
   Future<void> resetTimer() async {
-    if (sweetRecord != null) {
-      final updated = sweetRecord!.copyWith(
+    final record = sweetRecord;
+    if (record != null) {
+      sweetRecord = null;
+      timerTime = 0;
+      notifyListeners();
+      final updated = record.copyWith(
         isActive: false,
         desactivated: DateTime.now(),
       );
       await _recordDao.update(updated);
-      sweetRecord = null;
-      timerTime = 0;
-      notifyListeners();
     }
   }
 
   AssetImage giveWindowImage() => TimerUtils.giveTimerImage(timerTime);
   String getMotivationMsg() => TimerUtils.giveMotivationMessage();
-  void showPopUp(BuildContext context, {required VoidCallback onTryAgain}) {
-    TimerUtils.showMotivationPopup(context, onTryAgain: onTryAgain);
+  void showPopUp(BuildContext context, AddictionTypes type) {
+    TimerUtils.showMotivationPopup(
+      context,
+      onTryAgain: () => createNewRecord(type),
+    );
   }
 }

@@ -174,26 +174,30 @@ class _TimerWidgetState extends State<TimerWidget> {
       });
       TimerUtils.showMotivationPopup(
         context,
-        onTryAgain: () {
-          _startTimerAfterReset();
+        onTryAgain: () async {
+          await _startTimerWithRecord();
         },
       );
       return;
     }
 
-    _startTimerAfterReset();
+    _startTimerWithRecord();
   }
 
-  void _startTimerAfterReset() {
+  void _startStopwatch() {
     if (!mounted) {
       return;
     }
     setState(() {
       _stopWatchTimer.onResetTimer();
       _stopWatchTimer.onStartTimer();
-      widget.timerFunction(1);
       widget.timerState = true;
     });
+  }
+
+  Future<void> _startTimerWithRecord() async {
+    widget.timerFunction(1);
+    _startStopwatch();
   }
 
 }

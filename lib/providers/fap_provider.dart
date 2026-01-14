@@ -39,15 +39,16 @@ class FapProvider extends ChangeNotifier {
   }
 
   Future<void> resetTimer() async {
-    if (fapRecord != null) {
-      final updated = fapRecord!.copyWith(
+    final record = fapRecord;
+    if (record != null) {
+      fapRecord = null;
+      timerTime = 0;
+      notifyListeners();
+      final updated = record.copyWith(
         isActive: false,
         desactivated: DateTime.now(),
       );
       await _recordDao.update(updated);
-      fapRecord = null;
-      timerTime = 0;
-      notifyListeners();
     }
   }
 
@@ -59,7 +60,10 @@ class FapProvider extends ChangeNotifier {
     return TimerUtils.giveMotivationMessage();
   }
 
-  void showPopUp(BuildContext context, {required VoidCallback onTryAgain}) {
-    TimerUtils.showMotivationPopup(context, onTryAgain: onTryAgain);
+  void showPopUp(BuildContext context, AddictionTypes type) {
+    TimerUtils.showMotivationPopup(
+      context,
+      onTryAgain: () => createNewRecord(type),
+    );
   }
 }

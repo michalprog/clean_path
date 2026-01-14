@@ -37,15 +37,16 @@ class AlcocholProvider extends ChangeNotifier {
   }
 
   Future<void> resetTimer() async {
-    if (alcRecord != null) {
-      final updated = alcRecord!.copyWith(
+    final record = alcRecord;
+    if (record != null) {
+      alcRecord = null;
+      timerTime = 0;
+      notifyListeners();
+      final updated = record.copyWith(
         isActive: false,
         desactivated: DateTime.now(),
       );
       await _recordDao.update(updated);
-      alcRecord = null;
-      timerTime = 0;
-      notifyListeners();
     }
   }
 
@@ -57,7 +58,10 @@ class AlcocholProvider extends ChangeNotifier {
     return TimerUtils.giveMotivationMessage();
   }
 
-  void showPopUp(BuildContext context, {required VoidCallback onTryAgain}) {
-    TimerUtils.showMotivationPopup(context, onTryAgain: onTryAgain);
+  void showPopUp(BuildContext context, AddictionTypes type) {
+    TimerUtils.showMotivationPopup(
+      context,
+      onTryAgain: () => createNewRecord(type),
+    );
   }
 }
