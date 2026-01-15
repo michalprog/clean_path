@@ -6,11 +6,11 @@ class StatisticListTile extends StatelessWidget {
   final int typ;
 
   const StatisticListTile({
-    Key? key,
+    super.key,
     required this.mainText,
     required this.highlightedText,
     this.typ = 0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

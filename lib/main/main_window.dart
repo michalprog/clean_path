@@ -1,10 +1,10 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
-import '../window_widgets/alk_view.dart';
-import '../window_widgets/default_view.dart';
-import '../window_widgets/fap_view.dart';
-import '../window_widgets/pap_view.dart';
+import '/window_widgets/alk_view.dart';
+import '/window_widgets/default_view.dart';
+import '/window_widgets/fap_view.dart';
+import '/window_widgets/pap_view.dart';
 import 'main_view.dart';
 import '/l10n/app_localizations.dart';
 
@@ -73,7 +73,7 @@ class _MainWindowState extends State<MainWindow> {
           children: [
             IconButton(
               onPressed: () => changeWindow(0),
-              icon: const FaIcon(FontAwesomeIcons.venusMars),
+              icon: const FaIcon(FontAwesomeIcons.marsAndVenus),
             ),
             IconButton(onPressed: () => changeWindow(1),
                 icon: Icon(Icons.smoking_rooms)),

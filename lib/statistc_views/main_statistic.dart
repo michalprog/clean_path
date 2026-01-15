@@ -19,11 +19,11 @@ class MainStatistic extends StatefulWidget {
 class _MainStatisticState extends State<MainStatistic> {
   bool isExpanded = false;
   List<Widget> showViews = [];
-  List<String> AppBarTexts = [];
-  int NavigationIndex = 4;
+  List<String> appBarTexts = [];
+  int navigationIndex = 4;
   @override
   void initState() {
-    NavigationIndex = widget.index;
+    navigationIndex = widget.index;
     showViews = [
       //StatisticUniversalCalendarView()
 
@@ -68,9 +68,9 @@ class _MainStatisticState extends State<MainStatistic> {
       appBar: AppBar(
         backgroundColor: Colors.greenAccent,
         centerTitle: true,
-        title: Text(appBarTexts[NavigationIndex], textAlign: TextAlign.center),
+        title: Text(appBarTexts[navigationIndex], textAlign: TextAlign.center),
       ),
-      body: showViews[NavigationIndex],
+      body: showViews[navigationIndex],
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -137,7 +137,7 @@ class _MainStatisticState extends State<MainStatistic> {
 
   void switchViews(int view) {
     setState(() {
-      NavigationIndex = view;
+      navigationIndex = view;
     });
   }
 }

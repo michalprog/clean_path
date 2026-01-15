@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../enums/enums.dart';
-import '../l10n/app_localizations.dart';
-import '../providers/daily_tasks_provider.dart';
-import '../widgets/daily_task_tile.dart';
+import '/enums/enums.dart';
+import '/l10n/app_localizations.dart';
+import '/providers/daily_tasks_provider.dart';
+import '/widgets/daily_task_tile.dart';
 
 class DailyTaskView extends StatelessWidget {
   const DailyTaskView({super.key});
@@ -35,7 +35,6 @@ class DailyTaskView extends StatelessWidget {
       case DailyTaskType.learning:
         return l10n.dailyTaskLearning;
     }
-    return fallback;
   }
 
   @override

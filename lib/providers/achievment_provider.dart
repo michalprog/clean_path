@@ -21,7 +21,7 @@ class AchievementProvider extends ChangeNotifier {
   }
 
   Future<void> activateAchievement(int id) async {
-    await _achievementDao.activate(id);
+    await _achievementDao.activateAchievement(id);
     await fetchAchievements();
   }
 

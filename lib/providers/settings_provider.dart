@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '/main/service_locator.dart';
 import '/providers/settings_storage.dart';
 
@@ -10,7 +9,6 @@ class SettingsProvider extends ChangeNotifier {
   SettingsProvider() {
     _loadSavedLocale();
   }
-
 
   Locale get locale => _locale;
 

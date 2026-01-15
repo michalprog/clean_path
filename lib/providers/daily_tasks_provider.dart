@@ -3,24 +3,24 @@ import '/data_types/daily_task.dart';
 import '/sqlflite/daily_tasks_dao.dart';
 
 class DailyTasksProvider extends ChangeNotifier {
-  final DailyTasksDao _dailyTasksDao = DailyTasksDao();
+  final DailyTasksDao dailyTasksDao = DailyTasksDao();
 
   List<DailyTask> _tasks = [];
 
   List<DailyTask> get tasks => _tasks;
 
   Future<void> initialize() async {
-    await _dailyTasksDao.ensureInitialized();
+    await dailyTasksDao.ensureInitialized();
     await fetchTasks();
   }
 
   Future<void> fetchTasks() async {
-    _tasks = await _dailyTasksDao.getDailyTasks();
+    _tasks = await dailyTasksDao.getDailyTasks();
     notifyListeners();
   }
 
   Future<void> saveTask(DailyTask task) async {
-    final updated = await _dailyTasksDao.insert(task);
+    final updated = await dailyTasksDao.insertDailyTasks(task);
     _tasks = _tasks
         .map((existing) =>
     existing.type == updated.type ? updated : existing)
@@ -30,7 +30,7 @@ class DailyTasksProvider extends ChangeNotifier {
 
   Future<void> markCompleted(DailyTask task) async {
     final updated = task.copyWith(lastCompleted: DateTime.now());
-    await _dailyTasksDao.update(updated);
+    await dailyTasksDao.update(updated);
     _tasks = _tasks
         .map((existing) =>
     existing.type == task.type ? updated : existing)

@@ -33,7 +33,7 @@ class AchievementDao {
     return maps.map((e) => AchievementRecord.fromMap(e)).toList();
   }
 
-  Future<void> activate(int id) async {
+  Future<void> activateAchievement(int id) async {
     final db = await _dbManager.database;
     await db.update(
       'achievement_record',

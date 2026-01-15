@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '/l10n/app_localizations.dart';
 
-
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
@@ -23,7 +22,6 @@ class MainView extends StatelessWidget {
             ),
           ),
 
-
           Positioned(
             top: 40,
             left: 0,
@@ -35,15 +33,15 @@ class MainView extends StatelessWidget {
                   width: 300,
                   child: Text(
                     l10n.mainTagline,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.headlineMedium?.copyWith(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),
-
               ],
             ),
           ),
-
 
           Positioned(
             bottom: 50,
@@ -75,6 +73,4 @@ class MainView extends StatelessWidget {
       ),
     );
   }
-
-
 }

@@ -85,7 +85,7 @@ class DailyTasksDao {
     });
   }
 
-  Future<DailyTask> insert(DailyTask task) async {
+  Future<DailyTask> insertDailyTasks(DailyTask task) async {
     final db = await _dbManager.database;
     final completionDate = task.lastCompleted ?? DateTime.now();
     final normalizedDate = DateTime(
@@ -110,6 +110,6 @@ class DailyTasksDao {
   }
 
   Future<void> update(DailyTask task) async {
-    await insert(task);
+    await insertDailyTasks(task);
   }
 }

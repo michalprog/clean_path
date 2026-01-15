@@ -10,7 +10,10 @@ class AchievementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final achievementProvider = Provider.of<AchievementProvider>(context, listen: false);
+    final achievementProvider = Provider.of<AchievementProvider>(
+      context,
+      listen: false,
+    );
     final l10n = AppLocalizations.of(context)!;
 
     return FutureBuilder(
@@ -23,8 +26,10 @@ class AchievementView extends StatelessWidget {
         } else {
           return Scaffold(
             appBar: AppBar(
-                backgroundColor: Colors.greenAccent,
-                centerTitle: true, title: Text(l10n.achievementsTitle)),
+              backgroundColor: Colors.greenAccent,
+              centerTitle: true,
+              title: Text(l10n.achievementsTitle),
+            ),
             body: Consumer<AchievementProvider>(
               builder: (context, achievementProvider, child) {
                 final items = achievementProvider.showAchievements;
@@ -46,10 +51,7 @@ class AchievementView extends StatelessWidget {
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                        colors: [
-                          Colors.brown.shade500,
-                          Colors.brown.shade800,
-                        ],
+                        colors: [Colors.brown.shade500, Colors.brown.shade800],
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -85,15 +87,23 @@ class AchievementView extends StatelessWidget {
                             children: [
                               // Pasek „tabliczki”
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 10,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(14),
                                   color: Colors.black.withOpacity(0.18),
-                                  border: Border.all(color: Colors.white.withOpacity(0.18)),
+                                  border: Border.all(
+                                    color: Colors.white.withOpacity(0.18),
+                                  ),
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.emoji_events, color: Colors.white.withOpacity(0.9)),
+                                    Icon(
+                                      Icons.emoji_events,
+                                      color: Colors.white.withOpacity(0.9),
+                                    ),
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: Text(
@@ -115,12 +125,13 @@ class AchievementView extends StatelessWidget {
                                 child: GridView.builder(
                                   itemCount: visible.length,
                                   physics: const BouncingScrollPhysics(),
-                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
-                                    crossAxisSpacing: 12,
-                                    mainAxisSpacing: 12,
-                                    childAspectRatio: 1,
-                                  ),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 4,
+                                        crossAxisSpacing: 12,
+                                        mainAxisSpacing: 12,
+                                        childAspectRatio: 1,
+                                      ),
                                   itemBuilder: (context, index) {
                                     final record = visible[index];
                                     return AchievementWidget(record: record);

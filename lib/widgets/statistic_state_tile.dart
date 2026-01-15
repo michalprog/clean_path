@@ -6,9 +6,9 @@ class StatisticStateTile extends StatelessWidget {
   final String mainText;
   final bool typeState;
   const StatisticStateTile({
-    Key? key,
+    super.key,
     required this.mainText, required this.typeState,
-  }): super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

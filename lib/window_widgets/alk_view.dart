@@ -23,7 +23,6 @@ class AlkView extends StatelessWidget {
           {
             if (alcocholProvider.alcRecord != null) {
               alcocholProvider.resetTimer();
-
             }
             break;
           }

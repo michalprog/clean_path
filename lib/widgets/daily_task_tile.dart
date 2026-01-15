@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../l10n/app_localizations.dart';
+import '/l10n/app_localizations.dart';
 
 class DailyTaskTile extends StatelessWidget {
   const DailyTaskTile({
@@ -28,18 +27,20 @@ class DailyTaskTile extends StatelessWidget {
       shadowColor: Colors.black.withValues(alpha: 0.08),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: cs.outlineVariant.withValues(alpha: 0.35),
-        ),
+        side: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.35)),
       ),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 10,
+        ),
         leading: Container(
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: (isCompleted ? cs.primary : cs.secondary)
-                .withValues(alpha: 0.12),
+            color: (isCompleted ? cs.primary : cs.secondary).withValues(
+              alpha: 0.12,
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           alignment: Alignment.center,
@@ -57,9 +58,10 @@ class DailyTaskTile extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w700,
-            color: isCompleted
-                ? cs.onSurface.withValues(alpha: 0.60)
-                : cs.onSurface,
+            color:
+                isCompleted
+                    ? cs.onSurface.withValues(alpha: 0.60)
+                    : cs.onSurface,
           ),
         ),
         subtitle: Padding(
@@ -74,11 +76,12 @@ class DailyTaskTile extends StatelessWidget {
         ),
         trailing: Checkbox(
           value: isCompleted,
-          onChanged: isCompleted
-              ? null
-              : (value) {
-            if (value == true) onCompleted();
-          },
+          onChanged:
+              isCompleted
+                  ? null
+                  : (value) {
+                    if (value == true) onCompleted();
+                  },
         ),
         onTap: isCompleted ? null : onCompleted,
       ),

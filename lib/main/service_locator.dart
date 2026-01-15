@@ -8,17 +8,19 @@ import '/providers/settings_storage.dart';
 final GetIt getIt = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
-getIt.registerLazySingleton<DatabaseManager>(() => DatabaseManager());
-getIt.registerSingletonAsync<Database>(() => getIt<DatabaseManager>().database);
+  getIt.registerLazySingleton<DatabaseManager>(() => DatabaseManager());
+  getIt.registerSingletonAsync<Database>(
+    () => getIt<DatabaseManager>().database,
+  );
 
-getIt.registerSingletonAsync<SharedPreferences>(
-() => SharedPreferences.getInstance(),
-);
+  getIt.registerSingletonAsync<SharedPreferences>(
+    () => SharedPreferences.getInstance(),
+  );
 
-getIt.registerSingletonWithDependencies<SettingsStorage>(
-() => SettingsStorage(getIt<SharedPreferences>()),
-dependsOn: [SharedPreferences],
-);
+  getIt.registerSingletonWithDependencies<SettingsStorage>(
+    () => SettingsStorage(getIt<SharedPreferences>()),
+    dependsOn: [SharedPreferences],
+  );
 
-await getIt.allReady();
+  await getIt.allReady();
 }

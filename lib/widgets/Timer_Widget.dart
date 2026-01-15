@@ -6,7 +6,7 @@ import '/providers/database_provider.dart';
 
 class TimerWidget extends StatefulWidget {
   final Function(int option) timerFunction;
-  bool timerState=false;
+  bool timerState = false;
   final int startCounter;
   TimerWidget({
     super.key,
@@ -32,7 +32,7 @@ class _TimerWidgetState extends State<TimerWidget> {
     );
     if (widget.startCounter > 0) {
       _stopWatchTimer.onStartTimer();
-      widget.timerState=true;
+      widget.timerState = true;
     }
   }
 
@@ -41,6 +41,7 @@ class _TimerWidgetState extends State<TimerWidget> {
     _stopWatchTimer.dispose();
     super.dispose();
   }
+
   String _formatTime(int milliseconds) {
     int seconds = (milliseconds / 1000).truncate();
     int days = (seconds / 86400).truncate();
@@ -55,6 +56,7 @@ class _TimerWidgetState extends State<TimerWidget> {
 
     return "$formattedDays d $formattedHours h $formattedMinutes m $formattedSeconds s";
   }
+
   String _mainFormatTime(int milliseconds) {
     int seconds = (milliseconds / 1000).truncate();
     int days = (seconds / 86400).truncate();
@@ -96,7 +98,6 @@ class _TimerWidgetState extends State<TimerWidget> {
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-
               ),
             );
           },
@@ -122,10 +123,7 @@ class _TimerWidgetState extends State<TimerWidget> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            title: const Text(
-              "Are you sure?",
-              textAlign: TextAlign.center,
-            ),
+            title: const Text("Are you sure?", textAlign: TextAlign.center),
             content: const Text(
               "Do you want to reset the timer?",
               textAlign: TextAlign.center,
@@ -199,5 +197,4 @@ class _TimerWidgetState extends State<TimerWidget> {
     widget.timerFunction(1);
     _startStopwatch();
   }
-
 }
