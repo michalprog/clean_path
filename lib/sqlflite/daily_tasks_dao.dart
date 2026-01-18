@@ -128,6 +128,28 @@ class DailyTasksDao {
     }
     return counts;
   }
+  Future<List<DateTime>> getCompletionDatesForType(int type) async {
+    final db = await _dbManager.database;
+    final rows = await db.query(
+      'daily_tasks',
+      columns: ['date'],
+      where: 'type = ?',
+      whereArgs: [type],
+      orderBy: 'date DESC',
+    );
+    final dates = <DateTime>{};
+    for (final row in rows) {
+      final dateValue = row['date'] as String?;
+      if (dateValue == null) {
+        continue;
+      }
+      final parsed = DateTime.parse(dateValue);
+      dates.add(DateTime(parsed.year, parsed.month, parsed.day));
+    }
+    final sortedDates = dates.toList()
+      ..sort((a, b) => a.compareTo(b));
+    return sortedDates;
+  }
   Future<void> update(DailyTask task) async {
     await insertDailyTasks(task);
   }

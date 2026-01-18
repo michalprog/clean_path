@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/l10n/app_localizations.dart';
 import '/utils_files/daily_task_utils.dart';
+import '/widgets/daily_task_calendar.dart';
 
 class DailyTaskCalendarView extends StatefulWidget {
   const DailyTaskCalendarView({super.key});
@@ -54,10 +55,10 @@ class _DailyTaskCalendarViewState extends State<DailyTaskCalendarView>
           child: IndexedStack(
             index: _index,
             children: const [
-              CalendarA(),
-              CalendarB(),
-              CalendarC(),
-              CalendarD(),
+              DailyTaskCalendar(taskType: 1),
+              DailyTaskCalendar(taskType: 2),
+              DailyTaskCalendar(taskType: 3),
+              DailyTaskCalendar(taskType: 4)
             ],
           ),
         ),
@@ -66,42 +67,5 @@ class _DailyTaskCalendarViewState extends State<DailyTaskCalendarView>
   }
 }
 
-/// Poniżej podstawiasz swoje 4 „kalendarze”
-/// (np. różne konfiguracje TableCalendar/SfCalendar, różne źródła danych itp.)
 
-class CalendarA extends StatelessWidget {
-  const CalendarA({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Tu jest Kalendarz 1'));
-  }
-}
-
-class CalendarB extends StatelessWidget {
-  const CalendarB({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Tu jest Kalendarz 2'));
-  }
-}
-
-class CalendarC extends StatelessWidget {
-  const CalendarC({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Tu jest Kalendarz 3'));
-  }
-}
-
-class CalendarD extends StatelessWidget {
-  const CalendarD({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Tu jest Kalendarz 4'));
-  }
-}
 
