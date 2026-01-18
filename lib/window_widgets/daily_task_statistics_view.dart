@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-class DailyTaskView extends StatelessWidget {
-  const DailyTaskView({super.key});
+class DailyTaskStatisticsView extends StatelessWidget {
+  const DailyTaskStatisticsView({super.key});
 
   @override
   Widget build(BuildContext context) {

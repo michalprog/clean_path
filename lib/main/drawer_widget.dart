@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/window_widgets/daily_task_view.dart';
+import '/window_widgets/daily_task_main_view.dart';
 import '/l10n/app_localizations.dart';
 import '/window_widgets/settings_view.dart';
 import '/statistc_views/main_Statistic.dart';
@@ -69,7 +69,7 @@ class DrawerWidget extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DailyTaskView()),
+                MaterialPageRoute(builder: (context) => DailyTaskMainView()),
               );
               },
           ),
