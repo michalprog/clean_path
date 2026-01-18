@@ -19,7 +19,6 @@ class MainWindow extends StatefulWidget {
 class _MainWindowState extends State<MainWindow> {
 
   List<Widget> show_view = [];
-  List<String> AppBarText = [];
   int navigationIndex = 4;
 
   @override

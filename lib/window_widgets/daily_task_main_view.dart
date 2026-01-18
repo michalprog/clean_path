@@ -1,40 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '/enums/enums.dart';
 import '/l10n/app_localizations.dart';
-import '/providers/daily_tasks_provider.dart';
-import '/widgets/daily_task_tile.dart';
+import 'daily_task_calendar_view.dart';
+import 'daily_task_statistics_view.dart';
+import 'daily_task_view.dart';
 
-class DailyTaskMainView extends StatelessWidget {
+class DailyTaskMainView extends StatefulWidget {
   const DailyTaskMainView({super.key});
 
-  Icon _iconForType(int type) {
-    final dailyType = DailyTaskType.values[type - 1];
-    switch (dailyType) {
-      case DailyTaskType.hydration:
-        return const Icon(Icons.water_drop);
-      case DailyTaskType.workout:
-        return const Icon(Icons.fitness_center);
-      case DailyTaskType.meditation:
-        return const Icon(Icons.self_improvement);
-      case DailyTaskType.learning:
-        return const Icon(Icons.menu_book);
-    }
-  }
+  @override
+  State<DailyTaskMainView> createState() => _DailyTaskMainViewState();
+}
 
-  String _titleForType(AppLocalizations l10n, int type, String fallback) {
-    final dailyType = DailyTaskType.values[type - 1];
-    switch (dailyType) {
-      case DailyTaskType.hydration:
-        return l10n.dailyTaskHydration;
-      case DailyTaskType.workout:
-        return l10n.dailyTaskWorkout;
-      case DailyTaskType.meditation:
-        return l10n.dailyTaskMeditation;
-      case DailyTaskType.learning:
-        return l10n.dailyTaskLearning;
-    }
+class _DailyTaskMainViewState extends State<DailyTaskMainView> {
+  List<Widget> showView = [];
+  int showViewIndex = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    showView = [
+      DailyTaskStatisticsView(),
+      DailyTaskView(),
+      DailyTaskCalendarView(),
+    ];
   }
 
   @override
@@ -46,45 +35,38 @@ class DailyTaskMainView extends StatelessWidget {
         centerTitle: true,
         title: Text(l10n.dailyTaskTitle),
       ),
-      body: Consumer<DailyTasksProvider>(
-        builder: (context, provider, _) {
-          final tasks = provider.tasks;
-          if (tasks.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return ListView.builder(
-            itemCount: tasks.length,
-            itemBuilder: (context, index) {
-              final task = tasks[index];
-              return DailyTaskTile(
-                taskIcon: _iconForType(task.type),
-                taskTitle: _titleForType(l10n, task.type, task.title),
-                isCompleted: task.isCompletedToday,
-                onCompleted: () => provider.markCompleted(task),
-              );
-            },
-          );
-        },
-      ),
+      body: showView[showViewIndex],
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         color: Colors.purple.shade50,
         elevation: 5,
-    child: Row(
-    mainAxisSize: MainAxisSize.max,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      IconButton(onPressed: () {},
-          icon: Icon(Icons.list_alt_outlined)),
-      IconButton(onPressed: () {},
-          icon: Icon(Icons.fitness_center_sharp)),
-      IconButton(onPressed: () {},
-          icon: Icon(Icons.calendar_month)),
-      ]
-    )
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: () => changeview(0),
+              icon: Icon(Icons.list_alt_outlined),
+            ),
+            IconButton(
+              onPressed: () => changeview(1),
+              icon: Icon(Icons.fitness_center_sharp),
+            ),
+            IconButton(
+              onPressed: () => changeview(2),
+              icon: Icon(Icons.calendar_month),
+            ),
+          ],
+        ),
       ),
-
     );
+  }
+
+  void changeview(int view) {
+    setState(() {
+      showViewIndex = view;
+    });
+
   }
 }
