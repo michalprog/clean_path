@@ -268,4 +268,12 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get dailyTaskNotCompleted => 'Nie wykonane';
+
+  @override
+  String get dailyTaskTotalCompleted => 'Wykonane zadania';
+
+  @override
+  String dailyTaskCompletedForCategory(Object category) {
+    return 'Wykonane w kategorii $category';
+  }
 }

@@ -271,4 +271,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get dailyTaskNotCompleted => 'Nicht abgeschlossen';
+
+  @override
+  String get dailyTaskTotalCompleted => 'Erledigte Aufgaben';
+
+  @override
+  String dailyTaskCompletedForCategory(Object category) {
+    return 'Erledigt in $category';
+  }
 }

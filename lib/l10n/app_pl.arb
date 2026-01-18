@@ -79,6 +79,8 @@
   "dailyTaskMeditation": "Medytacja",
   "dailyTaskLearning": "Nauka",
   "dailyTaskCompleted": "Wykonane",
-  "dailyTaskNotCompleted": "Nie wykonane"
+  "dailyTaskNotCompleted": "Nie wykonane",
+  "dailyTaskTotalCompleted": "Wykonane zadania",
+  "dailyTaskCompletedForCategory": "Wykonane w kategorii {category}"
 }
 

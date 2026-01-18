@@ -18,6 +18,9 @@ class DailyTasksProvider extends ChangeNotifier {
     _tasks = await dailyTasksDao.getDailyTasks();
     notifyListeners();
   }
+  Future<Map<int, int>> fetchCompletionCounts() {
+    return dailyTasksDao.getCompletionCounts();
+  }
 
   Future<void> saveTask(DailyTask task) async {
     final updated = await dailyTasksDao.insertDailyTasks(task);

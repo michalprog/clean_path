@@ -587,6 +587,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not completed'**
   String get dailyTaskNotCompleted;
+
+  /// No description provided for @dailyTaskTotalCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed tasks'**
+  String get dailyTaskTotalCompleted;
+
+  /// No description provided for @dailyTaskCompletedForCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed in {category}'**
+  String dailyTaskCompletedForCategory(Object category);
 }
 
 class _AppLocalizationsDelegate

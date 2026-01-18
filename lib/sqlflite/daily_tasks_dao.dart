@@ -108,7 +108,26 @@ class DailyTasksDao {
     );
     return task.copyWith(lastCompleted: normalizedDate);
   }
-
+  Future<Map<int, int>> getCompletionCounts() async {
+    final db = await _dbManager.database;
+    final rows = await db.rawQuery(
+      'SELECT type, COUNT(*) as count FROM daily_tasks GROUP BY type',
+    );
+    final counts = <int, int>{};
+    for (final row in rows) {
+      final type = row['type'] as int?;
+      final countValue = row['count'];
+      if (type == null || countValue == null) {
+        continue;
+      }
+      counts[type] = (countValue as int?) ?? int.parse(countValue.toString());
+    }
+    for (var i = 0; i < _defaultTasks.length; i++) {
+      final type = i + 1;
+      counts.putIfAbsent(type, () => 0);
+    }
+    return counts;
+  }
   Future<void> update(DailyTask task) async {
     await insertDailyTasks(task);
   }
