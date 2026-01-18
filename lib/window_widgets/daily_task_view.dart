@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '/providers/daily_tasks_provider.dart';
 import '/widgets/daily_task_tile.dart';
 
+
 class DailyTaskView extends StatelessWidget {
   const DailyTaskView({super.key});
 

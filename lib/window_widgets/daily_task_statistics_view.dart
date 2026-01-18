@@ -5,6 +5,7 @@ import '../enums/enums.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/daily_tasks_provider.dart';
 import '../utils_files/daily_task_utils.dart';
+import '../widgets/daily_tasks_status_widget.dart';
 import '../widgets/statistic_list_tile.dart';
 
 class DailyTaskStatisticsView extends StatelessWidget {
@@ -24,6 +25,7 @@ class DailyTaskStatisticsView extends StatelessWidget {
           0,
               (sum, value) => sum + value,
         );
+        final tasks = context.watch<DailyTasksProvider>().tasks;
         return ListView(
           children: [
             StatisticListTile(
@@ -45,6 +47,9 @@ class DailyTaskStatisticsView extends StatelessWidget {
                 highlightedText: '$completedInCategory',
               );
             }),
+            DailyTasksStatusWidget(
+              tasks: context.watch<DailyTasksProvider>().tasks,
+            ),
             const SizedBox(height: 50),
           ],
         );
