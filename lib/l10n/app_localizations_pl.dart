@@ -252,6 +252,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get dailyTaskTitle => 'Zadania codzienne';
 
   @override
+  String get dailyTaskStatusTitle => 'Aktualny stan zadań codziennych';
+
+  @override
   String get dailyTaskHydration => 'Nawodnienie';
 
   @override

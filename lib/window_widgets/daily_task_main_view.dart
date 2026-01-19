@@ -36,30 +36,26 @@ class _DailyTaskMainViewState extends State<DailyTaskMainView> {
         title: Text(l10n.dailyTaskTitle),
       ),
       body: showView[showViewIndex],
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        color: Colors.purple.shade50,
-        elevation: 5,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => changeview(0),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: showViewIndex,
+          onTap: changeview,
+          selectedItemColor: Colors.purple,
+          unselectedItemColor: Colors.grey,
+          items: const [
+            BottomNavigationBarItem(
               icon: Icon(Icons.list_alt_outlined),
+              label: 'Lista',
             ),
-            IconButton(
-              onPressed: () => changeview(1),
+            BottomNavigationBarItem(
               icon: Icon(Icons.fitness_center_sharp),
+              label: 'Zadanie',
             ),
-            IconButton(
-              onPressed: () => changeview(2),
+            BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month),
+              label: 'Kalendarz',
             ),
           ],
         ),
-      ),
     );
   }
 

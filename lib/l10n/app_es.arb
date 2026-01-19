@@ -74,6 +74,7 @@
   "statusActive": "activo",
   "statusNotActive": "inactivo",
   "dailyTaskTitle": "Tareas diarias",
+  "dailyTaskStatusTitle": "Estado actual de las tareas diarias",
   "dailyTaskHydration": "Hidratación",
   "dailyTaskWorkout": "Entrenamiento",
   "dailyTaskMeditation": "Meditación",

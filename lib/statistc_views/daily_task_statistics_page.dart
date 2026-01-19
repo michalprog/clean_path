@@ -57,7 +57,7 @@ class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
         Expanded(
           child: IndexedStack(
             index: _index,
-            children: const [
+            children:  [
               DailyTaskStatisticsView(),
               DailyTaskCalendar(taskType: 1),
               DailyTaskCalendar(taskType: 2),

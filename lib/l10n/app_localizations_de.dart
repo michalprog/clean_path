@@ -255,6 +255,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dailyTaskTitle => 'Tägliche Aufgaben';
 
   @override
+  String get dailyTaskStatusTitle => 'Aktueller Status der täglichen Aufgaben';
+
+  @override
   String get dailyTaskHydration => 'Flüssigkeitszufuhr';
 
   @override

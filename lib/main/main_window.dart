@@ -80,7 +80,7 @@ class _MainWindowState extends State<MainWindow> {
             IconButton(
                 onPressed: () => changeWindow(2), icon: Icon(Icons.liquor)),
             IconButton(
-                onPressed: () => changeWindow(3), icon: Icon(FontAwesomeIcons.candyCane)),
+                onPressed: () => changeWindow(3), icon: Icon(Icons.question_mark)),
           ],
         ),
       ),

@@ -36,7 +36,7 @@ class DailyTasksStatusWidget extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 12),
               child: Center(
                 child: Text(
-                  'Aktualny stan zadań codziennych',
+                  l10n.dailyTaskStatusTitle,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: cs.onSurface,
@@ -45,8 +45,6 @@ class DailyTasksStatusWidget extends StatelessWidget {
               ),
             ),
 
-
-            // ======= RESZTA BEZ ZMIAN =======
             Table(
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [

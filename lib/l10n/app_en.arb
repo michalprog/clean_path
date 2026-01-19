@@ -79,6 +79,7 @@
   "statusActive": "active",
   "statusNotActive": "not active",
   "dailyTaskTitle": "Daily tasks",
+  "dailyTaskStatusTitle": "Current daily task status",
   "dailyTaskHydration": "Hydration",
   "dailyTaskWorkout": "Workout",
   "dailyTaskMeditation": "Meditation",

@@ -75,7 +75,7 @@ class _MainStatisticState extends State<MainStatistic> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
+    final cs = Theme.of(context).colorScheme;
     final appBarTexts = [
       l10n.noFapStatus,
       l10n.noSmokingStatus,
@@ -149,10 +149,40 @@ class _MainStatisticState extends State<MainStatistic> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(onPressed: () => switchViews(4), icon: const Icon(Icons.home)),
-            IconButton(onPressed: () => switchViews(6), icon: const Icon(Icons.fitness_center)), // <- DailyTaskStatisticsPage
-            IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
-            IconButton(onPressed: () => switchViews(5), icon: const Icon(Icons.menu)),
+            IconButton(
+              onPressed: () => switchViews(4),
+              icon: Icon(
+                Icons.home,
+                color: navigationIndex == 4
+                    ? cs.primary
+                    : cs.onSurfaceVariant,
+              ),
+            ),
+            IconButton(
+              onPressed: () => switchViews(6),
+              icon: Icon(
+                Icons.fitness_center,
+                color: navigationIndex == 6
+                    ? cs.primary
+                    : cs.onSurfaceVariant,
+              ),
+            ), // <- DailyTaskStatisticsPage
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.person,
+                color: cs.onSurfaceVariant,
+              ),
+            ),
+            IconButton(
+              onPressed: () => switchViews(5),
+              icon: Icon(
+                Icons.menu,
+                color: navigationIndex == 5
+                    ? cs.primary
+                    : cs.onSurfaceVariant,
+              ),
+            ),
           ],
         ),
       ),

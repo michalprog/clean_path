@@ -552,6 +552,12 @@ abstract class AppLocalizations {
   /// **'Daily tasks'**
   String get dailyTaskTitle;
 
+  /// No description provided for @dailyTaskStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Current daily task status'**
+  String get dailyTaskStatusTitle;
+
   /// No description provided for @dailyTaskHydration.
   ///
   /// In en, this message translates to:
