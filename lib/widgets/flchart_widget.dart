@@ -61,98 +61,83 @@ class FlchartWidget extends StatelessWidget {
                 ),
                 Container(
                   height: 200,
-                  child: Stack(
-                    children: [
-                      LineChart(
-                        LineChartData(
-                          minX: 0,
-                          maxX: maxX.toDouble(),
-                          minY: 0,
-                          maxY: maxY.toDouble(),
-                          backgroundColor: const Color(0xff1a1a2e),
-                          gridData: FlGridData(
-                            show: true,
-                            drawVerticalLine: true,
-                            drawHorizontalLine: true,
-                            horizontalInterval: 1.0,
-                            verticalInterval: 1.0,
-                            getDrawingHorizontalLine:
-                                (value) => FlLine(
-                                  color: const Color(0xff37434d),
-                                  strokeWidth: 1,
-                                ),
-                            getDrawingVerticalLine:
-                                (value) => FlLine(
-                                  color: const Color(0xff37434d),
-                                  strokeWidth: 1,
-                                ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    clipBehavior: Clip.hardEdge,
+                    child: LineChart(
+                      LineChartData(
+                        minX: 0,
+                        maxX: maxX.toDouble(),
+                        minY: 0,
+                        maxY: maxY.toDouble(),
+                        backgroundColor: const Color(0xff1a1a2e),
+                        gridData: FlGridData(
+                          show: true,
+                          drawVerticalLine: true,
+                          drawHorizontalLine: true,
+                          horizontalInterval: 1.0,
+                          verticalInterval: 1.0,
+                          getDrawingHorizontalLine: (value) => FlLine(
+                            color: const Color(0xff37434d),
+                            strokeWidth: 1,
                           ),
-                          borderData: FlBorderData(
-                            show: true,
-                            border: Border.all(color: const Color(0xff37434d)),
+                          getDrawingVerticalLine: (value) => FlLine(
+                            color: const Color(0xff37434d),
+                            strokeWidth: 1,
                           ),
-                          titlesData: FlTitlesData(
-                            show: true,
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 40,
-                                interval: intervalY.toDouble(),
-                                getTitlesWidget:
-                                    (value, meta) => Text(
-                                      '${value.toInt()}d',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                              ),
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                interval: 1,
-                                getTitlesWidget:
-                                    (value, meta) => Text(
-                                      '${value.toInt() + 1}',
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                              ),
-                            ),
-                            topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                            rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false),
-                            ),
-                          ),
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: spots,
-                              isCurved: true,
-                              gradient: LinearGradient(colors: gradientColors),
-                              barWidth: 5,
-                              isStrokeCapRound: true,
-                              dotData: const FlDotData(show: false),
-                              belowBarData: BarAreaData(
-                                show: true,
-                                gradient: LinearGradient(
-                                  colors:
-                                      gradientColors
-                                          .map(
-                                            (color) => color.withOpacity(0.3),
-                                          )
-                                          .toList(),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
+                        borderData: FlBorderData(
+                          show: true,
+                          border: Border.all(color: const Color(0xff37434d)),
+                        ),
+                        titlesData: FlTitlesData(
+                          show: true,
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              reservedSize: 40,
+                              interval: intervalY.toDouble(),
+                              getTitlesWidget: (value, meta) => Text(
+                                '${value.toInt()}d',
+                                style: const TextStyle(color: Colors.white, fontSize: 10),
+                              ),
+                            ),
+                          ),
+                          bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              interval: 1,
+                              getTitlesWidget: (value, meta) => Text(
+                                '${value.toInt() + 1}',
+                                style: const TextStyle(color: Colors.white, fontSize: 10),
+                              ),
+                            ),
+                          ),
+                          topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                          rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                        ),
+                        lineBarsData: [
+                          LineChartBarData(
+                            spots: spots,
+                            isCurved: false,
+                            preventCurveOverShooting: true,
+                            preventCurveOvershootingThreshold: 1.0,
+                            gradient: LinearGradient(colors: gradientColors),
+                            barWidth: 5,
+                            isStrokeCapRound: true,
+                            dotData: const FlDotData(show: false),
+                            belowBarData: BarAreaData(
+                              show: true,
+                              gradient: LinearGradient(
+                                colors: gradientColors
+                                    .map((c) => c.withOpacity(0.3))
+                                    .toList(),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],
