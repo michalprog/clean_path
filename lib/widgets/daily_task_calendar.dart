@@ -61,19 +61,20 @@ class _DailyTaskCalendarState extends State<DailyTaskCalendar> {
       ),
       alignment: Alignment.center,
       child: isCompleted
-      ? Icon(
-      iconData,
-      color: textColor,
-      size: 18,
-    )
-        : Text(
-    '${day.day}',
-    style: TextStyle(
-    color: textColor,
-    fontWeight:
-    isSelected ? FontWeight.bold : FontWeight.normal,
-    ),
-    ),
+          ?  Text(
+        DailyTaskUtils.markerForTaskType(widget.taskType-1),
+        style: TextStyle(
+          fontSize: 18,
+        ),
+      )
+          : Text(
+        '${day.day}',
+        style: TextStyle(
+          color: textColor,
+          fontWeight:
+          isSelected ? FontWeight.bold : FontWeight.normal,
+        ),
+      ),
     );
   }
 

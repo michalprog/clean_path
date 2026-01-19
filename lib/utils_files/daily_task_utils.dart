@@ -29,5 +29,19 @@ class DailyTaskUtils {
         return l10n.dailyTaskLearning;
     }
   }
+ static String markerForTaskType(int taskType) {
+   switch (taskType) {
+     case 0: // woda
+       return '💧';
+     case 1: // trening / muskuły
+       return '💪';
+     case 2: // medytacja
+       return '🧘';
+     case 3: // książka
+       return '📚';
+     default:
+       return '✅';
+   }
+ }
 
 }
