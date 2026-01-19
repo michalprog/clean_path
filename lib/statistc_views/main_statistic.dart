@@ -6,6 +6,7 @@ import 'package:hugeicons/hugeicons.dart';
 import '/l10n/app_localizations.dart';
 import '/enums/enums.dart';
 import 'all_attemps_list.dart';
+import 'daily_task_statistics_page.dart';
 import 'main_statistcs_view.dart';
 
 class MainStatistic extends StatefulWidget {
@@ -18,44 +19,63 @@ class MainStatistic extends StatefulWidget {
 
 class _MainStatisticState extends State<MainStatistic> {
   bool isExpanded = false;
-  List<Widget> showViews = [];
-  List<String> appBarTexts = [];
+  late final List<Widget> showViews;
   int navigationIndex = 4;
+
   @override
   void initState() {
-    navigationIndex = widget.index;
+    super.initState();
+
     showViews = [
-      //StatisticUniversalCalendarView()
-
-
-
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.fap),StatisticUniversalCalendarView(
-        key: const ValueKey(AddictionTypes.fap),
-        type: AddictionTypes.fap,
-      )]),
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.smoking),StatisticUniversalCalendarView(
-        key: const ValueKey(AddictionTypes.smoking),
-        type: AddictionTypes.smoking,
-      )]),
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.alcochol),StatisticUniversalCalendarView(
-        key: const ValueKey(AddictionTypes.alcochol),
-        type: AddictionTypes.alcochol,
-      )]),
-      PageView(children: const [UniwersalStatisticsView(type: AddictionTypes.sweets),StatisticUniversalCalendarView(
-        key: const ValueKey(AddictionTypes.sweets),
-        type: AddictionTypes.sweets,
-      )]),
-
+      PageView(
+        children: const [
+          UniwersalStatisticsView(type: AddictionTypes.fap),
+          StatisticUniversalCalendarView(
+            key: ValueKey(AddictionTypes.fap),
+            type: AddictionTypes.fap,
+          ),
+        ],
+      ),
+      PageView(
+        children: const [
+          UniwersalStatisticsView(type: AddictionTypes.smoking),
+          StatisticUniversalCalendarView(
+            key: ValueKey(AddictionTypes.smoking),
+            type: AddictionTypes.smoking,
+          ),
+        ],
+      ),
+      PageView(
+        children: const [
+          UniwersalStatisticsView(type: AddictionTypes.alcochol),
+          StatisticUniversalCalendarView(
+            key: ValueKey(AddictionTypes.alcochol),
+            type: AddictionTypes.alcochol,
+          ),
+        ],
+      ),
+      PageView(
+        children: const [
+          UniwersalStatisticsView(type: AddictionTypes.sweets),
+          StatisticUniversalCalendarView(
+            key: ValueKey(AddictionTypes.sweets),
+            type: AddictionTypes.sweets,
+          ),
+        ],
+      ),
       MainStatistcsView(),
       PageView(children: const [StatisticsTrailsView(), AllAttempsList()]),
+      const DailyTaskStatisticsPage(), // <- upewniamy się, że jest const jeśli się da
     ];
 
-    super.initState();
+    // zabezpieczenie indeksu z zewnątrz
+    navigationIndex = widget.index.clamp(0, showViews.length - 1);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
     final appBarTexts = [
       l10n.noFapStatus,
       l10n.noSmokingStatus,
@@ -63,61 +83,63 @@ class _MainStatisticState extends State<MainStatistic> {
       l10n.noSweetStatus,
       l10n.drawerStatistics,
       l10n.timesOfTrials,
+      l10n.dailyTaskTitle, // <- DODANE: tytuł dla DailyTaskStatisticsPage (index 6)
     ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.greenAccent,
         centerTitle: true,
-        title: Text(appBarTexts[navigationIndex], textAlign: TextAlign.center),
+        title: Text(
+          appBarTexts[navigationIndex],
+          textAlign: TextAlign.center,
+        ),
       ),
       body: showViews[navigationIndex],
+
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (isExpanded) ...[
             FloatingActionButton(
-              heroTag: "1",
+              heroTag: "fab_fap",
               mini: true,
               onPressed: () => switchViews(0),
-              child: Icon(Icons.girl),
+              child: const Icon(Icons.girl),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             FloatingActionButton(
-              heroTag: "2",
+              heroTag: "fab_smoking",
               mini: true,
               onPressed: () => switchViews(1),
-              child: Icon(Icons.smoking_rooms),
+              child: const Icon(Icons.smoking_rooms),
             ),
-            SizedBox(height: 8),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             FloatingActionButton(
-              heroTag: "2",
+              heroTag: "fab_alcohol",
               mini: true,
               onPressed: () => switchViews(2),
-              child: Icon(Icons.liquor),
+              child: const Icon(Icons.liquor),
             ),
-            SizedBox(height: 8),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             FloatingActionButton(
-              heroTag: "2",
+              heroTag: "fab_sweets",
               mini: true,
               onPressed: () => switchViews(3),
-              child: Icon(HugeIcons.strokeRoundedCottonCandy),
+              child: const Icon(HugeIcons.strokeRoundedCottonCandy),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
           ],
           FloatingActionButton(
-            heroTag: "main",
-            onPressed: () {
-              setState(() {
-                isExpanded = !isExpanded;
-              });
-            },
+            heroTag: "fab_main",
+            onPressed: () => setState(() => isExpanded = !isExpanded),
             child: Icon(isExpanded ? Icons.close : Icons.add),
           ),
         ],
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
@@ -127,8 +149,10 @@ class _MainStatisticState extends State<MainStatistic> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(onPressed: () => switchViews(4), icon: Icon(Icons.home)),
-            IconButton(onPressed: () => switchViews(5), icon: Icon(Icons.menu)),
+            IconButton(onPressed: () => switchViews(4), icon: const Icon(Icons.home)),
+            IconButton(onPressed: () => switchViews(6), icon: const Icon(Icons.fitness_center)), // <- DailyTaskStatisticsPage
+            IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
+            IconButton(onPressed: () => switchViews(5), icon: const Icon(Icons.menu)),
           ],
         ),
       ),
@@ -137,7 +161,7 @@ class _MainStatisticState extends State<MainStatistic> {
 
   void switchViews(int view) {
     setState(() {
-      navigationIndex = view;
+      navigationIndex = view.clamp(0, showViews.length - 1);
     });
   }
 }
