@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '/providers/daily_tasks_provider.dart';
-
+import '/utils_files/daily_task_utils.dart';
 class DailyTaskCalendar extends StatefulWidget {
   final int taskType;
 
@@ -45,6 +45,7 @@ class _DailyTaskCalendarState extends State<DailyTaskCalendar> {
         : isOutside
         ? Colors.grey
         : Colors.black87;
+    final iconData = DailyTaskUtils.iconForType(widget.taskType).icon;
 
     return Container(
       margin: const EdgeInsets.all(6),
@@ -59,13 +60,20 @@ class _DailyTaskCalendarState extends State<DailyTaskCalendar> {
             : null,
       ),
       alignment: Alignment.center,
-      child: Text(
-        '${day.day}',
-        style: TextStyle(
-          color: textColor,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-        ),
-      ),
+      child: isCompleted
+      ? Icon(
+      iconData,
+      color: textColor,
+      size: 18,
+    )
+        : Text(
+    '${day.day}',
+    style: TextStyle(
+    color: textColor,
+    fontWeight:
+    isSelected ? FontWeight.bold : FontWeight.normal,
+    ),
+    ),
     );
   }
 
