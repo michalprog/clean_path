@@ -84,34 +84,71 @@ class _TimerWidgetState extends State<TimerWidget> {
   @override
   Widget build(BuildContext context) {
     final database = Provider.of<DatabaseProvider>(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        StreamBuilder<int>(
-          stream: _stopWatchTimer.rawTime,
-          builder: (context, snapshot) {
-            final value = snapshot.data ?? widget.startCounter;
-            return Text(
-              _mainFormatTime(value),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            );
-          },
-        ),
 
-        SizedBox(height: 200),
-        ElevatedButton(
-          onPressed: () => timerFunction(),
-          child: Text(widget.timerState ? "Reset" : "Start"),
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            StreamBuilder<int>(
+              stream: _stopWatchTimer.rawTime,
+              builder: (context, snapshot) {
+                final value = snapshot.data ?? widget.startCounter;
+                return Text(
+                  _mainFormatTime(value),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+
+            const SizedBox(height: 200),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // RESET / START
+                ElevatedButton(
+                  onPressed: () => timerFunction(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                    widget.timerState ? Colors.red.shade600 : Colors.green.shade600,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(widget.timerState ? "Reset" : "Start"),
+                ),
+
+                const SizedBox(width: 16),
+
+                // MOTIVATION BUTTON
+                ElevatedButton(
+                  onPressed: () => widget.timerFunction(3),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade600,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: const Icon(Icons.lightbulb_outline),
+                ),
+              ],
+            ),
+            const SizedBox(height: 90),
+          ],
         ),
-        SizedBox(height: 90),
       ],
     );
   }
+
 
   Future<void> timerFunction() async {
     final wasRunning = widget.timerState;
