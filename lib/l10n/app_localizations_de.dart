@@ -252,10 +252,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get statusNotActive => 'inaktiv';
 
   @override
+  String get drawerDailyChallenges => 'Tägliche Herausforderungen';
+
+  @override
   String get dailyTaskTitle => 'Tägliche Aufgaben';
 
   @override
   String get dailyTaskStatusTitle => 'Aktueller Status der täglichen Aufgaben';
+
+  @override
+  String get dailyTaskListTab => 'Liste';
+
+  @override
+  String get dailyTaskTaskTab => 'Aufgabe';
+
+  @override
+  String get dailyTaskCalendarTab => 'Kalender';
 
   @override
   String get dailyTaskHydration => 'Flüssigkeitszufuhr';

@@ -36,26 +36,26 @@ class _DailyTaskMainViewState extends State<DailyTaskMainView> {
         title: Text(l10n.dailyTaskTitle),
       ),
       body: showView[showViewIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: showViewIndex,
-          onTap: changeview,
-          selectedItemColor: Colors.purple,
-          unselectedItemColor: Colors.grey,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt_outlined),
-              label: 'Lista',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.fitness_center_sharp),
-              label: 'Zadanie',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month),
-              label: 'Kalendarz',
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: showViewIndex,
+        onTap: changeview,
+        selectedItemColor: Colors.purple,
+        unselectedItemColor: Colors.grey,
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.list_alt_outlined),
+            label: l10n.dailyTaskListTab,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.fitness_center_sharp),
+            label: l10n.dailyTaskTaskTab,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.calendar_month),
+            label: l10n.dailyTaskCalendarTab,
+          ),
+        ],
+      ),
     );
   }
 

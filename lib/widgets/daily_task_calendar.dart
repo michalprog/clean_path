@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import '/l10n/app_localizations.dart';
 import '/providers/daily_tasks_provider.dart';
 import '/utils_files/daily_task_utils.dart';
 class DailyTaskCalendar extends StatefulWidget {
@@ -78,7 +78,7 @@ class _DailyTaskCalendarState extends State<DailyTaskCalendar> {
     );
   }
 
-  Widget _buildLegend() {
+  Widget _buildLegend(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -91,13 +91,14 @@ class _DailyTaskCalendarState extends State<DailyTaskCalendar> {
           ),
         ),
         const SizedBox(width: 8),
-        const Text('Wykonano'),
+        Text(l10n.dailyTaskCompleted),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FutureBuilder<List<DateTime>>(
       future: context
           .watch<DailyTasksProvider>()
@@ -161,7 +162,7 @@ class _DailyTaskCalendarState extends State<DailyTaskCalendar> {
               ),
             ),
             const SizedBox(height: 12),
-            _buildLegend(),
+            _buildLegend(l10n),
           ],
         );
       },

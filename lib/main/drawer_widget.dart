@@ -65,7 +65,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.check_box),
-            title: Text("Wyzwania dzienne"),
+            title: Text(l10n.drawerDailyChallenges),
             onTap: () {
               Navigator.push(
                 context,

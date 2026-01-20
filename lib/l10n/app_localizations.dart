@@ -546,6 +546,12 @@ abstract class AppLocalizations {
   /// **'not active'**
   String get statusNotActive;
 
+  /// No description provided for @drawerDailyChallenges.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily challenges'**
+  String get drawerDailyChallenges;
+
   /// No description provided for @dailyTaskTitle.
   ///
   /// In en, this message translates to:
@@ -557,6 +563,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Current daily task status'**
   String get dailyTaskStatusTitle;
+
+  /// No description provided for @dailyTaskListTab.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get dailyTaskListTab;
+
+  /// No description provided for @dailyTaskTaskTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get dailyTaskTaskTab;
+
+  /// No description provided for @dailyTaskCalendarTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get dailyTaskCalendarTab;
 
   /// No description provided for @dailyTaskHydration.
   ///
