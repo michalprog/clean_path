@@ -31,14 +31,26 @@ class DatabaseManager {
       ON daily_tasks(date)
     ''');
     }
+    if (oldVersion < 4) {
+      await db.execute('''
+      CREATE TABLE IF NOT EXISTS user (
+        username TEXT PRIMARY KEY,
+        password TEXT NOT NULL,
+        email TEXT,
+        xp INTEGER NOT NULL,
+        level INTEGER NOT NULL
+      )
+    ''');
+    }
   }
+
 
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'notes.db');
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -70,6 +82,15 @@ class DatabaseManager {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type INTEGER NOT NULL,
     date TEXT NOT NULL
+    )
+    ''');
+    await db.execute('''
+    CREATE TABLE user (
+      username TEXT PRIMARY KEY,
+      password TEXT NOT NULL,
+      email TEXT,
+      xp INTEGER NOT NULL,
+      level INTEGER NOT NULL
     )
     ''');
   }
