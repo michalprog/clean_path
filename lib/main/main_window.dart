@@ -1,11 +1,13 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
+import '/widgets/account_bottom_sheet.dart';
 import '/window_widgets/alk_view.dart';
 import '/window_widgets/default_view.dart';
 import '/window_widgets/fap_view.dart';
 import '/window_widgets/pap_view.dart';
 import 'main_view.dart';
+
 import '/l10n/app_localizations.dart';
 
 class MainWindow extends StatefulWidget {
@@ -36,7 +38,7 @@ class _MainWindowState extends State<MainWindow> {
         backgroundColor: Colors.greenAccent,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => showAccountBottomSheet(context),
             icon: Icon(Icons.account_circle_outlined, size: 35),
           ),
         ],
@@ -87,5 +89,15 @@ class _MainWindowState extends State<MainWindow> {
     setState(() {
       navigationIndex = page;
     });
+  }
+  void showAccountBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return const AccountBottomSheet();
+      },
+    );
   }
 }
