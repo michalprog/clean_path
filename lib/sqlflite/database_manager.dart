@@ -35,12 +35,30 @@ class DatabaseManager {
       await db.execute('''
       CREATE TABLE IF NOT EXISTS user (
         username TEXT PRIMARY KEY,
-        password TEXT NOT NULL,
+        password TEXT,
         email TEXT,
         xp INTEGER NOT NULL,
         level INTEGER NOT NULL
       )
     ''');
+    }
+    if (oldVersion < 5) {
+      await db.execute('''
+      CREATE TABLE IF NOT EXISTS user_new (
+        username TEXT PRIMARY KEY,
+        password TEXT,
+        email TEXT,
+        xp INTEGER NOT NULL,
+        level INTEGER NOT NULL
+      )
+    ''');
+      await db.execute('''
+      INSERT INTO user_new (username, password, email, xp, level)
+      SELECT username, password, email, xp, level FROM user
+    ''');
+      await db.execute('DROP TABLE user');
+      await db.execute('ALTER TABLE user_new RENAME TO user');
+      await _ensureDefaultUser(db);
     }
   }
 
@@ -50,7 +68,7 @@ class DatabaseManager {
     final path = join(dbPath, 'notes.db');
     return await openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -93,5 +111,20 @@ class DatabaseManager {
       level INTEGER NOT NULL
     )
     ''');
+    await _ensureDefaultUser(db);
+  }
+
+  Future<void> _ensureDefaultUser(Database db) async {
+    final result = await db.rawQuery('SELECT COUNT(*) as count FROM user');
+    final count = Sqflite.firstIntValue(result) ?? 0;
+    if (count == 0) {
+      await db.insert('user', {
+        'username': 'user',
+        'password': null,
+        'email': null,
+        'xp': 0,
+        'level': 0,
+      });
+    }
   }
 }
