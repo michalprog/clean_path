@@ -49,15 +49,25 @@ class DatabaseManager {
         password TEXT,
         email TEXT,
         xp INTEGER NOT NULL,
-        level INTEGER NOT NULL
+        level INTEGER NOT NULL,
+        character INTEGER NOT NULL
       )
     ''');
       await db.execute('''
-      INSERT INTO user_new (username, password, email, xp, level)
-      SELECT username, password, email, xp, level FROM user
+      INSERT INTO user_new (username, password, email, xp, level, character)
+      SELECT username, password, email, xp, level, 0 FROM user
     ''');
       await db.execute('DROP TABLE user');
       await db.execute('ALTER TABLE user_new RENAME TO user');
+      await _ensureDefaultUser(db);
+    }
+    if (oldVersion < 6) {
+      final hasCharacter = await _hasColumn(db, 'user', 'character');
+      if (!hasCharacter) {
+        await db.execute(
+          'ALTER TABLE user ADD COLUMN character INTEGER NOT NULL DEFAULT 0',
+        );
+      }
       await _ensureDefaultUser(db);
     }
   }
@@ -68,9 +78,10 @@ class DatabaseManager {
     final path = join(dbPath, 'notes.db');
     return await openDatabase(
       path,
-      version: 5,
+      version: 6,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
+      onOpen: _ensureDefaultUser,
     );
   }
 
@@ -105,10 +116,11 @@ class DatabaseManager {
     await db.execute('''
     CREATE TABLE user (
       username TEXT PRIMARY KEY,
-      password TEXT NOT NULL,
+      password TEXT,
       email TEXT,
       xp INTEGER NOT NULL,
-      level INTEGER NOT NULL
+      level INTEGER NOT NULL,
+      character INTEGER NOT NULL
     )
     ''');
     await _ensureDefaultUser(db);
@@ -124,7 +136,13 @@ class DatabaseManager {
         'email': null,
         'xp': 0,
         'level': 0,
+        'character': 0,
       });
     }
+  }
+
+  Future<bool> _hasColumn(Database db, String table, String column) async {
+    final result = await db.rawQuery('PRAGMA table_info($table)');
+    return result.any((row) => row['name'] == column);
   }
 }
