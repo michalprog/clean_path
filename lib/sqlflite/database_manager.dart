@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 
 class DatabaseManager {
   Database? _database;
+
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
@@ -15,86 +16,32 @@ class DatabaseManager {
     _database = null;
   }
 
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 3) {
-      await db.execute('''
-      CREATE TABLE IF NOT EXISTS daily_tasks (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        type INTEGER NOT NULL,
-        date TEXT NOT NULL,
-        UNIQUE(type, date)
-      )
-    ''');
-
-      await db.execute('''
-      CREATE INDEX IF NOT EXISTS idx_daily_tasks_date
-      ON daily_tasks(date)
-    ''');
-    }
-    if (oldVersion < 4) {
-      await db.execute('''
-      CREATE TABLE IF NOT EXISTS user (
-        username TEXT PRIMARY KEY,
-        password TEXT,
-        email TEXT,
-        xp INTEGER NOT NULL,
-        level INTEGER NOT NULL
-      )
-    ''');
-    }
-    if (oldVersion < 5) {
-      await db.execute('''
-      CREATE TABLE IF NOT EXISTS user_new (
-        username TEXT PRIMARY KEY,
-        password TEXT,
-        email TEXT,
-        xp INTEGER NOT NULL,
-        level INTEGER NOT NULL,
-        character INTEGER NOT NULL
-      )
-    ''');
-      await db.execute('''
-      INSERT INTO user_new (username, password, email, xp, level, character)
-      SELECT username, password, email, xp, level, 0 FROM user
-    ''');
-      await db.execute('DROP TABLE user');
-      await db.execute('ALTER TABLE user_new RENAME TO user');
-      await _ensureDefaultUser(db);
-    }
-    if (oldVersion < 6) {
-      final hasCharacter = await _hasColumn(db, 'user', 'character');
-      if (!hasCharacter) {
-        await db.execute(
-          'ALTER TABLE user ADD COLUMN character INTEGER NOT NULL DEFAULT 0',
-        );
-      }
-      await _ensureDefaultUser(db);
-    }
-  }
-
-
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'notes.db');
+
     return await openDatabase(
       path,
-      version: 6,
+      version: 7,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
       onOpen: _ensureDefaultUser,
     );
   }
 
+
+  // CREATE
+
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-       CREATE TABLE record (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      type INTEGER NOT NULL,
-      is_active INTEGER DEFAULT 1,
-      activated TEXT NOT NULL,
-      desactivated TEXT,
-      comment TEXT
-    )
+      CREATE TABLE record (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type INTEGER NOT NULL,
+        is_active INTEGER DEFAULT 1,
+        activated TEXT NOT NULL,
+        desactivated TEXT,
+        comment TEXT
+      )
     ''');
 
     await db.execute('''
@@ -106,29 +53,117 @@ class DatabaseManager {
         achievement_date TEXT
       )
     ''');
+
     await db.execute('''
-    CREATE TABLE daily_tasks (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    type INTEGER NOT NULL,
-    date TEXT NOT NULL
-    )
+      CREATE TABLE daily_tasks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type INTEGER NOT NULL,
+        date TEXT NOT NULL,
+        UNIQUE(type, date)
+      )
     ''');
+
     await db.execute('''
-    CREATE TABLE user (
-      username TEXT PRIMARY KEY,
-      password TEXT,
-      email TEXT,
-      xp INTEGER NOT NULL,
-      level INTEGER NOT NULL,
-      character INTEGER NOT NULL
-    )
+      CREATE TABLE user (
+        username TEXT PRIMARY KEY,
+        password TEXT,
+        email TEXT,
+        xp INTEGER NOT NULL,
+        level INTEGER NOT NULL,
+        character INTEGER NOT NULL,
+        join_date TEXT NOT NULL,
+        status INTEGER NOT NULL
+      )
     ''');
+
     await _ensureDefaultUser(db);
   }
+
+
+  // UPGRADE
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 3) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS daily_tasks (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          type INTEGER NOT NULL,
+          date TEXT NOT NULL,
+          UNIQUE(type, date)
+        )
+      ''');
+
+      await db.execute('''
+        CREATE INDEX IF NOT EXISTS idx_daily_tasks_date
+        ON daily_tasks(date)
+      ''');
+    }
+
+    if (oldVersion < 4) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS user (
+          username TEXT PRIMARY KEY,
+          password TEXT,
+          email TEXT,
+          xp INTEGER NOT NULL,
+          level INTEGER NOT NULL
+        )
+      ''');
+    }
+
+    if (oldVersion < 5) {
+      await db.execute('''
+        CREATE TABLE user_new (
+          username TEXT PRIMARY KEY,
+          password TEXT,
+          email TEXT,
+          xp INTEGER NOT NULL,
+          level INTEGER NOT NULL,
+          character INTEGER NOT NULL
+        )
+      ''');
+
+      await db.execute('''
+        INSERT INTO user_new (username, password, email, xp, level, character)
+        SELECT username, password, email, xp, level, 0 FROM user
+      ''');
+
+      await db.execute('DROP TABLE user');
+      await db.execute('ALTER TABLE user_new RENAME TO user');
+    }
+
+    if (oldVersion < 6) {
+      if (!await _hasColumn(db, 'user', 'character')) {
+        await db.execute(
+          'ALTER TABLE user ADD COLUMN character INTEGER NOT NULL DEFAULT 0',
+        );
+      }
+    }
+
+    if (oldVersion < 7) {
+      if (!await _hasColumn(db, 'user', 'join_date')) {
+        await db.execute(
+          "ALTER TABLE user ADD COLUMN join_date TEXT NOT NULL DEFAULT ''",
+        );
+      }
+
+      if (!await _hasColumn(db, 'user', 'status')) {
+        await db.execute(
+          'ALTER TABLE user ADD COLUMN status INTEGER NOT NULL DEFAULT 1',
+        );
+      }
+    }
+
+    await _ensureDefaultUser(db);
+  }
+
+
+  // HELPERS
 
   Future<void> _ensureDefaultUser(Database db) async {
     final result = await db.rawQuery('SELECT COUNT(*) as count FROM user');
     final count = Sqflite.firstIntValue(result) ?? 0;
+
     if (count == 0) {
       await db.insert('user', {
         'username': 'user',
@@ -137,6 +172,8 @@ class DatabaseManager {
         'xp': 0,
         'level': 0,
         'character': 0,
+        'join_date': DateTime.now().toIso8601String(),
+        'status': 0,
       });
     }
   }
