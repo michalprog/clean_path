@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '/providers/account_provider.dart';
 
 class AccountBottomSheet extends StatelessWidget {
   const AccountBottomSheet({super.key});
@@ -6,6 +10,15 @@ class AccountBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final accountProvider = context.watch<AccountProvider>();
+    final user = accountProvider.user;
+    final username = user?.username ?? "Użytkownik Clean Path";
+    final email = user?.email ?? "Brak adresu email";
+    final level = user?.level ?? 0;
+    final xp = user?.xp ?? 0;
+    final status = user?.status ?? 0;
+    final joinDate = _formatJoinDate(context, user?.joinDate);
+
     return SafeArea(
       child: Container(
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -44,14 +57,14 @@ class AccountBottomSheet extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              "Użytkownik Clean Path",
+              username,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 4),
             Text(
-              "user@cleanpath.app",
+              email,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.grey.shade600,
               ),
@@ -75,14 +88,14 @@ class AccountBottomSheet extends StatelessWidget {
                     context,
                     icon: Icons.emoji_events,
                     label: "Poziom",
-                    value: "5",
+                    value: level.toString(),
                     color: Colors.deepPurple,
                   ),
                   _buildInfoTile(
                     context,
                     icon: Icons.auto_graph,
                     label: "XP",
-                    value: "1 200",
+                    value: xp.toString(),
                     color: Colors.teal,
                   ),
                   _buildInfoTile(
@@ -100,15 +113,15 @@ class AccountBottomSheet extends StatelessWidget {
               context,
               icon: Icons.check_circle,
               title: "Status konta",
-              value: "Aktywne",
-              color: Colors.green,
+              value: _statusLabel(status),
+              color: status == 1 ? Colors.green : Colors.grey,
             ),
             const SizedBox(height: 8),
             _buildAccountRow(
               context,
               icon: Icons.calendar_today,
               title: "Dołączyłeś",
-              value: "Styczeń 2024",
+              value: joinDate,
               color: Colors.blueGrey,
             ),
             const SizedBox(height: 12),
@@ -128,80 +141,102 @@ class AccountBottomSheet extends StatelessWidget {
                 ),
               ),
             ),
+            if (accountProvider.isLoading)
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  "Ładowanie danych...",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
     );
   }
-}
+  String _formatJoinDate(BuildContext context, DateTime? date) {
+    if (date == null) {
+      return "Brak danych";
+    }
 
-Widget _buildInfoTile(
-    BuildContext context, {
-      required IconData icon,
-      required String label,
-      required String value,
-      required Color color,
-    }) {
-  return Column(
-    children: [
-      CircleAvatar(
-        radius: 18,
-        backgroundColor: color.withOpacity(0.15),
-        child: Icon(icon, size: 18, color: color),
-      ),
-      const SizedBox(height: 8),
-      Text(
-        value,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      Text(
-        label,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: Colors.grey.shade700,
-        ),
-      ),
-    ],
-  );
-}
+    final locale = Localizations.localeOf(context);
+    return DateFormat.yMMMM(locale.toString()).format(date);
+  }
 
-Widget _buildAccountRow(
-    BuildContext context, {
-      required IconData icon,
-      required String title,
-      required String value,
-      required Color color,
-    }) {
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-    decoration: BoxDecoration(
-      color: Colors.grey.shade100,
-      borderRadius: BorderRadius.circular(12),
-    ),
-    child: Row(
+  String _statusLabel(int status) {
+    return status == 1 ? "Aktywne" : "Nieaktywne";
+  }
+
+  Widget _buildInfoTile(
+      BuildContext context, {
+        required IconData icon,
+        required String label,
+        required String value,
+        required Color color,
+      }) {
+    return Column(
       children: [
         CircleAvatar(
-          radius: 16,
+          radius: 18,
           backgroundColor: color.withOpacity(0.15),
-          child: Icon(icon, size: 16, color: color),
+          child: Icon(icon, size: 18, color: color),
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.bold,
           ),
         ),
         Text(
-          value,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          label,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Colors.grey.shade700,
           ),
         ),
       ],
-    ),
-  );
+    );
+  }
+
+  Widget _buildAccountRow(
+      BuildContext context, {
+        required IconData icon,
+        required String title,
+        required String value,
+        required Color color,
+      }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 16,
+            backgroundColor: color.withOpacity(0.15),
+            child: Icon(icon, size: 16, color: color),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Colors.grey.shade700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
