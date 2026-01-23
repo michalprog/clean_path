@@ -37,6 +37,7 @@ class AccountBottomSheet extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Uchwyt do przeciągania dolnego arkusza.
             Container(
               width: 44,
               height: 5,
@@ -46,6 +47,7 @@ class AccountBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            // Avatar użytkownika.
             CircleAvatar(
               radius: 36,
               backgroundColor: colorScheme.primary.withOpacity(0.15),
@@ -56,6 +58,7 @@ class AccountBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
+            // Nazwa użytkownika.
             Text(
               username,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -63,6 +66,7 @@ class AccountBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
+            // Adres e-mail.
             Text(
               email,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -70,6 +74,7 @@ class AccountBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+            // Kafelki ze statystykami konta.
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -84,21 +89,21 @@ class AccountBottomSheet extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildInfoTile(
+                  AccountBottomSheet._buildInfoTile(
                     context,
                     icon: Icons.emoji_events,
                     label: "Poziom",
                     value: level.toString(),
                     color: Colors.deepPurple,
                   ),
-                  _buildInfoTile(
+                  AccountBottomSheet._buildInfoTile(
                     context,
                     icon: Icons.auto_graph,
                     label: "XP",
                     value: xp.toString(),
                     color: Colors.teal,
                   ),
-                  _buildInfoTile(
+                  AccountBottomSheet._buildInfoTile(
                     context,
                     icon: Icons.local_fire_department,
                     label: "Seria",
@@ -109,7 +114,8 @@ class AccountBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            _buildAccountRow(
+            // Wiersz ze statusem konta.
+            AccountBottomSheet._buildAccountRow(
               context,
               icon: Icons.check_circle,
               title: "Status konta",
@@ -117,7 +123,8 @@ class AccountBottomSheet extends StatelessWidget {
               color: status == 1 ? Colors.green : Colors.grey,
             ),
             const SizedBox(height: 8),
-            _buildAccountRow(
+            // Wiersz z datą dołączenia.
+            AccountBottomSheet._buildAccountRow(
               context,
               icon: Icons.calendar_today,
               title: "Dołączyłeś",
@@ -125,6 +132,25 @@ class AccountBottomSheet extends StatelessWidget {
               color: Colors.blueGrey,
             ),
             const SizedBox(height: 12),
+            // Przycisk do edycji profilu (na razie bez akcji).
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.edit),
+                label: const Text("Edytuj profil"),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: colorScheme.primary,
+                  side: BorderSide(color: colorScheme.primary),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            // Przycisk zamknięcia arkusza.
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -141,6 +167,7 @@ class AccountBottomSheet extends StatelessWidget {
                 ),
               ),
             ),
+            // Informacja o ładowaniu danych konta.
             if (accountProvider.isLoading)
               Padding(
                 padding: const EdgeInsets.only(top: 12),
@@ -169,7 +196,7 @@ class AccountBottomSheet extends StatelessWidget {
     return status == 1 ? "Aktywne" : "Nieaktywne";
   }
 
-  Widget _buildInfoTile(
+  static Widget _buildInfoTile(
       BuildContext context, {
         required IconData icon,
         required String label,
@@ -200,7 +227,7 @@ class AccountBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountRow(
+  static Widget _buildAccountRow(
       BuildContext context, {
         required IconData icon,
         required String title,
