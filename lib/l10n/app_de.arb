@@ -86,6 +86,25 @@
   "dailyTaskCompleted": "Abgeschlossen",
   "dailyTaskNotCompleted": "Nicht abgeschlossen",
   "dailyTaskTotalCompleted": "Erledigte Aufgaben",
-  "dailyTaskCompletedForCategory": "Erledigt in {category}"
+  "dailyTaskCompletedForCategory": "Erledigt in {category}",
+  "accountDefaultUsername": "Clean Path Nutzer",
+  "accountNoEmail": "Keine E-Mail-Adresse",
+  "accountLevelLabel": "Level",
+  "accountXpLabel": "XP",
+  "accountStreakLabel": "Serie",
+  "accountStreakValue": "{days} Tage",
+  "@accountStreakValue": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "accountStatusTitle": "Kontostatus",
+  "accountStatusActive": "Aktiv",
+  "accountStatusInactive": "Inaktiv",
+  "accountJoinedTitle": "Beigetreten",
+  "accountEditProfile": "Profil bearbeiten",
+  "accountClose": "Schließen",
+  "accountLoading": "Daten werden geladen...",
+  "accountNoData": "Keine Daten"
 
 }

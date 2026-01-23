@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '/l10n/app_localizations.dart';
 import '/providers/account_provider.dart';
 
 class AccountBottomSheet extends StatelessWidget {
@@ -11,13 +12,14 @@ class AccountBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final accountProvider = context.watch<AccountProvider>();
+    final l10n = AppLocalizations.of(context)!;
     final user = accountProvider.user;
-    final username = user?.username ?? "Użytkownik Clean Path";
-    final email = user?.email ?? "Brak adresu email";
+    final username = user?.username ?? l10n.accountDefaultUsername;
+    final email = user?.email ?? l10n.accountNoEmail;
     final level = user?.level ?? 0;
     final xp = user?.xp ?? 0;
     final status = user?.status ?? 0;
-    final joinDate = _formatJoinDate(context, user?.joinDate);
+    final joinDate = _formatJoinDate(context, l10n, user?.joinDate);
 
     return SafeArea(
       child: Container(
@@ -92,22 +94,22 @@ class AccountBottomSheet extends StatelessWidget {
                   AccountBottomSheet._buildInfoTile(
                     context,
                     icon: Icons.emoji_events,
-                    label: "Poziom",
+                    label: l10n.accountLevelLabel,
                     value: level.toString(),
                     color: Colors.deepPurple,
                   ),
                   AccountBottomSheet._buildInfoTile(
                     context,
                     icon: Icons.auto_graph,
-                    label: "XP",
+                    label: l10n.accountXpLabel,
                     value: xp.toString(),
                     color: Colors.teal,
                   ),
                   AccountBottomSheet._buildInfoTile(
                     context,
                     icon: Icons.local_fire_department,
-                    label: "Seria",
-                    value: "7 dni",
+                    label: l10n.accountStreakLabel,
+                    value: l10n.accountStreakValue(7),
                     color: Colors.deepOrange,
                   ),
                 ],
@@ -118,8 +120,8 @@ class AccountBottomSheet extends StatelessWidget {
             AccountBottomSheet._buildAccountRow(
               context,
               icon: Icons.check_circle,
-              title: "Status konta",
-              value: _statusLabel(status),
+              title: l10n.accountStatusTitle,
+              value: _statusLabel(l10n, status),
               color: status == 1 ? Colors.green : Colors.grey,
             ),
             const SizedBox(height: 8),
@@ -127,7 +129,7 @@ class AccountBottomSheet extends StatelessWidget {
             AccountBottomSheet._buildAccountRow(
               context,
               icon: Icons.calendar_today,
-              title: "Dołączyłeś",
+              title: l10n.accountJoinedTitle,
               value: joinDate,
               color: Colors.blueGrey,
             ),
@@ -138,7 +140,7 @@ class AccountBottomSheet extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: () {},
                 icon: const Icon(Icons.edit),
-                label: const Text("Edytuj profil"),
+                label: Text(l10n.accountEditProfile),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: colorScheme.primary,
                   side: BorderSide(color: colorScheme.primary),
@@ -156,7 +158,7 @@ class AccountBottomSheet extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: () => Navigator.of(context).pop(),
                 icon: const Icon(Icons.close),
-                label: const Text("Zamknij"),
+                label: Text(l10n.accountClose),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colorScheme.primary,
                   foregroundColor: Colors.white,
@@ -172,7 +174,7 @@ class AccountBottomSheet extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  "Ładowanie danych...",
+                  l10n.accountLoading,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Colors.grey.shade600,
                   ),
@@ -183,17 +185,24 @@ class AccountBottomSheet extends StatelessWidget {
       ),
     );
   }
-  String _formatJoinDate(BuildContext context, DateTime? date) {
+
+  String _formatJoinDate(
+      BuildContext context,
+      AppLocalizations l10n,
+      DateTime? date,
+      ) {
     if (date == null) {
-      return "Brak danych";
+      return l10n.accountNoData;
     }
 
     final locale = Localizations.localeOf(context);
     return DateFormat.yMMMM(locale.toString()).format(date);
   }
 
-  String _statusLabel(int status) {
-    return status == 1 ? "Aktywne" : "Nieaktywne";
+  String _statusLabel(AppLocalizations l10n, int status) {
+    return status == 1
+        ? l10n.accountStatusActive
+        : l10n.accountStatusInactive;
   }
 
   static Widget _buildInfoTile(

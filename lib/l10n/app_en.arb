@@ -91,5 +91,24 @@
   "dailyTaskCompleted": "Completed",
   "dailyTaskNotCompleted": "Not completed",
   "dailyTaskTotalCompleted": "Completed tasks",
-  "dailyTaskCompletedForCategory": "Completed in {category}"
+  "dailyTaskCompletedForCategory": "Completed in {category}",
+  "accountDefaultUsername": "Clean Path user",
+  "accountNoEmail": "No email address",
+  "accountLevelLabel": "Level",
+  "accountXpLabel": "XP",
+  "accountStreakLabel": "Streak",
+  "accountStreakValue": "{days} days",
+  "@accountStreakValue": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "accountStatusTitle": "Account status",
+  "accountStatusActive": "Active",
+  "accountStatusInactive": "Inactive",
+  "accountJoinedTitle": "Joined",
+  "accountEditProfile": "Edit profile",
+  "accountClose": "Close",
+  "accountLoading": "Loading data...",
+  "accountNoData": "No data"
 }

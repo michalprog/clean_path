@@ -629,6 +629,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completed in {category}'**
   String dailyTaskCompletedForCategory(Object category);
+
+  /// No description provided for @accountDefaultUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Clean Path user'**
+  String get accountDefaultUsername;
+
+  /// No description provided for @accountNoEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'No email address'**
+  String get accountNoEmail;
+
+  /// No description provided for @accountLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get accountLevelLabel;
+
+  /// No description provided for @accountXpLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'XP'**
+  String get accountXpLabel;
+
+  /// No description provided for @accountStreakLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get accountStreakLabel;
+
+  /// No description provided for @accountStreakValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String accountStreakValue(Object days);
+
+  /// No description provided for @accountStatusTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account status'**
+  String get accountStatusTitle;
+
+  /// No description provided for @accountStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get accountStatusActive;
+
+  /// No description provided for @accountStatusInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get accountStatusInactive;
+
+  /// No description provided for @accountJoinedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined'**
+  String get accountJoinedTitle;
+
+  /// No description provided for @accountEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get accountEditProfile;
+
+  /// No description provided for @accountClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get accountClose;
+
+  /// No description provided for @accountLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading data...'**
+  String get accountLoading;
+
+  /// No description provided for @accountNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get accountNoData;
 }
 
 class _AppLocalizationsDelegate

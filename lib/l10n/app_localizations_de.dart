@@ -294,4 +294,48 @@ class AppLocalizationsDe extends AppLocalizations {
   String dailyTaskCompletedForCategory(Object category) {
     return 'Erledigt in $category';
   }
+
+  @override
+  String get accountDefaultUsername => 'Clean Path Nutzer';
+
+  @override
+  String get accountNoEmail => 'Keine E-Mail-Adresse';
+
+  @override
+  String get accountLevelLabel => 'Level';
+
+  @override
+  String get accountXpLabel => 'XP';
+
+  @override
+  String get accountStreakLabel => 'Serie';
+
+  @override
+  String accountStreakValue(Object days) {
+    return '$days Tage';
+  }
+
+  @override
+  String get accountStatusTitle => 'Kontostatus';
+
+  @override
+  String get accountStatusActive => 'Aktiv';
+
+  @override
+  String get accountStatusInactive => 'Inaktiv';
+
+  @override
+  String get accountJoinedTitle => 'Beigetreten';
+
+  @override
+  String get accountEditProfile => 'Profil bearbeiten';
+
+  @override
+  String get accountClose => 'Schließen';
+
+  @override
+  String get accountLoading => 'Daten werden geladen...';
+
+  @override
+  String get accountNoData => 'Keine Daten';
 }
