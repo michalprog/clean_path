@@ -2,30 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '/l10n/app_localizations.dart';
 import '/providers/account_provider.dart';
+import '/user_views/account_edit_view.dart';
+import '/user_views/account_info_tile.dart';
+import '/user_views/account_row.dart';
 
 class AccountBottomSheet extends StatelessWidget {
   const AccountBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final accountProvider = context.watch<AccountProvider>();
-    final user = accountProvider.user;
-    final username = user?.username ?? "Użytkownik Clean Path";
-    final email = user?.email ?? "Brak adresu email";
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final tt = theme.textTheme;
+    final l10n = AppLocalizations.of(context)!;
+
+    // Mniej rebuildów: pobieramy tylko potrzebne pola.
+    final user = context.select<AccountProvider, dynamic>((p) => p.user);
+    final isLoading = context.select<AccountProvider, bool>((p) => p.isLoading);
+
+    final username = user?.username ?? l10n.accountDefaultUsername;
+    final email = user?.email ?? l10n.accountNoEmail;
     final level = user?.level ?? 0;
     final xp = user?.xp ?? 0;
     final streak = user?.streak ?? 0;
     final status = user?.status ?? 0;
-    final joinDate = _formatJoinDate(context, user?.joinDate);
+    final joinDate = _formatJoinDate(context, user?.joinDate, l10n);
 
     return SafeArea(
       child: Container(
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: cs.surface,
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
@@ -43,106 +53,108 @@ class AccountBottomSheet extends StatelessWidget {
               width: 44,
               height: 5,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: cs.outlineVariant.withOpacity(0.8),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
             const SizedBox(height: 16),
-            // Avatar użytkownika.
+
+            // Avatar + podstawowe dane
             CircleAvatar(
               radius: 36,
-              backgroundColor: colorScheme.primary.withOpacity(0.15),
-              child: Icon(
-                Icons.person,
-                size: 40,
-                color: colorScheme.primary,
-              ),
+              backgroundColor: cs.primaryContainer,
+              foregroundColor: cs.onPrimaryContainer,
+              child: const Icon(Icons.person, size: 40),
             ),
             const SizedBox(height: 12),
-            // Nazwa użytkownika.
+
             Text(
               username,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: tt.titleLarge?.copyWith(fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 4),
-            // Adres e-mail.
+
             Text(
               email,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey.shade600,
-              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
             ),
             const SizedBox(height: 20),
+
             // Kafelki ze statystykami konta.
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    colorScheme.primary.withOpacity(0.15),
-                    colorScheme.secondary.withOpacity(0.15),
+                    cs.primary.withOpacity(0.14),
+                    cs.secondary.withOpacity(0.14),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: cs.outlineVariant.withOpacity(0.6)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AccountBottomSheet._buildInfoTile(
-                    context,
+                  AccountInfoTile(
                     icon: Icons.emoji_events,
-                    label: "Poziom",
+                    label: l10n.accountLevelLabel,
                     value: level.toString(),
-                    color: Colors.deepPurple,
+                    color: cs.primary,
                   ),
-                  AccountBottomSheet._buildInfoTile(
-                    context,
+                  AccountInfoTile(
                     icon: Icons.auto_graph,
-                    label: "XP",
+                    label: l10n.accountXpLabel,
                     value: xp.toString(),
-                    color: Colors.teal,
+                    color: cs.secondary,
                   ),
-                  AccountBottomSheet._buildInfoTile(
-                    context,
+                  AccountInfoTile(
                     icon: Icons.local_fire_department,
-                    label: "Seria",
-                    value: "$streak dni",
-                    color: Colors.deepOrange,
+                    label: l10n.accountStreakLabel,
+                    value: l10n.accountStreakValue(streak),
+                    color: cs.tertiary,
                   ),
                 ],
               ),
             ),
+
             const SizedBox(height: 16),
+            Divider(height: 1, color: cs.outlineVariant.withOpacity(0.7)),
+            const SizedBox(height: 16),
+
             // Wiersz ze statusem konta.
-            AccountBottomSheet._buildAccountRow(
-              context,
-              icon: Icons.check_circle,
-              title: "Status konta",
-              value: _statusLabel(status),
-              color: status == 1 ? Colors.green : Colors.grey,
+            AccountRow(
+              icon: status == 1 ? Icons.check_circle : Icons.cancel,
+              title: l10n.accountStatusTitle,
+              value: _statusLabel(status, l10n),
+              color: status == 1 ? Colors.green : cs.outline,
             ),
             const SizedBox(height: 8),
+
             // Wiersz z datą dołączenia.
-            AccountBottomSheet._buildAccountRow(
-              context,
+            AccountRow(
               icon: Icons.calendar_today,
-              title: "Dołączyłeś",
+              title: l10n.accountJoinedTitle,
               value: joinDate,
-              color: Colors.blueGrey,
+              color: cs.secondary,
             ),
-            const SizedBox(height: 12),
-            // Przycisk do edycji profilu (na razie bez akcji).
+
+            const SizedBox(height: 16),
+
+            // Przycisk do edycji profilu.
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: isLoading ? null : () => _openEditProfile(context),
                 icon: const Icon(Icons.edit),
-                label: const Text("Edytuj profil"),
+                label: Text(l10n.accountEditProfile),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: colorScheme.primary,
-                  side: BorderSide(color: colorScheme.primary),
+                  foregroundColor: cs.primary,
+                  side: BorderSide(color: cs.outline),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -151,16 +163,15 @@ class AccountBottomSheet extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
+
             // Przycisk zamknięcia arkusza.
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton.icon(
+              child: FilledButton.icon(
                 onPressed: () => Navigator.of(context).pop(),
                 icon: const Icon(Icons.close),
-                label: const Text("Zamknij"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: colorScheme.primary,
-                  foregroundColor: Colors.white,
+                label: Text(l10n.accountClose),
+                style: FilledButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -168,103 +179,51 @@ class AccountBottomSheet extends StatelessWidget {
                 ),
               ),
             ),
+
             // Informacja o ładowaniu danych konta.
-            if (accountProvider.isLoading)
-              Padding(
-                padding: const EdgeInsets.only(top: 12),
-                child: Text(
-                  "Ładowanie danych...",
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey.shade600,
+            if (isLoading) ...[
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  Text(
+                    l10n.accountLoading,
+                    style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+                  ),
+                ],
               ),
+            ],
           ],
         ),
       ),
     );
   }
-  String _formatJoinDate(BuildContext context, DateTime? date) {
-    if (date == null) {
-      return "Brak danych";
-    }
 
+  String _formatJoinDate(
+      BuildContext context,
+      DateTime? date,
+      AppLocalizations l10n,
+      ) {
+    if (date == null) return l10n.accountNoData;
     final locale = Localizations.localeOf(context);
     return DateFormat.yMMMM(locale.toString()).format(date);
   }
 
-  String _statusLabel(int status) {
-    return status == 1 ? "Aktywne" : "Nieaktywne";
+  String _statusLabel(int status, AppLocalizations l10n) {
+    return status == 1 ? l10n.accountStatusActive : l10n.accountStatusInactive;
   }
 
-  static Widget _buildInfoTile(
-      BuildContext context, {
-        required IconData icon,
-        required String label,
-        required String value,
-        required Color color,
-      }) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 18,
-          backgroundColor: color.withOpacity(0.15),
-          child: Icon(icon, size: 18, color: color),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          value,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Colors.grey.shade700,
-          ),
-        ),
-      ],
-    );
-  }
-
-  static Widget _buildAccountRow(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required String value,
-        required Color color,
-      }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 16,
-            backgroundColor: color.withOpacity(0.15),
-            child: Icon(icon, size: 16, color: color),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.grey.shade700,
-            ),
-          ),
-        ],
-      ),
+  void _openEditProfile(BuildContext context) {
+    final navigator = Navigator.of(context, rootNavigator: true);
+    Navigator.of(context).pop(); // zamykamy bottom sheet
+    navigator.push(
+      MaterialPageRoute(builder: (_) => const AccountEditView()),
     );
   }
 }
