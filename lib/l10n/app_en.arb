@@ -108,6 +108,9 @@
   "accountStatusInactive": "Inactive",
   "accountJoinedTitle": "Joined",
   "accountEditProfile": "Edit profile",
+  "accountUsernameLabel": "Username",
+  "accountEmailLabel": "Email",
+  "accountSaveChanges": "Save changes",
   "accountClose": "Close",
   "accountLoading": "Loading data...",
   "accountNoData": "No data"

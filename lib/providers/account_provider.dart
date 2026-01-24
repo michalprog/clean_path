@@ -19,8 +19,8 @@ class AccountProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUser(User user) async {
-    await _accountDao.upsertUser(user);
+  Future<void> updateUser(User user, {String? previousUsername}) async {
+    await _accountDao.upsertUser(user, previousUsername: previousUsername);
     _user = user;
     notifyListeners();
   }

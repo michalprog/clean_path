@@ -17,13 +17,14 @@ class AccountDao {
     return User.fromMap(maps.first);
   }
 
-  Future<void> upsertUser(User user) async {
+  Future<void> upsertUser(User user, {String? previousUsername}) async {
     final db = await _dbManager.database;
+    final usernameForUpdate = previousUsername ?? user.username;
     final updated = await db.update(
       'user',
       user.toMap(),
       where: 'username = ?',
-      whereArgs: [user.username],
+      whereArgs: [usernameForUpdate],
     );
 
     if (updated == 0) {

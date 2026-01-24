@@ -330,6 +330,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountEditProfile => 'Editar perfil';
 
   @override
+  String get accountUsernameLabel => 'Nombre de usuario';
+
+  @override
+  String get accountEmailLabel => 'Correo electrónico';
+
+  @override
+  String get accountSaveChanges => 'Guardar cambios';
+
+  @override
   String get accountClose => 'Cerrar';
 
   @override

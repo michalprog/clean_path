@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'account_edit_view.dart';
 import '/l10n/app_localizations.dart';
 import '/providers/account_provider.dart';
 import 'account_info_tile.dart';
 import 'account_row.dart';
-
 
 class AccountBottomSheet extends StatelessWidget {
   const AccountBottomSheet({super.key});
@@ -139,7 +138,26 @@ class AccountBottomSheet extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: isLoading ? null : () {},
+                onPressed:
+                    isLoading
+                        ? null
+                        : () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder:
+                                (context) => Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom:
+                                        MediaQuery.of(
+                                          context,
+                                        ).viewInsets.bottom,
+                                  ),
+                                  child: const AccountEditView(),
+                                ),
+                          );
+                        },
                 icon: const Icon(Icons.edit),
                 label: Text(l10n.accountEditProfile),
                 style: OutlinedButton.styleFrom(
@@ -194,10 +212,10 @@ class AccountBottomSheet extends StatelessWidget {
   }
 
   String _formatJoinDate(
-      BuildContext context,
-      AppLocalizations l10n,
-      DateTime? date,
-      ) {
+    BuildContext context,
+    AppLocalizations l10n,
+    DateTime? date,
+  ) {
     if (date == null) return l10n.accountNoData;
     final locale = Localizations.localeOf(context);
     return DateFormat.yMMMM(locale.toString()).format(date);

@@ -103,6 +103,9 @@
   "accountStatusInactive": "Inaktiv",
   "accountJoinedTitle": "Beigetreten",
   "accountEditProfile": "Profil bearbeiten",
+  "accountUsernameLabel": "Benutzername",
+  "accountEmailLabel": "E-Mail",
+  "accountSaveChanges": "Änderungen speichern",
   "accountClose": "Schließen",
   "accountLoading": "Daten werden geladen...",
   "accountNoData": "Keine Daten"

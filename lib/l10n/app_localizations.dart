@@ -696,6 +696,24 @@ abstract class AppLocalizations {
   /// **'Edit profile'**
   String get accountEditProfile;
 
+  /// No description provided for @accountUsernameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get accountUsernameLabel;
+
+  /// No description provided for @accountEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get accountEmailLabel;
+
+  /// No description provided for @accountSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get accountSaveChanges;
+
   /// No description provided for @accountClose.
   ///
   /// In en, this message translates to:

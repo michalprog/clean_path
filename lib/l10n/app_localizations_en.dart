@@ -328,6 +328,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountEditProfile => 'Edit profile';
 
   @override
+  String get accountUsernameLabel => 'Username';
+
+  @override
+  String get accountEmailLabel => 'Email';
+
+  @override
+  String get accountSaveChanges => 'Save changes';
+
+  @override
   String get accountClose => 'Close';
 
   @override

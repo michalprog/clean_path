@@ -103,6 +103,9 @@
   "accountStatusInactive": "Inactiva",
   "accountJoinedTitle": "Te uniste",
   "accountEditProfile": "Editar perfil",
+  "accountUsernameLabel": "Nombre de usuario",
+  "accountEmailLabel": "Correo electrónico",
+  "accountSaveChanges": "Guardar cambios",
   "accountClose": "Cerrar",
   "accountLoading": "Cargando datos...",
   "accountNoData": "Sin datos"
