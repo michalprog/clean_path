@@ -5,6 +5,7 @@ class User {
   final int xp;
   final int level;
   final int character;
+  final int streak;
   final DateTime joinDate;
   final int status;
 
@@ -15,6 +16,7 @@ class User {
     required this.xp,
     required this.level,
     required this.character,
+    required this.streak,
     required this.joinDate,
     required this.status,
   });
@@ -27,6 +29,7 @@ class User {
       xp: map['xp'] as int,
       level: map['level'] as int,
       character: map['character'] as int,
+      streak: map['streak'] as int? ?? 0,
       joinDate: DateTime.parse(map['join_date'] as String),
       status: map['status'] as int,
     );
@@ -40,6 +43,7 @@ class User {
       'xp': xp,
       'level': level,
       'character': character,
+      'streak': streak,
       'join_date': joinDate.toIso8601String(),
       'status': status,
     };
@@ -52,6 +56,7 @@ class User {
     int? xp,
     int? level,
     int? character,
+    int? streak,
     DateTime? joinDate,
     int? status,
   }) {
@@ -62,6 +67,7 @@ class User {
       xp: xp ?? this.xp,
       level: level ?? this.level,
       character: character ?? this.character,
+      streak: streak ?? this.streak,
       joinDate: joinDate ?? this.joinDate,
       status: status ?? this.status,
     );

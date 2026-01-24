@@ -22,7 +22,7 @@ class DatabaseManager {
 
     return await openDatabase(
       path,
-      version: 7,
+      version: 8,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
       onOpen: _ensureDefaultUser,
@@ -71,6 +71,7 @@ class DatabaseManager {
         xp INTEGER NOT NULL,
         level INTEGER NOT NULL,
         character INTEGER NOT NULL,
+         streak INTEGER NOT NULL DEFAULT 0,
         join_date TEXT NOT NULL,
         status INTEGER NOT NULL
       )
@@ -146,6 +147,13 @@ class DatabaseManager {
           "ALTER TABLE user ADD COLUMN join_date TEXT NOT NULL DEFAULT ''",
         );
       }
+      if (oldVersion < 8) {
+        if (!await _hasColumn(db, 'user', 'streak')) {
+          await db.execute(
+            'ALTER TABLE user ADD COLUMN streak INTEGER NOT NULL DEFAULT 0',
+          );
+        }
+      }
 
       if (!await _hasColumn(db, 'user', 'status')) {
         await db.execute(
@@ -172,6 +180,7 @@ class DatabaseManager {
         'xp': 0,
         'level': 0,
         'character': 0,
+        'streak': 0,
         'join_date': DateTime.now().toIso8601String(),
         'status': 0,
       });
