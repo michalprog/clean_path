@@ -65,6 +65,9 @@ class AlkView extends StatelessWidget {
                       child: TimerWidget(
                         timerFunction: providerOperation,
                         startCounter: alcocholProvider.timerTime,
+                        addictionType: AddictionTypes.alcochol,
+                        recordActivated: alcocholProvider.alcRecord?.activated,
+
                       ),
                     ),
                   ),

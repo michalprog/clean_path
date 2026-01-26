@@ -25,16 +25,17 @@ class AchievementProvider extends ChangeNotifier {
     await fetchAchievements();
   }
 
-  Future<void> statisticInicjalization() async {
-    await checkAchievements();
+  Future<int> statisticInicjalization() async {
+    final activatedCount = await checkAchievements();
     await fetchAchievements();
     activeAchievements = AchievmentUtils.getActiveRecords(_achievements);
     unsactiveAchievements = AchievmentUtils.getUnactiveRecords(_achievements);
     showAchievements = activeAchievements + unsactiveAchievements;
     notifyListeners();
+    return activatedCount;
   }
 
-  Future<void> checkAchievements() async {
-    await _achievementChecker.checkAchievements();
+  Future<int> checkAchievements() async {
+    return _achievementChecker.checkAchievements();
   }
 }

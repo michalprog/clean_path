@@ -1,17 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import '/utils_files/timer_utils.dart';
-import '/providers/database_provider.dart';
+
+import '/enums/enums.dart';
+import '/main/service_locator.dart';
+import '/providers/account_provider.dart';
+import '/providers/settings_storage.dart';
 
 class TimerWidget extends StatefulWidget {
-  final Function(int option) timerFunction;
-  bool timerState = false;
-  final int startCounter;
-  TimerWidget({
+  final void Function(int option) timerFunction;
+  final int startCounter; // ms
+  final AddictionTypes addictionType;
+  final DateTime? recordActivated;
+
+  const TimerWidget({
     super.key,
     required this.timerFunction,
     required this.startCounter,
+    required this.addictionType,
+    required this.recordActivated,
   });
 
   @override
@@ -19,72 +28,60 @@ class TimerWidget extends StatefulWidget {
 }
 
 class _TimerWidgetState extends State<TimerWidget> {
-  late StopWatchTimer _stopWatchTimer;
+  late final StopWatchTimer _stopWatchTimer;
+  StreamSubscription<int>? _timerSubscription;
 
-  static const int countdownStart = 1 * 86400000; // 1 dzień = 86 400 000 ms
+  bool _isRunning = false;
+  int _lastObservedDays = -1;
+
+  static const int _millisecondsPerDay = 86400000;
 
   @override
   void initState() {
     super.initState();
+
     _stopWatchTimer = StopWatchTimer(
       mode: StopWatchMode.countUp,
       presetMillisecond: widget.startCounter,
     );
+
+    // start, jeśli przychodzimy z już działającym licznikiem
     if (widget.startCounter > 0) {
       _stopWatchTimer.onStartTimer();
-      widget.timerState = true;
+      _isRunning = true;
     }
+
+    _timerSubscription = _stopWatchTimer.rawTime.listen(_handleTimerTick);
   }
 
   @override
   void dispose() {
+    _timerSubscription?.cancel();
     _stopWatchTimer.dispose();
     super.dispose();
   }
 
-  String _formatTime(int milliseconds) {
-    int seconds = (milliseconds / 1000).truncate();
-    int days = (seconds / 86400).truncate();
-    int hours = ((seconds % 86400) / 3600).truncate();
-    int minutes = ((seconds % 3600) / 60).truncate();
-    int remainingSeconds = seconds % 60;
-
-    String formattedDays = days.toString().padLeft(2, '0');
-    String formattedHours = hours.toString().padLeft(2, '0');
-    String formattedMinutes = minutes.toString().padLeft(2, '0');
-    String formattedSeconds = remainingSeconds.toString().padLeft(2, '0');
-
-    return "$formattedDays d $formattedHours h $formattedMinutes m $formattedSeconds s";
-  }
-
   String _mainFormatTime(int milliseconds) {
-    int seconds = (milliseconds / 1000).truncate();
-    int days = (seconds / 86400).truncate();
-    int hours = ((seconds % 86400) / 3600).truncate();
-    int minutes = ((seconds % 3600) / 60).truncate();
-    int remainingSeconds = seconds % 60;
+    final seconds = (milliseconds / 1000).truncate();
+    final days = (seconds / 86400).truncate();
+    final hours = ((seconds % 86400) / 3600).truncate();
+    final minutes = ((seconds % 3600) / 60).truncate();
+    final remainingSeconds = seconds % 60;
 
-    String formattedHours = hours.toString().padLeft(2, '0');
-    String formattedMinutes = minutes.toString().padLeft(2, '0');
-    String formattedSeconds = remainingSeconds.toString().padLeft(2, '0');
+    final formattedHours = hours.toString().padLeft(2, '0');
+    final formattedMinutes = minutes.toString().padLeft(2, '0');
+    final formattedSeconds = remainingSeconds.toString().padLeft(2, '0');
 
-    String formattedDays;
-    if (days < 10) {
-      formattedDays = days.toString();
-    } else if (days < 100) {
-      formattedDays = days.toString().padLeft(2, '0');
-    } else {
-      formattedDays = days.toString().padLeft(3, '0');
-    }
+    // dni: 0..9 -> "0", 10..99 -> "10", 100+ -> "100"
+    final formattedDays = days < 10
+        ? days.toString()
+        : (days < 100 ? days.toString().padLeft(2, '0') : days.toString().padLeft(3, '0'));
 
-    return "$formattedHours : $formattedMinutes : $formattedSeconds\n"
-        "$formattedDays d";
+    return "$formattedHours : $formattedMinutes : $formattedSeconds\n$formattedDays d";
   }
 
   @override
   Widget build(BuildContext context) {
-    final database = Provider.of<DatabaseProvider>(context);
-
     return Stack(
       children: [
         Column(
@@ -106,132 +103,106 @@ class _TimerWidgetState extends State<TimerWidget> {
               },
             ),
 
-            const SizedBox(height: 200),
+            const SizedBox(height: 24),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // RESET / START
                 ElevatedButton(
-                  onPressed: () => timerFunction(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                    widget.timerState ? Colors.red.shade600 : Colors.green.shade600,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  child: Text(widget.timerState ? "Reset" : "Start"),
+                  onPressed: _isRunning ? null : _startTimerWithRecord,
+                  child: const Text('Start'),
                 ),
-
-                const SizedBox(width: 16),
-
-                // MOTIVATION BUTTON
+                const SizedBox(width: 12),
                 ElevatedButton(
-                  onPressed: () => widget.timerFunction(3),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade600,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  child: const Icon(Icons.lightbulb_outline),
+                  onPressed: !_isRunning ? null : _stopTimer,
+                  child: const Text('Stop'),
+                ),
+                const SizedBox(width: 12),
+                OutlinedButton(
+                  onPressed: _resetTimer,
+                  child: const Text('Reset'),
                 ),
               ],
             ),
-            const SizedBox(height: 90),
+
+            const SizedBox(height: 24),
           ],
         ),
       ],
     );
   }
 
-
-  Future<void> timerFunction() async {
-    final wasRunning = widget.timerState;
-    if (wasRunning) {
-      final shouldReset = await showDialog<bool>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            title: const Text("Are you sure?", textAlign: TextAlign.center),
-            content: const Text(
-              "Do you want to reset the timer?",
-              textAlign: TextAlign.center,
-            ),
-            actionsAlignment: MainAxisAlignment.center,
-            actionsPadding: const EdgeInsets.only(bottom: 12),
-            actions: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.grey.shade700,
-                ),
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text("Cancel"),
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green.shade400,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 2,
-                ),
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text("Reset"),
-              ),
-            ],
-          );
-        },
-      );
-
-      if (shouldReset != true) {
-        return;
-      }
-    }
-
-    if (!mounted) {
-      return;
-    }
-    if (wasRunning) {
-      setState(() {
-        _stopWatchTimer.onResetTimer();
-        widget.timerFunction(2);
-        widget.timerState = false;
-      });
-      TimerUtils.showMotivationPopup(
-        context,
-        onTryAgain: () async {
-          await _startTimerWithRecord();
-        },
-      );
-      return;
-    }
-
-    _startTimerWithRecord();
-  }
-
-  void _startStopwatch() {
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _stopWatchTimer.onResetTimer();
-      _stopWatchTimer.onStartTimer();
-      widget.timerState = true;
-    });
+  void _startStopwatchFromZero() {
+    if (!mounted) return;
+    _stopWatchTimer.onResetTimer();
+    _stopWatchTimer.onStartTimer();
   }
 
   Future<void> _startTimerWithRecord() async {
+    // sygnał do rodzica (Twoja logika: option=1)
     widget.timerFunction(1);
-    _startStopwatch();
+
+    if (!mounted) return;
+    setState(() {
+      _startStopwatchFromZero();
+      _isRunning = true;
+      _lastObservedDays = -1; // reset obserwacji dni po nowym starcie
+    });
+  }
+
+  void _stopTimer() {
+    if (!mounted) return;
+    setState(() {
+      _stopWatchTimer.onStopTimer();
+      _isRunning = false;
+    });
+  }
+
+  void _resetTimer() {
+    if (!mounted) return;
+    setState(() {
+      _stopWatchTimer.onResetTimer();
+      _isRunning = false;
+      _lastObservedDays = -1;
+    });
+  }
+
+  Future<void> _handleTimerTick(int milliseconds) async {
+    if (!mounted) return;
+
+    final recordActivated = widget.recordActivated;
+    if (recordActivated == null || milliseconds <= 0) return;
+
+    final days = milliseconds ~/ _millisecondsPerDay;
+    if (days == _lastObservedDays) return;
+
+    _lastObservedDays = days;
+    await _applyTimerDayRewards(days, recordActivated);
+  }
+
+  Future<void> _applyTimerDayRewards(int days, DateTime recordActivated) async {
+    if (days <= 0) return;
+
+    final settingsStorage = getIt<SettingsStorage>();
+    final accountProvider = context.read<AccountProvider>();
+
+    final storedStart = await settingsStorage.loadTimerStart(widget.addictionType);
+    final currentStart = recordActivated.toIso8601String();
+
+    // nowy rekord -> reset licznika nagród
+    if (storedStart != currentStart) {
+      await settingsStorage.saveTimerStart(widget.addictionType, recordActivated);
+      await settingsStorage.saveTimerRewardedDays(widget.addictionType, 0);
+    }
+
+    final rewardedDays = await settingsStorage.loadTimerRewardedDays(widget.addictionType);
+    if (days <= rewardedDays) return;
+
+    final newlyCompletedDays = days - rewardedDays;
+    for (var i = 0; i < newlyCompletedDays; i++) {
+      await accountProvider.applyLevelingAction(LevelingAction.timerDayCompleted);
+    }
+
+    await settingsStorage.saveTimerRewardedDays(widget.addictionType, days);
   }
 }

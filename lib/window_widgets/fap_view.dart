@@ -66,6 +66,8 @@ class FapView extends StatelessWidget {
                       child: TimerWidget(
                         timerFunction: providerOperation,
                         startCounter: fapProvider.timerTime,
+                        addictionType: AddictionTypes.fap,
+                        recordActivated: fapProvider.fapRecord?.activated,
                       ),
                     ),
                   ),

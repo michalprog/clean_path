@@ -66,6 +66,8 @@ class PapView extends StatelessWidget {
                       child: TimerWidget(
                         timerFunction: providerOperation,
                         startCounter: papProvider.timerTime,
+                        addictionType: AddictionTypes.smoking,
+                        recordActivated: papProvider.papRecord?.activated,
                       ),
                     ),
                   ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/enums/enums.dart';
 import '/l10n/app_localizations.dart';
 import '/providers/achievment_provider.dart';
+import '/providers/account_provider.dart';
 import '/widgets/achivement_widget.dart';
 
 class AchievementView extends StatelessWidget {
@@ -14,10 +16,19 @@ class AchievementView extends StatelessWidget {
       context,
       listen: false,
     );
+    final accountProvider = context.read<AccountProvider>();
     final l10n = AppLocalizations.of(context)!;
 
     return FutureBuilder(
-      future: achievementProvider.statisticInicjalization(),
+      future: achievementProvider.statisticInicjalization().then((count) async {
+        if (count <= 0) {
+          return;
+        }
+        for (var i = 0; i < count; i++) {
+          await accountProvider
+              .applyLevelingAction(LevelingAction.achievementUnlocked);
+        }
+      }),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -38,8 +49,6 @@ class AchievementView extends StatelessWidget {
                   return Center(child: Text(l10n.noAchievements));
                 }
 
-                // Jeśli masz mniej/więcej niż 20 rekordów, gablotka i tak będzie wyglądać spójnie:
-                // - max 20 = 4x5
                 final visible = items.take(20).toList();
 
                 return Padding(

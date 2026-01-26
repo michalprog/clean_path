@@ -67,6 +67,8 @@ class DefaultView extends StatelessWidget {
                       child: TimerWidget(
                         timerFunction: providerOperation,
                         startCounter: sweetsProvider.timerTime,
+                        addictionType: AddictionTypes.sweets,
+                        recordActivated: sweetsProvider.sweetRecord?.activated,
                       ),
                     ),
                   ),
