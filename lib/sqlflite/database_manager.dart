@@ -147,19 +147,20 @@ class DatabaseManager {
           "ALTER TABLE user ADD COLUMN join_date TEXT NOT NULL DEFAULT ''",
         );
       }
-      if (oldVersion < 8) {
-        if (!await _hasColumn(db, 'user', 'streak')) {
-          await db.execute(
-            'ALTER TABLE user ADD COLUMN streak INTEGER NOT NULL DEFAULT 0',
-          );
-        }
-      }
+    }
 
-      if (!await _hasColumn(db, 'user', 'status')) {
+    if (oldVersion < 8) {
+      if (!await _hasColumn(db, 'user', 'streak')) {
         await db.execute(
-          'ALTER TABLE user ADD COLUMN status INTEGER NOT NULL DEFAULT 1',
+          'ALTER TABLE user ADD COLUMN streak INTEGER NOT NULL DEFAULT 0',
         );
       }
+    }
+
+    if (!await _hasColumn(db, 'user', 'status')) {
+      await db.execute(
+        'ALTER TABLE user ADD COLUMN status INTEGER NOT NULL DEFAULT 1',
+      );
     }
 
     await _ensureDefaultUser(db);

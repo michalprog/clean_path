@@ -8,6 +8,7 @@ import '/enums/enums.dart';
 import 'all_attemps_list.dart';
 import 'daily_task_statistics_page.dart';
 import 'main_statistcs_view.dart';
+import '/user_views/account_summary_view.dart';
 
 class MainStatistic extends StatefulWidget {
   final int index;
@@ -65,7 +66,8 @@ class _MainStatisticState extends State<MainStatistic> {
       ),
       MainStatistcsView(),
       PageView(children: const [StatisticsTrailsView(), AllAttempsList()]),
-      const DailyTaskStatisticsPage(), // <- upewniamy się, że jest const jeśli się da
+      const DailyTaskStatisticsPage(),
+      const AccountSummaryView(),// <- upewniamy się, że jest const jeśli się da
     ];
 
     // zabezpieczenie indeksu z zewnątrz
@@ -83,7 +85,8 @@ class _MainStatisticState extends State<MainStatistic> {
       l10n.noSweetStatus,
       l10n.drawerStatistics,
       l10n.timesOfTrials,
-      l10n.dailyTaskTitle, // <- DODANE: tytuł dla DailyTaskStatisticsPage (index 6)
+      l10n.dailyTaskTitle,
+      "statystyki"
     ];
 
     return Scaffold(
@@ -168,7 +171,7 @@ class _MainStatisticState extends State<MainStatistic> {
               ),
             ), // <- DailyTaskStatisticsPage
             IconButton(
-              onPressed: () {},
+              onPressed: () => switchViews(7),
               icon: Icon(
                 Icons.person,
                 color: cs.onSurfaceVariant,
