@@ -32,7 +32,14 @@ class AccountSummaryView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: cs.surface,
+            gradient: LinearGradient(
+              colors: [
+                Colors.green.shade50,
+                Colors.green.shade100,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
@@ -46,8 +53,12 @@ class AccountSummaryView extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 38,
-                backgroundColor: cs.primary.withOpacity(0.15),
-                child: Icon(Icons.person, size: 42, color: cs.primary),
+                backgroundColor: Colors.green.shade200,
+                child: Icon(
+                  Icons.person,
+                  size: 42,
+                  color: Colors.green.shade900,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
@@ -66,6 +77,10 @@ class AccountSummaryView extends StatelessWidget {
                   onPressed: () => _openEditProfile(context),
                   icon: const Icon(Icons.edit),
                   label: Text(l10n.accountEditProfile),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.green.shade600,
+                    foregroundColor: Colors.white,
+                  ),
                 ),
               ),
             ],
@@ -77,9 +92,12 @@ class AccountSummaryView extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                cs.primary.withOpacity(0.15),
-                cs.secondary.withOpacity(0.15),
+                Colors.green.shade100,
+                Colors.green.shade200,
+                Colors.green.shade300,
               ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(16),
           ),
@@ -90,19 +108,19 @@ class AccountSummaryView extends StatelessWidget {
                 icon: Icons.emoji_events,
                 label: l10n.accountLevelLabel,
                 value: level.toString(),
-                color: Colors.deepPurple,
+                color: Colors.green.shade700,
               ),
               AccountInfoTile(
                 icon: Icons.auto_graph,
                 label: l10n.accountXpLabel,
                 value: xp.toString(),
-                color: Colors.teal,
+                color: Colors.green.shade600,
               ),
               AccountInfoTile(
                 icon: Icons.local_fire_department,
                 label: l10n.accountStreakLabel,
                 value: l10n.accountStreakValue(streak),
-                color: Colors.deepOrange,
+                color: Colors.green.shade800,
               ),
             ],
           ),
@@ -111,16 +129,17 @@ class AccountSummaryView extends StatelessWidget {
         AccountRow(
           icon: Icons.check_circle,
           title: l10n.accountStatusTitle,
-          value:
-          status == 1 ? l10n.accountStatusActive : l10n.accountStatusInactive,
-          color: status == 1 ? Colors.green : Colors.grey,
+          value: status == 1
+              ? l10n.accountStatusActive
+              : l10n.accountStatusInactive,
+          color: status == 1 ? Colors.green.shade700 : Colors.grey,
         ),
         const SizedBox(height: 12),
         AccountRow(
           icon: Icons.calendar_today,
           title: l10n.accountJoinedTitle,
           value: joinDate,
-          color: Colors.blueGrey,
+          color: Colors.green.shade400,
         ),
         if (accountProvider.isLoading) ...[
           const SizedBox(height: 16),

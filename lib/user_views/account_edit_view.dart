@@ -35,6 +35,26 @@ class _AccountEditViewState extends State<AccountEditView> {
     super.dispose();
   }
 
+  InputDecoration _inputDecoration(
+      String label, {
+        required Color labelColor,
+      }) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: TextStyle(color: labelColor),
+      filled: true,
+      fillColor: Colors.green.shade50,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: Colors.green.shade200),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: Colors.green.shade600, width: 2),
+      ),
+    );
+  }
+
   Future<void> _saveChanges(BuildContext context) async {
     final user = _user;
     if (user == null) return;
@@ -65,16 +85,54 @@ class _AccountEditViewState extends State<AccountEditView> {
     final user = _user;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.accountEditProfile)),
+      appBar: AppBar(
+        title: Text(l10n.accountEditProfile),
+        backgroundColor: Colors.green.shade50,
+        foregroundColor: Colors.green.shade900,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                l10n.accountEditProfile,
-                style: tt.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.green.shade50,
+                      Colors.green.shade100,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.green.shade200),
+                ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.green.shade200,
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.green.shade900,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        l10n.accountEditProfile,
+                        style: tt.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.green.shade900,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
 
@@ -93,8 +151,9 @@ class _AccountEditViewState extends State<AccountEditView> {
                   textInputAction: TextInputAction.next,
                   autocorrect: false,
                   enableSuggestions: false,
-                  decoration: InputDecoration(
-                    labelText: l10n.accountUsernameLabel,
+                  decoration: _inputDecoration(
+                    l10n.accountUsernameLabel,
+                    labelColor: Colors.green.shade700,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -108,8 +167,9 @@ class _AccountEditViewState extends State<AccountEditView> {
                   autocorrect: false,
                   enableSuggestions: false,
                   textCapitalization: TextCapitalization.none,
-                  decoration: InputDecoration(
-                    labelText: l10n.accountEmailLabel,
+                  decoration: _inputDecoration(
+                    l10n.accountEmailLabel,
+                    labelColor: Colors.green.shade700,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -118,9 +178,13 @@ class _AccountEditViewState extends State<AccountEditView> {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
-                  onPressed: isLoading || user == null ? null : () => _saveChanges(context),
+                  onPressed: isLoading || user == null
+                      ? null
+                      : () => _saveChanges(context),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
+                    backgroundColor: Colors.green.shade600,
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -136,6 +200,8 @@ class _AccountEditViewState extends State<AccountEditView> {
                   onPressed: () => Navigator.of(context).pop(),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
+                    foregroundColor: Colors.green.shade700,
+                    side: BorderSide(color: Colors.green.shade300),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

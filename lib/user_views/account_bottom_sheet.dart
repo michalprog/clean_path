@@ -35,7 +35,14 @@ class AccountBottomSheet extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
         decoration: BoxDecoration(
-          color: cs.surface,
+          gradient: LinearGradient(
+            colors: [
+              Colors.green.shade50,
+              Colors.green.shade100,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
@@ -62,8 +69,8 @@ class AccountBottomSheet extends StatelessWidget {
             // Avatar + podstawowe dane
             CircleAvatar(
               radius: 36,
-              backgroundColor: cs.primaryContainer,
-              foregroundColor: cs.onPrimaryContainer,
+              backgroundColor: Colors.green.shade200,
+              foregroundColor: Colors.green.shade900,
               child: const Icon(Icons.person, size: 40),
             ),
             const SizedBox(height: 12),
@@ -90,12 +97,15 @@ class AccountBottomSheet extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    cs.primary.withOpacity(0.14),
-                    cs.secondary.withOpacity(0.14),
+                    Colors.green.shade100,
+                    Colors.green.shade200,
+                    Colors.green.shade300,
                   ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: cs.outlineVariant.withOpacity(0.6)),
+                border: Border.all(color: Colors.green.shade300),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,26 +114,26 @@ class AccountBottomSheet extends StatelessWidget {
                     icon: Icons.emoji_events,
                     label: l10n.accountLevelLabel,
                     value: level.toString(),
-                    color: cs.primary,
+                    color: Colors.green.shade700,
                   ),
                   AccountInfoTile(
                     icon: Icons.auto_graph,
                     label: l10n.accountXpLabel,
                     value: xp.toString(),
-                    color: cs.secondary,
+                    color: Colors.green.shade600,
                   ),
                   AccountInfoTile(
                     icon: Icons.local_fire_department,
                     label: l10n.accountStreakLabel,
                     value: l10n.accountStreakValue(streak),
-                    color: cs.tertiary,
+                    color: Colors.green.shade800,
                   ),
                 ],
               ),
             ),
 
             const SizedBox(height: 16),
-            Divider(height: 1, color: cs.outlineVariant.withOpacity(0.7)),
+            Divider(height: 1, color: Colors.green.shade200),
             const SizedBox(height: 16),
 
             // Wiersz ze statusem konta.
@@ -131,7 +141,7 @@ class AccountBottomSheet extends StatelessWidget {
               icon: status == 1 ? Icons.check_circle : Icons.cancel,
               title: l10n.accountStatusTitle,
               value: _statusLabel(status, l10n),
-              color: status == 1 ? Colors.green : cs.outline,
+              color: status == 1 ? Colors.green.shade700 : Colors.green.shade300,
             ),
             const SizedBox(height: 8),
 
@@ -140,7 +150,7 @@ class AccountBottomSheet extends StatelessWidget {
               icon: Icons.calendar_today,
               title: l10n.accountJoinedTitle,
               value: joinDate,
-              color: cs.secondary,
+              color: Colors.green.shade500,
             ),
 
             const SizedBox(height: 16),
@@ -153,8 +163,8 @@ class AccountBottomSheet extends StatelessWidget {
                 icon: const Icon(Icons.edit),
                 label: Text(l10n.accountEditProfile),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: cs.primary,
-                  side: BorderSide(color: cs.outline),
+                  foregroundColor: Colors.green.shade700,
+                  side: BorderSide(color: Colors.green.shade300),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -172,6 +182,8 @@ class AccountBottomSheet extends StatelessWidget {
                 icon: const Icon(Icons.close),
                 label: Text(l10n.accountClose),
                 style: FilledButton.styleFrom(
+                  backgroundColor: Colors.green.shade600,
+                  foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

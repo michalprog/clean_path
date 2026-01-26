@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AccountRow extends StatelessWidget {
   const AccountRow({
     super.key,
@@ -21,15 +22,22 @@ class AccountRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
-        color: cs.surfaceContainerHighest.withOpacity(0.6),
+        gradient: LinearGradient(
+          colors: [
+            color.withOpacity(0.14),
+            color.withOpacity(0.04),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: cs.outlineVariant.withOpacity(0.6)),
+        border: Border.all(color: color.withOpacity(0.25)),
       ),
       child: Row(
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: color.withOpacity(0.16),
+            backgroundColor: color.withOpacity(0.22),
             child: Icon(icon, size: 16, color: color),
           ),
           const SizedBox(width: 12),
@@ -42,7 +50,10 @@ class AccountRow extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             value,
-            style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
+            style: tt.bodyMedium?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),
