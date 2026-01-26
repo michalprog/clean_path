@@ -17,6 +17,8 @@ import '/main/service_locator.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupServiceLocator();
+  final accountProvider = getIt<AccountProvider>();
+  await accountProvider.loadUser();
   runApp(
     MultiProvider(
       providers: [
@@ -47,14 +49,11 @@ Future<void> main() async {
         ChangeNotifierProvider<DailyTasksProvider>(
           create: (_) => DailyTasksProvider()..initialize(),
         ),
-        ChangeNotifierProvider<AccountProvider>(
-          create: (_) => AccountProvider()..loadUser(),
+        ChangeNotifierProvider<AccountProvider>.value(
+          value: accountProvider,
         ),
       ],
       child: CleanPathMain(),
     ),
   );
 }
-
-
-
