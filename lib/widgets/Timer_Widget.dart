@@ -8,6 +8,7 @@ import '/enums/enums.dart';
 import '/main/service_locator.dart';
 import '/providers/account_provider.dart';
 import '/providers/settings_storage.dart';
+import '/utils_files/timer_utils.dart';
 
 class TimerWidget extends StatefulWidget {
   final void Function(int option) timerFunction;
@@ -33,8 +34,6 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   bool _isRunning = false;
   int _lastObservedDays = -1;
-
-  static const int _millisecondsPerDay = 86400000;
 
   @override
   void initState() {
@@ -85,8 +84,8 @@ class _TimerWidgetState extends State<TimerWidget> {
     return Stack(
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            const SizedBox(height: 220),
             StreamBuilder<int>(
               stream: _stopWatchTimer.rawTime,
               builder: (context, snapshot) {
@@ -103,29 +102,42 @@ class _TimerWidgetState extends State<TimerWidget> {
               },
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 200),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: _isRunning ? null : _startTimerWithRecord,
-                  child: const Text('Start'),
+                  onPressed: _handleMainButtonPress,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _isRunning ? Colors.red.shade600 : Colors.green.shade600,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(_isRunning ? 'Reset' : 'Start'),
                 ),
-                const SizedBox(width: 12),
+
+                const SizedBox(width: 16),
+
                 ElevatedButton(
-                  onPressed: !_isRunning ? null : _stopTimer,
-                  child: const Text('Stop'),
-                ),
-                const SizedBox(width: 12),
-                OutlinedButton(
-                  onPressed: _resetTimer,
-                  child: const Text('Reset'),
+                  onPressed: _showMotivationDialog,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade600,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: const Icon(Icons.lightbulb_outline),
                 ),
               ],
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 90),
           ],
         ),
       ],
@@ -150,21 +162,93 @@ class _TimerWidgetState extends State<TimerWidget> {
     });
   }
 
-  void _stopTimer() {
-    if (!mounted) return;
-    setState(() {
-      _stopWatchTimer.onStopTimer();
-      _isRunning = false;
-    });
+  Future<void> _handleMainButtonPress() async {
+    if (_isRunning) {
+      final shouldReset = await _confirmReset();
+      if (shouldReset != true) return;
+      if (!mounted) return;
+      setState(() {
+        _stopWatchTimer.onResetTimer();
+        _isRunning = false;
+        _lastObservedDays = -1;
+      });
+      widget.timerFunction(2);
+      TimerUtils.showMotivationPopup(
+        context,
+        onTryAgain: _startTimerWithRecord,
+      );
+      return;
+    }
+
+    await _startTimerWithRecord();
   }
 
-  void _resetTimer() {
-    if (!mounted) return;
-    setState(() {
-      _stopWatchTimer.onResetTimer();
-      _isRunning = false;
-      _lastObservedDays = -1;
-    });
+  Future<bool?> _confirmReset() {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text('Are you sure?', textAlign: TextAlign.center),
+          content: const Text(
+            'Do you want to reset the timer?',
+            textAlign: TextAlign.center,
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actionsPadding: const EdgeInsets.only(bottom: 12),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.grey.shade700,
+              ),
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            const SizedBox(width: 12),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green.shade400,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                elevation: 2,
+              ),
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Reset'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showMotivationDialog() {
+    final quote = TimerUtils.giveMotivationMessage();
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: const Text('Motivation', textAlign: TextAlign.center),
+          content: Text(
+            quote,
+            textAlign: TextAlign.center,
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Thanks!'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _handleTimerTick(int milliseconds) async {
@@ -173,7 +257,7 @@ class _TimerWidgetState extends State<TimerWidget> {
     final recordActivated = widget.recordActivated;
     if (recordActivated == null || milliseconds <= 0) return;
 
-    final days = milliseconds ~/ _millisecondsPerDay;
+    final days = milliseconds ~/ Duration.millisecondsPerDay;
     if (days == _lastObservedDays) return;
 
     _lastObservedDays = days;
