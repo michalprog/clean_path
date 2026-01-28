@@ -25,7 +25,6 @@ class DailyTaskStatisticsView extends StatelessWidget {
           0,
               (sum, value) => sum + value,
         );
-        final tasks = context.watch<DailyTasksProvider>().tasks;
         return ListView(
           children: [
             StatisticListTile(
@@ -42,8 +41,7 @@ class DailyTaskStatisticsView extends StatelessWidget {
                 '',
               );
               return StatisticListTile(
-                mainText:
-                l10n.dailyTaskCompletedForCategory(categoryLabel),
+                mainText: l10n.dailyTaskCompletedForCategory(categoryLabel),
                 highlightedText: '$completedInCategory',
               );
             }),
@@ -57,4 +55,3 @@ class DailyTaskStatisticsView extends StatelessWidget {
     );
   }
 }
-//TODO stan dzisiejszych tasków

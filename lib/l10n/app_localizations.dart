@@ -630,6 +630,36 @@ abstract class AppLocalizations {
   /// **'Completed in {category}'**
   String dailyTaskCompletedForCategory(Object category);
 
+  /// No description provided for @dailyTaskProgressLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get dailyTaskProgressLevelLabel;
+
+  /// No description provided for @dailyTaskProgressRankLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rank'**
+  String get dailyTaskProgressRankLabel;
+
+  /// No description provided for @dailyTaskProgressStreakLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get dailyTaskProgressStreakLabel;
+
+  /// No description provided for @dailyTaskProgressTotalCompletedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total completed'**
+  String get dailyTaskProgressTotalCompletedLabel;
+
+  /// No description provided for @dailyTaskProgressTasksToNextLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks to next level'**
+  String get dailyTaskProgressTasksToNextLevelLabel;
+
   /// No description provided for @accountDefaultUsername.
   ///
   /// In en, this message translates to:

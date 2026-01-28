@@ -295,6 +295,22 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get dailyTaskProgressLevelLabel => 'Nivel';
+
+  @override
+  String get dailyTaskProgressRankLabel => 'Rango';
+
+  @override
+  String get dailyTaskProgressStreakLabel => 'Racha';
+
+  @override
+  String get dailyTaskProgressTotalCompletedLabel => 'Total completadas';
+
+  @override
+  String get dailyTaskProgressTasksToNextLevelLabel =>
+      'Tareas hasta el siguiente nivel';
+
+  @override
   String get accountDefaultUsername => 'Usuario de Clean Path';
 
   @override

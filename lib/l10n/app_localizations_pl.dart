@@ -293,6 +293,21 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get dailyTaskProgressLevelLabel => 'Poziom';
+
+  @override
+  String get dailyTaskProgressRankLabel => 'Ranga';
+
+  @override
+  String get dailyTaskProgressStreakLabel => 'Seria';
+
+  @override
+  String get dailyTaskProgressTotalCompletedLabel => 'Łącznie wykonane';
+
+  @override
+  String get dailyTaskProgressTasksToNextLevelLabel => 'Do następnego poziomu';
+
+  @override
   String get accountDefaultUsername => 'Użytkownik Clean Path';
 
   @override
