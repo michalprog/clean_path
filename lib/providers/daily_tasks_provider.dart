@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/data_types/daily_task.dart';
 import '/sqlflite/daily_tasks_dao.dart';
+import '/data_types/task_progress.dart';
 
 class DailyTasksProvider extends ChangeNotifier {
   final DailyTasksDao dailyTasksDao = DailyTasksDao();
@@ -24,7 +25,13 @@ class DailyTasksProvider extends ChangeNotifier {
   Future<List<DateTime>> fetchCompletionDatesForType(int type) {
     return dailyTasksDao.getCompletionDatesForType(type);
   }
+  Future<TaskProgress?> fetchTaskProgress(int type) {
+    return dailyTasksDao.getTaskProgressForType(type);
+  }
 
+  Future<Map<int, TaskProgress>> fetchTaskProgressMap() {
+    return dailyTasksDao.getTaskProgressMap();
+  }
 
   Future<void> saveTask(DailyTask task) async {
     final updated = await dailyTasksDao.insertDailyTasks(task);

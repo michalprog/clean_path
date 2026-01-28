@@ -184,6 +184,26 @@ class DailyTasksDao {
     await insertDailyTasks(task);
   }
 
+  Future<TaskProgress?> getTaskProgressForType(int type) async {
+    if (type < 1 || type > DailyTaskType.values.length) {
+      return null;
+    }
+    final taskEnum = DailyTaskType.values[type - 1];
+    return _taskProgressDao.getTaskProgress(taskEnum);
+  }
+
+  Future<Map<int, TaskProgress>> getTaskProgressMap() async {
+    final progressMap = <int, TaskProgress>{};
+    for (final taskType in DailyTaskType.values) {
+      final progress = await _taskProgressDao.getTaskProgress(taskType);
+      if (progress == null) {
+        continue;
+      }
+      progressMap[taskType.index + 1] = progress;
+    }
+    return progressMap;
+  }
+
   Future<void> _updateTaskProgress({
     required int taskType,
     required DateTime completionDate,
