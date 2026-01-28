@@ -16,6 +16,7 @@ class AchievementProvider extends ChangeNotifier {
   List<AchievementRecord> get achievements => _achievements;
 
   Future<void> fetchAchievements() async {
+    await _achievementDao.ensureInitialized();
     _achievements = await _achievementDao.getAll();
     notifyListeners();
   }
@@ -36,6 +37,7 @@ class AchievementProvider extends ChangeNotifier {
   }
 
   Future<int> checkAchievements() async {
+    await _achievementDao.ensureInitialized();
     return _achievementChecker.checkAchievements();
   }
 }
