@@ -85,65 +85,78 @@ class _TimerWidgetState extends State<TimerWidget> {
       children: [
         Column(
           children: [
-            const SizedBox(height: 220),
-            StreamBuilder<int>(
-              stream: _stopWatchTimer.rawTime,
-              builder: (context, snapshot) {
-                final value = snapshot.data ?? widget.startCounter;
-                return Text(
-                  _mainFormatTime(value),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                );
-              },
-            ),
-
-            const SizedBox(height: 200),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: _handleMainButtonPress,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _isRunning ? Colors.red.shade600 : Colors.green.shade600,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+            const SizedBox(height: 32),
+            Expanded(
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: StreamBuilder<int>(
+                      stream: _stopWatchTimer.rawTime,
+                      builder: (context, snapshot) {
+                        final value = snapshot.data ?? widget.startCounter;
+                        return Text(
+                          _mainFormatTime(value),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  child: Text(_isRunning ? 'Reset' : 'Start'),
-                ),
-
-                const SizedBox(width: 16),
-
-                ElevatedButton(
-                  onPressed: _showMotivationDialog,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade600,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: _handleMainButtonPress,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _isRunning
+                                  ? Colors.red.shade600
+                                  : Colors.green.shade600,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                            child: Text(_isRunning ? 'Reset' : 'Start'),
+                          ),
+                          const SizedBox(width: 16),
+                          ElevatedButton(
+                            onPressed: _showMotivationDialog,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue.shade600,
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                            child: const Icon(Icons.lightbulb_outline),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  child: const Icon(Icons.lightbulb_outline),
-                ),
-              ],
+                ],
+              ),
             ),
-
-            const SizedBox(height: 90),
+            const SizedBox(height: 24),
           ],
         ),
       ],
     );
   }
-
   void _startStopwatchFromZero() {
     if (!mounted) return;
     _stopWatchTimer.onResetTimer();

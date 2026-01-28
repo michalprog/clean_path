@@ -35,10 +35,7 @@ class _AccountEditViewState extends State<AccountEditView> {
     super.dispose();
   }
 
-  InputDecoration _inputDecoration(
-      String label, {
-        required Color labelColor,
-      }) {
+  InputDecoration _inputDecoration(String label, {required Color labelColor}) {
     return InputDecoration(
       labelText: label,
       labelStyle: TextStyle(color: labelColor),
@@ -86,6 +83,7 @@ class _AccountEditViewState extends State<AccountEditView> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(l10n.accountEditProfile),
         backgroundColor: Colors.green.shade50,
         foregroundColor: Colors.green.shade900,
@@ -97,44 +95,16 @@ class _AccountEditViewState extends State<AccountEditView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.green.shade50,
-                      Colors.green.shade100,
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+              Center(
+                child: Text(
+                  l10n.accountEditProfile,
+                  style: tt.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.green.shade900,
                   ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.green.shade200),
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.green.shade200,
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.green.shade900,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        l10n.accountEditProfile,
-                        style: tt.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.green.shade900,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
 
               if (user == null) ...[
                 Text(
@@ -178,9 +148,10 @@ class _AccountEditViewState extends State<AccountEditView> {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
-                  onPressed: isLoading || user == null
-                      ? null
-                      : () => _saveChanges(context),
+                  onPressed:
+                      isLoading || user == null
+                          ? null
+                          : () => _saveChanges(context),
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     backgroundColor: Colors.green.shade600,

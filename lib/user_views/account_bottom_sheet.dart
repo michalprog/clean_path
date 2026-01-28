@@ -95,15 +95,7 @@ class AccountBottomSheet extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.green.shade100,
-                    Colors.green.shade200,
-                    Colors.green.shade300,
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: Colors.green.shade100,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.green.shade300),
               ),
