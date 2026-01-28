@@ -61,9 +61,12 @@ flutter_launcher_icons:
 flutter_native_splash:
   android: true
   ios: true
-  background_image: "assets/icon/cleanPathLogo.png"
-  fullscreen: true
-
+  background_color: "#0b3d2e"
+  image: "assets/images/main_window_screen.png"
+  android_gravity: center
+  android_scale_type: fitCenter
+  ios_content_mode: scaleAspectFit
+  fullscreen: false
 dev_dependencies:
   flutter_test:
     sdk: flutter

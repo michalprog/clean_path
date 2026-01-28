@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <bitmap android:gravity="fill" android:src="@drawable/background"/>
+        <scale
+            android:gravity="center"
+            android:scaleHeight="50%"
+            android:scaleWidth="50%">
+            <bitmap
+                android:gravity="center"
+                android:src="@drawable/background" />
+        </scale>
     </item>
 </layer-list>
