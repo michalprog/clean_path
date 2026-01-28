@@ -3,6 +3,7 @@ import '/enums/enums.dart';
 class TaskProgress {
   final DailyTaskType taskType;
   final int level;
+  final int rank;
   final int streak;
   final int totalTasksCompleted;
   final int tasksToNextLevel;
@@ -10,6 +11,7 @@ class TaskProgress {
   const TaskProgress({
     required this.taskType,
     required this.level,
+    required this.rank,
     required this.streak,
     required this.totalTasksCompleted,
     required this.tasksToNextLevel,
@@ -27,6 +29,7 @@ class TaskProgress {
     return TaskProgress(
       taskType: taskType,
       level: map['level'] as int,
+      rank: (map['rank'] as int?) ?? 0,
       streak: map['streak'] as int,
       totalTasksCompleted: map['total_tasks_completed'] as int,
       tasksToNextLevel: map['tasks_to_next_level'] as int,
@@ -37,6 +40,7 @@ class TaskProgress {
     final map = <String, dynamic>{
       'id': id,
       'level': level,
+      'rank': rank,
       'streak': streak,
       'total_tasks_completed': totalTasksCompleted,
       'tasks_to_next_level': tasksToNextLevel,
@@ -47,6 +51,7 @@ class TaskProgress {
   TaskProgress copyWith({
     DailyTaskType? taskType,
     int? level,
+    int? rank,
     int? streak,
     int? totalTasksCompleted,
     int? tasksToNextLevel,
@@ -54,6 +59,7 @@ class TaskProgress {
     return TaskProgress(
       taskType: taskType ?? this.taskType,
       level: level ?? this.level,
+      rank: rank ?? this.rank,
       streak: streak ?? this.streak,
       totalTasksCompleted: totalTasksCompleted ?? this.totalTasksCompleted,
       tasksToNextLevel: tasksToNextLevel ?? this.tasksToNextLevel,

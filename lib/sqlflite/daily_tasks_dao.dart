@@ -1,10 +1,15 @@
 import 'package:sqflite/sqflite.dart';
 import '/data_types/daily_task.dart';
 import '/main/service_locator.dart';
+import '/sqlflite/task_progress_dao.dart';
+import '/utils_files/task_progress_utils.dart';
+import '/data_types/task_progress.dart';
+import '/enums/enums.dart';
 import 'database_manager.dart';
 
 class DailyTasksDao {
   final DatabaseManager _dbManager = getIt<DatabaseManager>();
+  final TaskProgressDao _taskProgressDao = TaskProgressDao();
 
   static const List<String> _defaultTasks = [
     'hydration',
@@ -12,7 +17,6 @@ class DailyTasksDao {
     'meditation',
     'learning',
   ];
-
 
   Future<void> ensureInitialized() async {
     final db = await _dbManager.database;
@@ -96,6 +100,25 @@ class DailyTasksDao {
     final startOfDay = normalizedDate.toIso8601String();
     final startOfNextDay =
     normalizedDate.add(const Duration(days: 1)).toIso8601String();
+    final existingToday = await db.query(
+      'daily_tasks',
+      columns: ['date'],
+      where: 'type = ? AND date >= ? AND date < ?',
+      whereArgs: [task.type, startOfDay, startOfNextDay],
+      limit: 1,
+    );
+    final lastCompletionRows = await db.query(
+      'daily_tasks',
+      columns: ['date'],
+      where: 'type = ? AND date < ?',
+      whereArgs: [task.type, startOfDay],
+      orderBy: 'date DESC',
+      limit: 1,
+    );
+    final lastCompletion = lastCompletionRows.isNotEmpty
+        ? DateTime.parse(lastCompletionRows.first['date'] as String)
+        : null;
+    final wasCompletedToday = existingToday.isNotEmpty;
     await db.delete(
       'daily_tasks',
       where: 'type = ? AND date >= ? AND date < ?',
@@ -106,6 +129,13 @@ class DailyTasksDao {
       task.toCompletionMap(normalizedDate),
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
+    if (!wasCompletedToday) {
+      await _updateTaskProgress(
+        taskType: task.type,
+        completionDate: normalizedDate,
+        lastCompletion: lastCompletion,
+      );
+    }
     return task.copyWith(lastCompleted: normalizedDate);
   }
   Future<Map<int, int>> getCompletionCounts() async {
@@ -152,5 +182,68 @@ class DailyTasksDao {
   }
   Future<void> update(DailyTask task) async {
     await insertDailyTasks(task);
+  }
+
+  Future<void> _updateTaskProgress({
+    required int taskType,
+    required DateTime completionDate,
+    DateTime? lastCompletion,
+  }) async {
+    final taskEnum = DailyTaskType.values[taskType - 1];
+    final currentProgress =
+        await _taskProgressDao.getTaskProgress(taskEnum) ??
+            TaskProgress(
+              taskType: taskEnum,
+              level: 0,
+              rank: 0,
+              streak: 0,
+              totalTasksCompleted: 0,
+              tasksToNextLevel: tasksToNextLevel(0),
+            );
+    final updatedTotal = currentProgress.totalTasksCompleted + 1;
+    final updatedLevel = calculateTaskLevel(updatedTotal);
+    final updatedTasksToNext = tasksToNextLevel(updatedTotal);
+    final updatedStreak = _calculateStreak(
+      currentProgress.streak,
+      completionDate,
+      lastCompletion,
+    );
+    var updatedRank = currentProgress.rank;
+    if (updatedLevel > currentProgress.level) {
+      updatedRank = updatedLevel.clamp(0, maxTaskLevel);
+    }
+    if (lastCompletion != null) {
+      final gap = completionDate.difference(lastCompletion).inDays;
+      if (gap >= 7) {
+        updatedRank = (updatedRank - 1).clamp(0, maxTaskLevel);
+      }
+    }
+    await _taskProgressDao.upsertTaskProgress(
+      currentProgress.copyWith(
+        level: updatedLevel,
+        rank: updatedRank,
+        streak: updatedStreak,
+        totalTasksCompleted: updatedTotal,
+        tasksToNextLevel: updatedTasksToNext,
+      ),
+    );
+  }
+
+  int _calculateStreak(
+      int currentStreak,
+      DateTime completionDate,
+      DateTime? lastCompletion,
+      ) {
+    if (lastCompletion == null) {
+      return 1;
+    }
+    final difference = completionDate.difference(lastCompletion).inDays;
+    if (difference == 1) {
+      return currentStreak + 1;
+    }
+    if (difference == 0) {
+      return currentStreak;
+    }
+    return 1;
   }
 }

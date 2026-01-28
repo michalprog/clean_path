@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '/enums/enums.dart';
+import '/utils_files/task_progress_utils.dart';
 
 class DatabaseManager {
   Database? _database;
@@ -24,16 +25,17 @@ class DatabaseManager {
 
     return openDatabase(
       path,
-      version: 9,
+      version: 10,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
       onOpen: (db) async {
         await _ensureDefaultUser(db);
         await _ensureDefaultTaskProgress(db);
+        await _ensureDefaultTaskLevels(db);
+        await _ensureDefaultTaskRanks(db);
       },
     );
   }
-
   // CREATE
 
   Future<void> _onCreate(Database db, int version) async {
@@ -92,14 +94,34 @@ class DatabaseManager {
       CREATE TABLE task_progress (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         level INTEGER NOT NULL,
+        rank INTEGER NOT NULL,
         streak INTEGER NOT NULL,
         total_tasks_completed INTEGER NOT NULL,
         tasks_to_next_level INTEGER NOT NULL
       )
     ''');
 
+    await db.execute('''
+      CREATE TABLE task_levels (
+        level INTEGER PRIMARY KEY,
+        min_tasks INTEGER NOT NULL,
+        max_tasks INTEGER NOT NULL,
+        color TEXT NOT NULL
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE task_ranks (
+        id INTEGER PRIMARY KEY,
+        title TEXT NOT NULL,
+        min_level INTEGER NOT NULL
+      )
+    ''');
+
     await _ensureDefaultUser(db);
     await _ensureDefaultTaskProgress(db);
+    await _ensureDefaultTaskLevels(db);
+    await _ensureDefaultTaskRanks(db);
   }
 
   // UPGRADE
@@ -171,12 +193,12 @@ class DatabaseManager {
       );
     }
 
-    // v9: task_progress
     if (oldVersion < 9) {
       await db.execute('''
         CREATE TABLE IF NOT EXISTS task_progress (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           level INTEGER NOT NULL,
+          rank INTEGER NOT NULL,
           streak INTEGER NOT NULL,
           total_tasks_completed INTEGER NOT NULL,
           tasks_to_next_level INTEGER NOT NULL
@@ -184,8 +206,36 @@ class DatabaseManager {
       ''');
     }
 
+    if (!await _hasColumn(db, 'task_progress', 'rank')) {
+      await db.execute(
+        'ALTER TABLE task_progress ADD COLUMN rank INTEGER NOT NULL DEFAULT 0',
+      );
+    }
+
+    // v10: task_levels + task_ranks
+    if (oldVersion < 10) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS task_levels (
+          level INTEGER PRIMARY KEY,
+          min_tasks INTEGER NOT NULL,
+          max_tasks INTEGER NOT NULL,
+          color TEXT NOT NULL
+        )
+      ''');
+
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS task_ranks (
+          id INTEGER PRIMARY KEY,
+          title TEXT NOT NULL,
+          min_level INTEGER NOT NULL
+        )
+      ''');
+    }
+
     await _ensureDefaultUser(db);
     await _ensureDefaultTaskProgress(db);
+    await _ensureDefaultTaskLevels(db);
+    await _ensureDefaultTaskRanks(db);
   }
 
   // HELPERS
@@ -234,9 +284,45 @@ class DatabaseManager {
       await db.insert('task_progress', {
         'id': id,
         'level': 0,
+        'rank': 0,
         'streak': 0,
         'total_tasks_completed': 0,
-        'tasks_to_next_level': 0,
+        'tasks_to_next_level': tasksToNextLevel(0),
+      });
+    }
+  }
+
+  Future<void> _ensureDefaultTaskLevels(Database db) async {
+    final hasTaskLevels = await _tableExists(db, 'task_levels');
+    if (!hasTaskLevels) return;
+
+    final result = await db.rawQuery('SELECT COUNT(*) as count FROM task_levels');
+    final count = Sqflite.firstIntValue(result) ?? 0;
+    if (count != 0) return;
+
+    for (var level = 0; level <= maxTaskLevel; level++) {
+      await db.insert('task_levels', {
+        'level': level,
+        'min_tasks': minTasksForLevel(level),
+        'max_tasks': maxTasksForLevel(level),
+        'color': taskLevelColors[level],
+      });
+    }
+  }
+
+  Future<void> _ensureDefaultTaskRanks(Database db) async {
+    final hasTaskRanks = await _tableExists(db, 'task_ranks');
+    if (!hasTaskRanks) return;
+
+    final result = await db.rawQuery('SELECT COUNT(*) as count FROM task_ranks');
+    final count = Sqflite.firstIntValue(result) ?? 0;
+    if (count != 0) return;
+
+    for (var rank = 0; rank <= maxTaskLevel; rank++) {
+      await db.insert('task_ranks', {
+        'id': rank,
+        'title': taskRankTitles[rank],
+        'min_level': rank,
       });
     }
   }
