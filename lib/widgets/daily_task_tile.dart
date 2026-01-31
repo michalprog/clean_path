@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/data_types/task_progress.dart';
 import '/l10n/app_localizations.dart';
+import '/utils_files/task_progress_utils.dart';
 
 class DailyTaskTile extends StatelessWidget {
   const DailyTaskTile({
@@ -27,8 +28,11 @@ class DailyTaskTile extends StatelessWidget {
 
     final totalCompleted = progress?.totalTasksCompleted ?? 0;
     final rank = progress?.rank ?? 0;
+    final level = progress?.level ?? 0;
     final streak = progress?.streak ?? 0;
     final tasksToNext = progress?.tasksToNextLevel ?? 0;
+    final levelStep = level < earlyLevelMax ? earlyLevelStep : lateLevelStep;
+    final currentLevelProgress = (levelStep - tasksToNext).clamp(0, levelStep);
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -67,57 +71,60 @@ class DailyTaskTile extends StatelessWidget {
           ),
         ),
 
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        subtitle: progress == null
+            ? null
+            : Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Row(
             children: [
-              // status + streak badge w jednej linii (to jest bezpieczne wysokościowo)
-              Row(
+              _RankIndicator(rank: rank),
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      isCompleted ? l10n.dailyTaskCompleted : l10n.dailyTaskNotCompleted,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: isCompleted ? cs.primary : cs.onSurfaceVariant,
+                  Text(
+                    '$totalCompleted',
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: cs.onSurface,
+                    ),
+                  ),
+                  Text(
+                    l10n.dailyTaskProgressTotalCompletedLabel,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: cs.onSurfaceVariant,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(999),
+                      child: LinearProgressIndicator(
+                        value: levelStep == 0 ? 0 : currentLevelProgress / levelStep,
+                        minHeight: 6,
+                        backgroundColor: cs.surfaceContainerHighest,
+                        valueColor: AlwaysStoppedAnimation<Color>(cs.primary),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${currentLevelProgress.toInt()} / $levelStep',
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: cs.onSurfaceVariant,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                  if (progress != null) ...[
-                    const SizedBox(width: 8),
-                    _StreakBadge(value: streak),
-                  ],
-                ],
-              ),
-
-              const SizedBox(height: 10),
-
-              // 3 staty jako ikony (bez ramek)
-              if (progress != null)
-                Row(
-                  children: [
-                    _IconStat(
-                      icon: Icons.emoji_events_rounded,
-                      value: '$rank',
-                      label: l10n.dailyTaskProgressRankLabel,
-                    ),
-                    const SizedBox(width: 12),
-                    _IconStat(
-                      icon: Icons.check_circle_rounded,
-                      value: '$totalCompleted',
-                      label: l10n.dailyTaskProgressTotalCompletedLabel,
-                    ),
-                    const SizedBox(width: 12),
-                    _IconStat(
-                      icon: Icons.trending_up_rounded,
-                      value: '$tasksToNext',
-                      label: l10n.dailyTaskProgressTasksToNextLevelLabel,
-                    ),
                   ],
                 ),
+              ),
+              const SizedBox(width: 12),
+              _StreakInline(value: streak),
             ],
           ),
         ),
@@ -138,61 +145,35 @@ class DailyTaskTile extends StatelessWidget {
   }
 }
 
-class _IconStat extends StatelessWidget {
-  const _IconStat({
-    required this.icon,
-    required this.value,
-    required this.label,
-  });
+class _RankIndicator extends StatelessWidget {
+  const _RankIndicator({required this.rank});
 
-  final IconData icon;
-  final String value;
-  final String label;
+  final int rank;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
 
-    return Expanded(
-      child: Row(
-        children: [
-          Icon(icon, size: 18, color: cs.onSurfaceVariant),
-          const SizedBox(width: 6),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  value,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: cs.onSurface,
-                  ),
-                ),
-                Text(
-                  label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: cs.onSurfaceVariant,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(Icons.emoji_events_rounded, size: 18, color: cs.primary),
+        const SizedBox(height: 4),
+        Text(
+          '$rank',
+          style: theme.textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.w800,
+            color: cs.onSurface,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-class _StreakBadge extends StatelessWidget {
-  const _StreakBadge({required this.value});
+class _StreakInline extends StatelessWidget {
+  const _StreakInline({required this.value});
 
   final int value;
 
@@ -201,27 +182,19 @@ class _StreakBadge extends StatelessWidget {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: cs.primary.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: cs.primary.withValues(alpha: 0.25)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.local_fire_department_rounded, size: 16, color: cs.primary),
-          const SizedBox(width: 6),
-          Text(
-            '$value',
-            style: theme.textTheme.labelLarge?.copyWith(
-              fontWeight: FontWeight.w900,
-              color: cs.primary,
-            ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          '+$value',
+          style: theme.textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.w900,
+            color: cs.primary,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 4),
+        Icon(Icons.local_fire_department_rounded, size: 16, color: cs.primary),
+      ],
     );
   }
 }
