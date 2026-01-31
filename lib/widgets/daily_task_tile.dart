@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '/data_types/task_progress.dart';
-import '/l10n/app_localizations.dart';
 import '/utils_files/task_progress_utils.dart';
 
 class DailyTaskTile extends StatelessWidget {
@@ -24,9 +23,6 @@ class DailyTaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
-    final l10n = AppLocalizations.of(context)!;
-
-    final totalCompleted = progress?.totalTasksCompleted ?? 0;
     final rank = progress?.rank ?? 0;
     final level = progress?.level ?? 0;
     final streak = progress?.streak ?? 0;
@@ -44,21 +40,46 @@ class DailyTaskTile extends StatelessWidget {
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        leading: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: (isCompleted ? cs.primary : cs.secondary).withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(12),
-          ),
+        leading: Stack(
           alignment: Alignment.center,
-          child: IconTheme(
-            data: IconThemeData(
-              color: isCompleted ? cs.primary : cs.secondary,
-              size: 22,
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: (isCompleted ? cs.primary : cs.secondary).withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              alignment: Alignment.center,
+              child: IconTheme(
+                data: IconThemeData(
+                  color: isCompleted ? cs.primary : cs.secondary,
+                  size: 22,
+                ),
+                child: taskIcon,
+              ),
             ),
-            child: taskIcon,
-          ),
+            if (progress != null)
+              Positioned(
+                right: -2,
+                bottom: -2,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: cs.primary,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: cs.surface, width: 1.5),
+                  ),
+                  child: Text(
+                    '$level',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: cs.onPrimary,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
 
         title: Text(
@@ -78,28 +99,9 @@ class DailyTaskTile extends StatelessWidget {
           child: Row(
             children: [
               _RankIndicator(rank: rank),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '$totalCompleted',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: cs.onSurface,
-                    ),
-                  ),
-                  Text(
-                    l10n.dailyTaskProgressTotalCompletedLabel,
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: cs.onSurfaceVariant,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
               Expanded(
+                flex: 4,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -158,11 +160,11 @@ class _RankIndicator extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.emoji_events_rounded, size: 18, color: cs.primary),
-        const SizedBox(height: 4),
+        Icon(Icons.emoji_events_rounded, size: 16, color: cs.primary),
+        const SizedBox(height: 2),
         Text(
           '$rank',
-          style: theme.textTheme.labelLarge?.copyWith(
+          style: theme.textTheme.labelMedium?.copyWith(
             fontWeight: FontWeight.w800,
             color: cs.onSurface,
           ),
