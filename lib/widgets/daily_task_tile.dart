@@ -23,11 +23,11 @@ class DailyTaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
+    final totalTasksCompleted = progress?.totalTasksCompleted ?? 0;
     final rank = progress?.rank ?? 0;
-    final level = progress?.level ?? 0;
     final streak = progress?.streak ?? 0;
     final tasksToNext = progress?.tasksToNextLevel ?? 0;
-    final levelStep = level < earlyLevelMax ? earlyLevelStep : lateLevelStep;
+    final levelStep = rank < earlyLevelMax ? earlyLevelStep : lateLevelStep;
     final currentLevelProgress = (levelStep - tasksToNext).clamp(0, levelStep);
 
     return Card(
@@ -71,7 +71,7 @@ class DailyTaskTile extends StatelessWidget {
                     border: Border.all(color: cs.surface, width: 1.5),
                   ),
                   child: Text(
-                    '$level',
+                    '$rank',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: cs.onPrimary,
                       fontWeight: FontWeight.w800,
@@ -98,7 +98,7 @@ class DailyTaskTile extends StatelessWidget {
           padding: const EdgeInsets.only(top: 8),
           child: Row(
             children: [
-              _RankIndicator(rank: rank),
+              _RankIndicator(rank: totalTasksCompleted),
               const SizedBox(width: 8),
               Expanded(
                 flex: 4,
