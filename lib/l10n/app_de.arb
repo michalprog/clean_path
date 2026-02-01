@@ -92,6 +92,8 @@
   "dailyTaskProgressStreakLabel": "Serie",
   "dailyTaskProgressTotalCompletedLabel": "Gesamt erledigt",
   "dailyTaskProgressTasksToNextLevelLabel": "Aufgaben bis zum nächsten Level",
+  "dailyTaskSeeMore": "Mehr anzeigen",
+  "dailyTaskCategoryReportTitle": "{category}-Bericht",
   "accountDefaultUsername": "Clean Path Nutzer",
   "accountNoEmail": "Keine E-Mail-Adresse",
   "accountLevelLabel": "Level",

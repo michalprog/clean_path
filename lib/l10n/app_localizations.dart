@@ -660,6 +660,18 @@ abstract class AppLocalizations {
   /// **'Tasks to next level'**
   String get dailyTaskProgressTasksToNextLevelLabel;
 
+  /// No description provided for @dailyTaskSeeMore.
+  ///
+  /// In en, this message translates to:
+  /// **'See more'**
+  String get dailyTaskSeeMore;
+
+  /// No description provided for @dailyTaskCategoryReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} report'**
+  String dailyTaskCategoryReportTitle(Object category);
+
   /// No description provided for @accountDefaultUsername.
   ///
   /// In en, this message translates to:

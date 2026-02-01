@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import '/l10n/app_localizations.dart';
+
+import '/data_types/daily_task.dart';
 import '/enums/enums.dart';
+import '/l10n/app_localizations.dart';
 class DailyTaskUtils {
- static Icon iconForType(int type) {
+  static Icon iconForType(int type) {
     final dailyType = DailyTaskType.values[type - 1];
     switch (dailyType) {
       case DailyTaskType.hydration:
@@ -29,19 +31,27 @@ class DailyTaskUtils {
         return l10n.dailyTaskLearning;
     }
   }
- static String markerForTaskType(int taskType) {
-   switch (taskType) {
-     case 0: // woda
-       return '💧';
-     case 1: // trening / muskuły
-       return '💪';
-     case 2: // medytacja
-       return '🧘';
-     case 3: // książka
-       return '📚';
-     default:
-       return '✅';
-   }
- }
+  static String markerForTaskType(int taskType) {
+    switch (taskType) {
+      case 0: // woda
+        return '💧';
+      case 1: // trening / muskuły
+        return '💪';
+      case 2: // medytacja
+        return '🧘';
+      case 3: // książka
+        return '📚';
+      default:
+        return '✅';
+    }
+  }
+
+  static int totalTasksCount(Iterable<DailyTask> tasks) {
+    return tasks.length;
+  }
+
+  static int completedTodayCount(Iterable<DailyTask> tasks) {
+    return tasks.where((task) => task.isCompletedToday).length;
+  }
 
 }

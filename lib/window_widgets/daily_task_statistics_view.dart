@@ -50,6 +50,7 @@ class DailyTaskStatisticsView extends StatelessWidget {
               );
               return DailyTaskStatisticsTile(
                 categoryLabel: categoryLabel,
+                categoryType: typeIndex,
                 completedInCategory: completedInCategory,
                 progress: progressMap[typeIndex],
                 tasks: tasks

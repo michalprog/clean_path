@@ -308,6 +308,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailyTaskProgressTasksToNextLevelLabel => 'Tasks to next level';
 
   @override
+  String get dailyTaskSeeMore => 'See more';
+
+  @override
+  String dailyTaskCategoryReportTitle(Object category) {
+    return '$category report';
+  }
+
+  @override
   String get accountDefaultUsername => 'Clean Path user';
 
   @override

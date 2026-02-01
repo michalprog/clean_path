@@ -311,6 +311,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tareas hasta el siguiente nivel';
 
   @override
+  String get dailyTaskSeeMore => 'Ver más';
+
+  @override
+  String dailyTaskCategoryReportTitle(Object category) {
+    return 'Informe de $category';
+  }
+
+  @override
   String get accountDefaultUsername => 'Usuario de Clean Path';
 
   @override
