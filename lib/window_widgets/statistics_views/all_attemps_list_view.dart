@@ -1,12 +1,12 @@
-import 'package:clean_path/statistc_views/trial_widget.dart';
+import 'package:clean_path/widgets/statistics_widgets/trial_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '/l10n/app_localizations.dart';
 import '/providers/statistics_provider.dart';
 
-class AllAttempsList extends StatelessWidget {
-  const AllAttempsList({super.key});
+class AllAttempsListView extends StatelessWidget {
+  const AllAttempsListView({super.key});
 
   @override
   Widget build(BuildContext context) {

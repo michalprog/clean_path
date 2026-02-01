@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import '/l10n/app_localizations.dart';
 import '/utils_files/daily_task_utils.dart';
-import '/widgets/daily_task_calendar.dart';
-import '../window_widgets/daily_task_statistics_view.dart';
+import 'daily_task_calendar.dart';
 
-class DailyTaskStatisticsPage extends StatefulWidget {
-  const DailyTaskStatisticsPage({super.key});
+class DailyTaskCalendarView extends StatefulWidget {
+  const DailyTaskCalendarView({super.key});
 
   @override
-  State<DailyTaskStatisticsPage> createState() => _DailyTaskStatisticsPageState();
+  State<DailyTaskCalendarView> createState() => _DailyTaskCalendarViewState();
 }
 
-class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
+class _DailyTaskCalendarViewState extends State<DailyTaskCalendarView>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
   int _index = 0;
@@ -19,7 +18,7 @@ class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) return;
       setState(() => _index = _tabController.index);
@@ -43,22 +42,19 @@ class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
           child: TabBar(
             controller: _tabController,
             isScrollable: false,
-            tabs: [
-              const Tab(icon: Icon(Icons.menu)),
-              ...List.generate(
-                4,
-                    (index) => Tab(
-                  icon: DailyTaskUtils.iconForType(index + 1),
-                ),
-              ),
-            ],
+            tabs: List.generate(
+              4,
+                  (index) => Tab(
+                    icon: DailyTaskUtils.iconForType(index + 1),
+                  ),
+
+            ),
           ),
         ),
         Expanded(
           child: IndexedStack(
             index: _index,
-            children:  [
-              DailyTaskStatisticsView(),
+            children: const [
               DailyTaskCalendar(taskType: 1),
               DailyTaskCalendar(taskType: 2),
               DailyTaskCalendar(taskType: 3),

@@ -1,3 +1,4 @@
+import 'package:clean_path/widgets/achievements_widgets/achivement_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,7 +6,7 @@ import '/enums/enums.dart';
 import '/l10n/app_localizations.dart';
 import '/providers/achievment_provider.dart';
 import '/providers/account_provider.dart';
-import '/widgets/achivement_widget.dart';
+
 
 class AchievementView extends StatelessWidget {
   const AchievementView({Key? key}) : super(key: key);

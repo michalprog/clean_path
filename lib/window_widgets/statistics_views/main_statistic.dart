@@ -1,14 +1,15 @@
-import 'package:clean_path/statistc_views/statistic_universal_calendar_view.dart';
-import 'package:clean_path/statistc_views/statistics_trails_view.dart';
-import 'package:clean_path/window_widgets/uniwersal_statistics_view.dart';
+import 'package:clean_path/window_widgets/statistics_views/statistic_universal_calendar_view.dart';
+import 'package:clean_path/window_widgets/statistics_views/statistics_trails_view.dart';
+import 'package:clean_path/window_widgets/statistics_views/uniwersal_statistics_view.dart';
+import 'package:clean_path/window_widgets/user_views/account_summary_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '/l10n/app_localizations.dart';
 import '/enums/enums.dart';
-import 'all_attemps_list.dart';
+import 'all_attemps_list_view.dart';
 import 'daily_task_statistics_page.dart';
 import 'main_statistcs_view.dart';
-import '/user_views/account_summary_view.dart';
+
 
 class MainStatistic extends StatefulWidget {
   final int index;
@@ -65,7 +66,7 @@ class _MainStatisticState extends State<MainStatistic> {
         ],
       ),
       MainStatistcsView(),
-      PageView(children: const [StatisticsTrailsView(), AllAttempsList()]),
+      PageView(children: const [StatisticsTrailsView(), AllAttempsListView()]),
       const DailyTaskStatisticsPage(),
       const AccountSummaryView(),// <- upewniamy się, że jest const jeśli się da
     ];

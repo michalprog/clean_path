@@ -1,11 +1,11 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
-import '../user_views/account_bottom_sheet.dart';
-import '/window_widgets/alk_view.dart';
-import '/window_widgets/default_view.dart';
-import '/window_widgets/fap_view.dart';
-import '/window_widgets/pap_view.dart';
+import '../widgets/user_widgets/account_bottom_sheet.dart';
+import '../window_widgets/main_additcion_views/alk_view.dart';
+import '../window_widgets/main_additcion_views/default_view.dart';
+import '../window_widgets/main_additcion_views/fap_view.dart';
+import '../window_widgets/main_additcion_views/pap_view.dart';
 import 'main_view.dart';
 
 import '/l10n/app_localizations.dart';

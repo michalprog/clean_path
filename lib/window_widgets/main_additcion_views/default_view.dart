@@ -1,28 +1,29 @@
-import 'package:clean_path/enums/enums.dart';
+import 'package:clean_path/widgets/main_addictions_widgets/Timer_Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/providers/fap_provider.dart';
-import '/widgets/Timer_Widget.dart';
+import '/enums/enums.dart';
+import '/providers/sweets_provider.dart';
 
-class FapView extends StatelessWidget {
-  const FapView({super.key});
+
+class DefaultView extends StatelessWidget {
+  const DefaultView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final fapProvider = Provider.of<FapProvider>(context);
+    final sweetsProvider = Provider.of<SweetsProvider>(context);
     void providerOperation(int option) {
       switch (option) {
         case 1: //włączenie
           {
-            if (fapProvider.fapRecord == null) {
-              fapProvider.createNewRecord(AddictionTypes.fap);
+            if (sweetsProvider.sweetRecord == null) {
+              sweetsProvider.createNewRecord(AddictionTypes.sweets);
             }
             break;
           }
         case 2: //reset timera
           {
-            if (fapProvider.fapRecord != null) {
-              fapProvider.resetTimer();
+            if (sweetsProvider.sweetRecord != null) {
+              sweetsProvider.resetTimer();
 
             }
             break;
@@ -31,7 +32,7 @@ class FapView extends StatelessWidget {
     }
 
     return FutureBuilder(
-      future: fapProvider.provideData(),
+      future: sweetsProvider.provideData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -51,13 +52,14 @@ class FapView extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: fapProvider.giveWindowImage(),
+                        image: sweetsProvider.giveWindowImage(),
                         fit: BoxFit.cover,
                         alignment: Alignment.topCenter,
                       ),
                     ),
                   ),
                 ),
+
                 Positioned.fill(
                   child: Align(
                     alignment: Alignment.bottomCenter,
@@ -65,17 +67,17 @@ class FapView extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 24.0),
                       child: TimerWidget(
                         timerFunction: providerOperation,
-                        startCounter: fapProvider.timerTime,
-                        addictionType: AddictionTypes.fap,
-                        recordActivated: fapProvider.fapRecord?.activated,
+                        startCounter: sweetsProvider.timerTime,
+                        addictionType: AddictionTypes.sweets,
+                        recordActivated: sweetsProvider.sweetRecord?.activated,
                       ),
                     ),
                   ),
                 ),
               ],
+
             ),
           );
-
         }
       },
     );

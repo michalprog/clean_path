@@ -1,12 +1,13 @@
+import 'package:clean_path/window_widgets/user_views/account_edit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '/l10n/app_localizations.dart';
 import '/providers/account_provider.dart';
-import '/user_views/account_edit_view.dart';
-import '/user_views/account_info_tile.dart';
-import '/user_views/account_row.dart';
+
+import 'account_info_tile.dart';
+import 'account_row.dart';
 
 class AccountBottomSheet extends StatelessWidget {
   const AccountBottomSheet({super.key});

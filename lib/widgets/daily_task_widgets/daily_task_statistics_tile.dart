@@ -1,9 +1,9 @@
+import 'package:clean_path/data_types/daily_task.dart';
+import 'package:clean_path/data_types/task_progress.dart';
+import 'package:clean_path/l10n/app_localizations.dart';
+import 'package:clean_path/utils_files/daily_task_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../data_types/daily_task.dart';
-import '../data_types/task_progress.dart';
-import '../l10n/app_localizations.dart';
-import '../utils_files/daily_task_utils.dart';
 
 class DailyTaskStatisticsTile extends StatelessWidget {
   const DailyTaskStatisticsTile({

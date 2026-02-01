@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '/window_widgets/daily_task_main_view.dart';
+import '../window_widgets/daily_task_views/daily_task_main_view.dart';
 import '/l10n/app_localizations.dart';
 import '/window_widgets/settings_view.dart';
-import '/statistc_views/main_Statistic.dart';
-import '/window_widgets/acievement_view.dart';
+import '../window_widgets/statistics_views/main_statistic.dart';
+import '../window_widgets/main_additcion_views/acievement_view.dart';
 
 class DrawerWidget extends StatelessWidget {
   final int index;

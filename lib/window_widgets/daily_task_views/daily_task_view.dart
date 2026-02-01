@@ -1,12 +1,14 @@
+import 'package:clean_path/data_types/task_progress.dart';
+import 'package:clean_path/providers/account_provider.dart';
+import 'package:clean_path/widgets/daily_task_widgets/daily_task_tile.dart';
 import 'package:flutter/material.dart';
-import '../data_types/task_progress.dart';
-import '../providers/account_provider.dart';
+
 import '/enums/enums.dart';
 import '/l10n/app_localizations.dart';
 import '/utils_files/daily_task_utils.dart';
 import 'package:provider/provider.dart';
 import '/providers/daily_tasks_provider.dart';
-import '/widgets/daily_task_tile.dart';
+
 
 class DailyTaskView extends StatefulWidget {
   const DailyTaskView({super.key});

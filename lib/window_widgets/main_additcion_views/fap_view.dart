@@ -1,28 +1,30 @@
+import 'package:clean_path/enums/enums.dart';
+import 'package:clean_path/widgets/main_addictions_widgets/Timer_Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/enums/enums.dart';
-import '/providers/alcochol_provider.dart';
-import '/widgets/Timer_Widget.dart';
+import '/providers/fap_provider.dart';
 
-class AlkView extends StatelessWidget {
-  const AlkView({super.key});
+
+class FapView extends StatelessWidget {
+  const FapView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final alcocholProvider = Provider.of<AlcocholProvider>(context);
+    final fapProvider = Provider.of<FapProvider>(context);
     void providerOperation(int option) {
       switch (option) {
         case 1: //włączenie
           {
-            if (alcocholProvider.alcRecord == null) {
-              alcocholProvider.createNewRecord(AddictionTypes.alcochol);
+            if (fapProvider.fapRecord == null) {
+              fapProvider.createNewRecord(AddictionTypes.fap);
             }
             break;
           }
         case 2: //reset timera
           {
-            if (alcocholProvider.alcRecord != null) {
-              alcocholProvider.resetTimer();
+            if (fapProvider.fapRecord != null) {
+              fapProvider.resetTimer();
+
             }
             break;
           }
@@ -30,7 +32,7 @@ class AlkView extends StatelessWidget {
     }
 
     return FutureBuilder(
-      future: alcocholProvider.provideData(),
+      future: fapProvider.provideData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -50,7 +52,7 @@ class AlkView extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: alcocholProvider.giveWindowImage(),
+                        image: fapProvider.giveWindowImage(),
                         fit: BoxFit.cover,
                         alignment: Alignment.topCenter,
                       ),
@@ -64,10 +66,9 @@ class AlkView extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 24.0),
                       child: TimerWidget(
                         timerFunction: providerOperation,
-                        startCounter: alcocholProvider.timerTime,
-                        addictionType: AddictionTypes.alcochol,
-                        recordActivated: alcocholProvider.alcRecord?.activated,
-
+                        startCounter: fapProvider.timerTime,
+                        addictionType: AddictionTypes.fap,
+                        recordActivated: fapProvider.fapRecord?.activated,
                       ),
                     ),
                   ),
@@ -75,6 +76,7 @@ class AlkView extends StatelessWidget {
               ],
             ),
           );
+
         }
       },
     );

@@ -1,12 +1,13 @@
+import 'package:clean_path/widgets/user_widgets/account_info_tile.dart';
+import 'package:clean_path/widgets/user_widgets/account_row.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '/l10n/app_localizations.dart';
 import '/providers/account_provider.dart';
-import '/user_views/account_edit_view.dart';
-import '/user_views/account_info_tile.dart';
-import '/user_views/account_row.dart';
+import 'account_edit_view.dart';
+
 
 class AccountSummaryView extends StatelessWidget {
   const AccountSummaryView({super.key});

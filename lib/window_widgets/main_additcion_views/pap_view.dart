@@ -1,8 +1,9 @@
+import 'package:clean_path/widgets/main_addictions_widgets/Timer_Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/enums/enums.dart';
 import '/providers/pap_provider.dart';
-import '/widgets/Timer_Widget.dart';
+
 
 class PapView extends StatelessWidget {
   const PapView({super.key});

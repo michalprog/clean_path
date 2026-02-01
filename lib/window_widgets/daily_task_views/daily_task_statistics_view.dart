@@ -1,14 +1,14 @@
+import 'package:clean_path/data_types/daily_task.dart';
+import 'package:clean_path/data_types/task_progress.dart';
+import 'package:clean_path/enums/enums.dart';
+import 'package:clean_path/l10n/app_localizations.dart';
+import 'package:clean_path/providers/daily_tasks_provider.dart';
+import 'package:clean_path/utils_files/daily_task_utils.dart';
+import 'package:clean_path/widgets/Statistic_list_tile.dart';
+import 'package:clean_path/widgets/daily_task_widgets/daily_tasks_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data_types/daily_task.dart';
-import '../data_types/task_progress.dart';
-import '../enums/enums.dart';
-import '../l10n/app_localizations.dart';
-import '../providers/daily_tasks_provider.dart';
-import '../utils_files/daily_task_utils.dart';
-import '../widgets/daily_tasks_status_widget.dart';
-import '../widgets/statistic_list_tile.dart';
 
 class DailyTaskStatisticsView extends StatelessWidget {
   const DailyTaskStatisticsView({super.key});

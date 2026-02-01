@@ -1,4 +1,6 @@
 import 'package:clean_path/data_types/record.dart';
+import 'package:clean_path/widgets/statistics_widgets/flchart_widget.dart';
+import 'package:clean_path/widgets/statistics_widgets/statistic_state_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,8 +9,6 @@ import '/l10n/app_localizations.dart';
 import '/providers/statistics_provider.dart';
 import '/utils_files/statistic_utils.dart';
 import '/widgets/Statistic_list_tile.dart';
-import '/widgets/flchart_widget.dart';
-import '/widgets/statistic_state_tile.dart';
 
 class UniwersalStatisticsView extends StatelessWidget {
   final AddictionTypes type;

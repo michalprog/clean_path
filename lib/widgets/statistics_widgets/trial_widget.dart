@@ -1,6 +1,7 @@
+import 'package:clean_path/widgets/main_addictions_widgets/change_comment_dialog.dart';
 import 'package:flutter/material.dart';
 import '/utils_files/statistic_utils.dart';
-import '/widgets/change_comment_dialog.dart';
+
 import '/data_types/record.dart';
 import 'package:intl/intl.dart';
 
