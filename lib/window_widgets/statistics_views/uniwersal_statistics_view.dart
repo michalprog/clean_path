@@ -8,7 +8,7 @@ import '/enums/enums.dart';
 import '/l10n/app_localizations.dart';
 import '/providers/statistics_provider.dart';
 import '/utils_files/statistic_utils.dart';
-import '/widgets/Statistic_list_tile.dart';
+import 'package:clean_path/widgets/statistics_widgets/statistic_list_tile.dart';
 
 class UniwersalStatisticsView extends StatelessWidget {
   final AddictionTypes type;

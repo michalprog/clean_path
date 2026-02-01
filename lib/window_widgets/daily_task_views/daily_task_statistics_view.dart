@@ -4,7 +4,7 @@ import 'package:clean_path/enums/enums.dart';
 import 'package:clean_path/l10n/app_localizations.dart';
 import 'package:clean_path/providers/daily_tasks_provider.dart';
 import 'package:clean_path/utils_files/daily_task_utils.dart';
-import 'package:clean_path/widgets/Statistic_list_tile.dart';
+import 'package:clean_path/widgets/statistics_widgets/statistic_list_tile.dart';
 import 'package:clean_path/widgets/daily_task_widgets/daily_tasks_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

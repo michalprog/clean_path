@@ -7,7 +7,7 @@ import '/l10n/app_localizations.dart';
 
 import '/utils_files/statistic_utils.dart';
 import '/providers/statistics_provider.dart';
-import '/widgets/Statistic_list_tile.dart';
+import 'package:clean_path/widgets/statistics_widgets/statistic_list_tile.dart';
 
 class MainStatistcsView extends StatelessWidget {
 
