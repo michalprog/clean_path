@@ -1,11 +1,12 @@
+import 'package:clean_path/widgets/user_widgets/account_bottom_sheet.dart';
+import 'package:clean_path/window_widgets/main_additcion_views/alk_view.dart';
+import 'package:clean_path/window_widgets/main_additcion_views/default_view.dart';
+import 'package:clean_path/window_widgets/main_additcion_views/fap_view.dart';
+import 'package:clean_path/window_widgets/main_additcion_views/pap_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
-import '../widgets/user_widgets/account_bottom_sheet.dart';
-import '../window_widgets/main_additcion_views/alk_view.dart';
-import '../window_widgets/main_additcion_views/default_view.dart';
-import '../window_widgets/main_additcion_views/fap_view.dart';
-import '../window_widgets/main_additcion_views/pap_view.dart';
+
 import 'main_view.dart';
 
 import '/l10n/app_localizations.dart';

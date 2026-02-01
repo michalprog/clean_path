@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '/data_types/task_progress.dart';
 import '/utils_files/task_progress_utils.dart';
+import 'rank_indicator.dart';
+import 'streak_inline.dart';
 
 class DailyTaskTile extends StatelessWidget {
   const DailyTaskTile({
@@ -98,7 +100,7 @@ class DailyTaskTile extends StatelessWidget {
           padding: const EdgeInsets.only(top: 8),
           child: Row(
             children: [
-              _RankIndicator(rank: totalTasksCompleted),
+              RankIndicator(rank: totalTasksCompleted),
               const SizedBox(width: 8),
               Expanded(
                 flex: 4,
@@ -126,7 +128,7 @@ class DailyTaskTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              _StreakInline(value: streak),
+              StreakInline(value: streak),
             ],
           ),
         ),
@@ -147,56 +149,5 @@ class DailyTaskTile extends StatelessWidget {
   }
 }
 
-class _RankIndicator extends StatelessWidget {
-  const _RankIndicator({required this.rank});
 
-  final int rank;
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final cs = theme.colorScheme;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(Icons.emoji_events_rounded, size: 16, color: cs.primary),
-        const SizedBox(height: 2),
-        Text(
-          '$rank',
-          style: theme.textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.w800,
-            color: cs.onSurface,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _StreakInline extends StatelessWidget {
-  const _StreakInline({required this.value});
-
-  final int value;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final cs = theme.colorScheme;
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          '+$value',
-          style: theme.textTheme.labelLarge?.copyWith(
-            fontWeight: FontWeight.w900,
-            color: cs.primary,
-          ),
-        ),
-        const SizedBox(width: 4),
-        Icon(Icons.local_fire_department_rounded, size: 16, color: cs.primary),
-      ],
-    );
-  }
-}
