@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data_types/daily_task.dart';
 import '../data_types/task_progress.dart';
 import '../enums/enums.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/daily_tasks_provider.dart';
 import '../utils_files/daily_task_utils.dart';
-import '../widgets/daily_task_statistics_tile.dart';
 import '../widgets/daily_tasks_status_widget.dart';
 import '../widgets/statistic_list_tile.dart';
 
@@ -30,7 +30,7 @@ class DailyTaskStatisticsView extends StatelessWidget {
         final progressMap = (data?[1] as Map<int, TaskProgress>?) ?? {};
         final totalCompleted = counts.values.fold<int>(
           0,
-          (sum, value) => sum + value,
+              (sum, value) => sum + value,
         );
         final tasks = context.watch<DailyTasksProvider>().tasks;
         return ListView(
@@ -48,9 +48,8 @@ class DailyTaskStatisticsView extends StatelessWidget {
                 typeIndex,
                 '',
               );
-              return DailyTaskStatisticsTile(
+              return DailyTaskCategoryStatisticsCard(
                 categoryLabel: categoryLabel,
-                categoryType: typeIndex,
                 completedInCategory: completedInCategory,
                 progress: progressMap[typeIndex],
                 tasks: tasks
@@ -65,6 +64,30 @@ class DailyTaskStatisticsView extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class DailyTaskCategoryStatisticsCard extends StatelessWidget {
+  final String categoryLabel;
+  final int completedInCategory;
+  final TaskProgress? progress;
+  final List<DailyTask> tasks;
+
+  const DailyTaskCategoryStatisticsCard({
+    super.key,
+    required this.categoryLabel,
+    required this.completedInCategory,
+    required this.progress,
+    required this.tasks,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StatisticListTile(
+      mainText: AppLocalizations.of(context)!
+          .dailyTaskCompletedForCategory(categoryLabel),
+      highlightedText: '$completedInCategory',
     );
   }
 }

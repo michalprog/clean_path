@@ -312,6 +312,12 @@ abstract class AppLocalizations {
   /// **'No records for this day'**
   String get noRecordsForDay;
 
+  /// No description provided for @noRecordsForWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'No records for this week'**
+  String get noRecordsForWeek;
+
   /// No description provided for @motivationPopupDescription.
   ///
   /// In en, this message translates to:

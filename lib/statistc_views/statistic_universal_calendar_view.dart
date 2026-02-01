@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import '/l10n/app_localizations.dart';
 import '/enums/enums.dart';
 import '/utils_files/statistic_utils.dart';
 import '/data_types/record.dart';
@@ -12,7 +12,7 @@ class StatisticUniversalCalendarView extends StatefulWidget {
   final AddictionTypes type;
 
   const StatisticUniversalCalendarView({Key? key, required this.type})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<StatisticUniversalCalendarView> createState() =>
@@ -39,7 +39,9 @@ class _StatisticUniversalCalendarViewState
     final provider = Provider.of<StatisticsProvider>(context, listen: false);
     provider.provideMainData().then((_) {
       final records = StatisticUtils.getRecordsByType(
-          provider.allRecords, widget.type);
+        provider.allRecords,
+        widget.type,
+      );
       final grouped = _groupRecords(records);
       final activeDays = provider.getActiveDaysForType(widget.type);
       final failDays = StatisticUtils.getFailDaysFromRecords(records);
@@ -74,38 +76,41 @@ class _StatisticUniversalCalendarViewState
   }
 
   Widget _buildDayCell(
-      DateTime day, {
-        bool isOutside = false,
-        bool isSelected = false,
-        bool isToday = false,
-      }) {
+    DateTime day, {
+    bool isOutside = false,
+    bool isSelected = false,
+    bool isToday = false,
+  }) {
     final key = DateTime(day.year, day.month, day.day);
     final isActiveDay = _activeDays.contains(key);
     final isFailDay = _failDays.contains(key) && !isActiveDay;
 
-    final Color? bgColor = isSelected
-        ? Theme.of(context).colorScheme.primary.withOpacity(0.85)
-        : (isFailDay
-        ? Colors.red.withOpacity(0.25)
-        : (isActiveDay ? Colors.green.withOpacity(0.25) : null));
+    final Color? bgColor =
+        isSelected
+            ? Theme.of(context).colorScheme.primary.withOpacity(0.85)
+            : (isFailDay
+                ? Colors.red.withOpacity(0.25)
+                : (isActiveDay ? Colors.green.withOpacity(0.25) : null));
 
-    final Color textColor = isSelected
-        ? Colors.white
-        : isOutside
-        ? Colors.grey
-        : Colors.black87;
+    final Color textColor =
+        isSelected
+            ? Colors.white
+            : isOutside
+            ? Colors.grey
+            : Colors.black87;
 
     return Container(
       margin: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(8),
-        border: isToday && !isSelected
-            ? Border.all(
-          color: Theme.of(context).colorScheme.primary,
-          width: 1.5,
-        )
-            : null,
+        border:
+            isToday && !isSelected
+                ? Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1.5,
+                )
+                : null,
       ),
       alignment: Alignment.center,
       child: Text(
@@ -127,6 +132,7 @@ class _StatisticUniversalCalendarViewState
     return Column(
       children: [
         TableCalendar(
+          locale: Localizations.localeOf(context).toString(),
           firstDay: DateTime.utc(2010, 1, 1),
           lastDay: DateTime.utc(2030, 12, 31),
           focusedDay: _focusedDay,
@@ -177,14 +183,21 @@ class _StatisticUniversalCalendarViewState
         ),
         const SizedBox(height: 16),
         Expanded(
-          child: _selectedDayRecords.isEmpty
-              ? const Center(child: Text("Brak rekordów na ten dzień"))
-              : ListView.builder(
-            itemCount: _selectedDayRecords.length,
-            itemBuilder: (context, index) {
-              return TrialWidget(record: _selectedDayRecords[index]);
-            },
-          ),
+          child:
+              _selectedDayRecords.isEmpty
+                  ? Center(
+                    child: Text(
+                      _calendarFormat == CalendarFormat.month
+                          ? AppLocalizations.of(context)!.noRecordsForDay
+                          : AppLocalizations.of(context)!.noRecordsForWeek,
+                    ),
+                  )
+                  : ListView.builder(
+                    itemCount: _selectedDayRecords.length,
+                    itemBuilder: (context, index) {
+                      return TrialWidget(record: _selectedDayRecords[index]);
+                    },
+                  ),
         ),
       ],
     );

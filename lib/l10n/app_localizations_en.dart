@@ -124,6 +124,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noRecordsForDay => 'No records for this day';
 
   @override
+  String get noRecordsForWeek => 'No records for this week';
+
+  @override
   String get motivationPopupDescription =>
       'You can always begin again.\\nDon\'t lose faith in yourself';
 

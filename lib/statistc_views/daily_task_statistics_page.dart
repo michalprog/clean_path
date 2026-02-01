@@ -19,7 +19,7 @@ class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) return;
       setState(() => _index = _tabController.index);

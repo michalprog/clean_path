@@ -34,6 +34,7 @@
   "achievement10Description": "Logro de prueba para verificación.",
   "noAchievements": "Sin logros",
   "noRecordsForDay": "No hay registros para este día",
+  "noRecordsForWeek": "No hay registros para esta semana",
   "motivationPopupDescription": "Siempre puedes empezar de nuevo.\\nNo pierdas la fe en ti mismo",
   "notNow": "Ahora no",
   "tryAgain": "Intentar de nuevo",
