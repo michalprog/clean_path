@@ -53,5 +53,21 @@ class DailyTaskUtils {
   static int completedTodayCount(Iterable<DailyTask> tasks) {
     return tasks.where((task) => task.isCompletedToday).length;
   }
+  static Color levelColor(int level) {
+    if (level <= 2) {
+      return Colors.grey.shade500;
+    }
+    if (level <= 4) {
+      return Colors.green.shade600;
+    }
+    if (level <= 7) {
+      return Colors.blue.shade600;
+    }
+    if (level <= 9) {
+      return Colors.purple.shade600;
+    }
+    return Colors.amber.shade700;
+  }
+
 
 }
