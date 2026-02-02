@@ -8,7 +8,7 @@ class StreakInline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final cs = theme.colorScheme;
+    final accentColor = Colors.green.shade800;
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -17,11 +17,11 @@ class StreakInline extends StatelessWidget {
           '+$value',
           style: theme.textTheme.labelLarge?.copyWith(
             fontWeight: FontWeight.w900,
-            color: cs.primary,
+            color: accentColor,
           ),
         ),
         const SizedBox(width: 4),
-        Icon(Icons.local_fire_department_rounded, size: 16, color: cs.primary),
+        Icon(Icons.local_fire_department_rounded, size: 16, color: accentColor),
       ],
     );
   }

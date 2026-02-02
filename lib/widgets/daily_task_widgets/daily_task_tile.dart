@@ -31,6 +31,9 @@ class DailyTaskTile extends StatelessWidget {
     final rank = progress?.rank ?? 0;
     final streak = progress?.streak ?? 0;
     final tasksToNext = progress?.tasksToNextLevel ?? 0;
+    final rankColor = DailyTaskUtils.levelColor(rank);
+    final accentColor = Colors.green.shade800;
+    final accentBackground = accentColor.withValues(alpha: 0.12);
 
     final levelStep = rank < earlyLevelMax ? earlyLevelStep : lateLevelStep;
     final currentLevelProgress = (levelStep - tasksToNext).clamp(0, levelStep);
@@ -54,13 +57,13 @@ class DailyTaskTile extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: (isCompleted ? cs.primary : cs.secondary).withValues(alpha: 0.12),
+                    color: accentBackground,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   alignment: Alignment.center,
                   child: IconTheme(
                     data: IconThemeData(
-                      color: isCompleted ? cs.primary : cs.secondary,
+                      color: accentColor,
                       size: 22,
                     ),
                     child: taskIcon,
@@ -73,7 +76,7 @@ class DailyTaskTile extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                       decoration: BoxDecoration(
-                        color: cs.primary,
+                        color: rankColor,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: cs.surface, width: 1.5),
                       ),
@@ -116,7 +119,7 @@ class DailyTaskTile extends StatelessWidget {
                             value: levelStep == 0 ? 0 : currentLevelProgress / levelStep,
                             minHeight: 6,
                             backgroundColor: cs.surfaceContainerHighest,
-                            valueColor: AlwaysStoppedAnimation<Color>(cs.primary),
+                            valueColor: AlwaysStoppedAnimation<Color>(rankColor),
                           ),
                         ),
                         const SizedBox(height: 4),

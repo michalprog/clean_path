@@ -28,8 +28,10 @@ class DailyTaskStatisticsTile extends StatelessWidget {
     final cs = theme.colorScheme;
     final l10n = AppLocalizations.of(context)!;
     final icon = DailyTaskUtils.iconForType(categoryType);
-    final level = progress?.level ?? 0;
+    final rank = progress?.rank ?? 0;
     final totalCompleted = completedInCategory;
+    final rankColor = DailyTaskUtils.levelColor(rank);
+    final accentColor = Colors.green.shade800;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -53,13 +55,13 @@ class DailyTaskStatisticsTile extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: cs.primary.withValues(alpha: 0.12),
+                      color: rankColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     alignment: Alignment.center,
                     child: IconTheme(
                       data: IconThemeData(
-                        color: cs.primary,
+                        color: rankColor,
                         size: 22,
                       ),
                       child: icon,
@@ -68,12 +70,12 @@ class DailyTaskStatisticsTile extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: cs.primary,
+                      color: rankColor,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: cs.surface, width: 1.5),
                     ),
                     child: Text(
-                      '$level',
+                      '$rank',
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: cs.onPrimary,
                         fontWeight: FontWeight.w700,
@@ -112,14 +114,14 @@ class DailyTaskStatisticsTile extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    border: Border.all(color: cs.primary),
+                    border: Border.all(color: accentColor),
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
                     l10n.dailyTaskSeeMore,
                     style: theme.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: cs.primary,
+                      color: accentColor,
                     ),
                   ),
                 ),

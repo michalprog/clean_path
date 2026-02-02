@@ -16,6 +16,8 @@ class DailyTasksStatusWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
     final l10n = AppLocalizations.of(context)!;
+    final accentColor = Colors.green.shade800;
+    final accentBackground = accentColor.withValues(alpha: 0.12);
 
     return Card(
       margin: const EdgeInsets.fromLTRB(16, 12, 16, 8),
@@ -59,18 +61,13 @@ class DailyTasksStatusWidget extends StatelessWidget {
                             width: 46,
                             height: 46,
                             decoration: BoxDecoration(
-                              color: (task.isCompletedToday
-                                  ? cs.primary
-                                  : cs.secondary)
-                                  .withValues(alpha: 0.12),
+                              color: accentBackground,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             alignment: Alignment.center,
                             child: IconTheme(
                               data: IconThemeData(
-                                color: task.isCompletedToday
-                                    ? cs.primary
-                                    : cs.secondary,
+                                color: accentColor,
                                 size: 22,
                               ),
                               child:
@@ -103,6 +100,12 @@ class DailyTasksStatusWidget extends StatelessWidget {
                       child: Checkbox(
                         value: task.isCompletedToday,
                         onChanged: null,
+                        checkColor: cs.onPrimary,
+                        fillColor: MaterialStateProperty.resolveWith(
+                              (states) => states.contains(MaterialState.selected)
+                              ? accentColor
+                              : cs.surfaceContainerHighest,
+                        ),
                       ),
                     ),
                   ).toList(),

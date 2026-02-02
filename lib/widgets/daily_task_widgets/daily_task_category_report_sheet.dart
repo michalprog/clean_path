@@ -30,6 +30,8 @@ class DailyTaskCategoryReportSheet extends StatelessWidget {
     final rank = progress?.rank ?? 0;
     final tasksToNext = progress?.tasksToNextLevel ?? 0;
     final totalCompleted = completedInCategory;
+    final accentColor = Colors.green.shade800;
+    final accentBackground = accentColor.withValues(alpha: 0.12);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -45,13 +47,13 @@ class DailyTaskCategoryReportSheet extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: cs.primary.withValues(alpha: 0.12),
+                      color: accentBackground,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     alignment: Alignment.center,
                     child: IconTheme(
                       data: IconThemeData(
-                        color: cs.primary,
+                        color: accentColor,
                         size: 22,
                       ),
                       child: icon,
@@ -123,7 +125,7 @@ class DailyTaskCategoryReportSheet extends StatelessWidget {
                         task.isCompletedToday
                             ? Icons.check_circle_rounded
                             : Icons.circle_outlined,
-                        color: task.isCompletedToday ? cs.primary : cs.outline,
+                        color: task.isCompletedToday ? accentColor : cs.outline,
                       ),
                       title: Text(task.title),
                       subtitle: Text(
@@ -131,7 +133,9 @@ class DailyTaskCategoryReportSheet extends StatelessWidget {
                             ? l10n.dailyTaskCompleted
                             : l10n.dailyTaskNotCompleted,
                         style: theme.textTheme.labelMedium?.copyWith(
-                          color: task.isCompletedToday ? cs.primary : cs.onSurfaceVariant,
+                          color: task.isCompletedToday
+                              ? accentColor
+                              : cs.onSurfaceVariant,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

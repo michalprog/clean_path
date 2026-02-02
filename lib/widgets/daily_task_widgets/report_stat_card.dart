@@ -15,6 +15,7 @@ class ReportStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
+    final accentColor = Colors.green.shade800;
 
     return Container(
       width: 160,
@@ -22,12 +23,12 @@ class ReportStatCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: cs.surfaceContainerHighest.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: cs.outlineVariant.withValues(alpha: 0.4)),
+        border: Border.all(color: accentColor.withValues(alpha: 0.4)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: cs.primary),
+          Icon(icon, size: 18, color: accentColor),
           const SizedBox(height: 8),
           Text(
             label,
@@ -41,7 +42,7 @@ class ReportStatCard extends StatelessWidget {
             value,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w800,
-              color: cs.onSurface,
+              color: accentColor,
             ),
           ),
         ],

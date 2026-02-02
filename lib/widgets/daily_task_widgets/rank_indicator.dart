@@ -9,11 +9,12 @@ class RankIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
+    final accentColor = Colors.green.shade800;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.emoji_events_rounded, size: 16, color: cs.primary),
+        Icon(Icons.emoji_events_rounded, size: 16, color: accentColor),
         const SizedBox(height: 2),
         Text(
           '$rank',
