@@ -40,41 +40,33 @@ class FapView extends StatelessWidget {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
           final screenHeight = MediaQuery.of(context).size.height;
-          return Container(
-            color: Color(0xFFF7F2E8),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: screenHeight * 0.6,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: fapProvider.giveWindowImage(),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                      ),
+          return Stack(
+            children: [
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: fapProvider.giveWindowImage(),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 24.0),
-                      child: TimerWidget(
-                        timerFunction: providerOperation,
-                        startCounter: fapProvider.timerTime,
-                        addictionType: AddictionTypes.fap,
-                        recordActivated: fapProvider.fapRecord?.activated,
-                      ),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 24.0),
+                    child: TimerWidget(
+                      timerFunction: providerOperation,
+                      startCounter: fapProvider.timerTime,
+                      addictionType: AddictionTypes.sweets,
+                      recordActivated: fapProvider.fapRecord?.activated,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
 
         }

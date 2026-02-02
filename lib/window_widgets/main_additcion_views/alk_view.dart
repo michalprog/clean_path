@@ -39,42 +39,33 @@ class AlkView extends StatelessWidget {
           return Center(child: Text("Błąd: ${snapshot.error}"));
         } else {
           final screenHeight = MediaQuery.of(context).size.height;
-          return Container(
-            color: Color(0xFFF7F2E8),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: screenHeight * 0.6,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: alcocholProvider.giveWindowImage(),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                      ),
+          return Stack(
+            children: [
+              Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: alcocholProvider.giveWindowImage(),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 24.0),
-                      child: TimerWidget(
-                        timerFunction: providerOperation,
-                        startCounter: alcocholProvider.timerTime,
-                        addictionType: AddictionTypes.alcochol,
-                        recordActivated: alcocholProvider.alcRecord?.activated,
-
-                      ),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 24.0),
+                    child: TimerWidget(
+                      timerFunction: providerOperation,
+                      startCounter: alcocholProvider.timerTime,
+                      addictionType: AddictionTypes.sweets,
+                      recordActivated: alcocholProvider.alcRecord?.activated,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }
       },
