@@ -1,3 +1,4 @@
+import 'package:clean_path/widgets/main_addictions_widgets/active_navigation_icon.dart';
 import 'package:clean_path/widgets/user_widgets/account_bottom_sheet.dart';
 import 'package:clean_path/window_widgets/main_additcion_views/alk_view.dart';
 import 'package:clean_path/window_widgets/main_additcion_views/default_view.dart';
@@ -6,10 +7,14 @@ import 'package:clean_path/window_widgets/main_additcion_views/pap_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:clean_path/main/drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'main_view.dart';
 
+import '/data_types/record.dart';
+import '/enums/enums.dart';
 import '/l10n/app_localizations.dart';
+import '/providers/database_provider.dart';
 
 class MainWindow extends StatefulWidget {
   const MainWindow({super.key});
@@ -59,28 +64,42 @@ class _MainWindowState extends State<MainWindow> {
         notchMargin: 8.0,
         color: Colors.purple.shade50,
         elevation: 5,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => changeWindow(0),
-              icon: const FaIcon(FontAwesomeIcons.marsAndVenus),
-            ),
-            IconButton(
-              onPressed: () => changeWindow(1),
-              icon: Icon(Icons.smoking_rooms),
-            ),
-            SizedBox(width: 40),
-            IconButton(
-              onPressed: () => changeWindow(2),
-              icon: Icon(Icons.liquor),
-            ),
-            IconButton(
-              onPressed: () => changeWindow(3),
-              icon: Icon(Icons.question_mark),
-            ),
-          ],
+        child: FutureBuilder<List<Record>>(
+          future: context.read<DatabaseProvider>().getActiveRecords(),
+          builder: (context, snapshot) {
+            final activeTypes = snapshot.data
+                ?.where((record) => record.isActive)
+                .map((record) => record.type)
+                .toSet() ??
+                <AddictionTypes>{};
+            return Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ActiveNavigationIcon(
+                  onPressed: () => changeWindow(0),
+                  icon: const FaIcon(FontAwesomeIcons.marsAndVenus),
+                  isActive: activeTypes.contains(AddictionTypes.fap),
+                ),
+                ActiveNavigationIcon(
+                  onPressed: () => changeWindow(1),
+                  icon: const Icon(Icons.smoking_rooms),
+                  isActive: activeTypes.contains(AddictionTypes.smoking),
+                ),
+                const SizedBox(width: 40),
+                ActiveNavigationIcon(
+                  onPressed: () => changeWindow(2),
+                  icon: const Icon(Icons.liquor),
+                  isActive: activeTypes.contains(AddictionTypes.alcochol),
+                ),
+                ActiveNavigationIcon(
+                  onPressed: () => changeWindow(3),
+                  icon: const Icon(Icons.question_mark),
+                  isActive: activeTypes.contains(AddictionTypes.sweets),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -102,3 +121,4 @@ class _MainWindowState extends State<MainWindow> {
     );
   }
 }
+
