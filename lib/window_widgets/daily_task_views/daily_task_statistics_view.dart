@@ -4,6 +4,7 @@ import 'package:clean_path/enums/enums.dart';
 import 'package:clean_path/l10n/app_localizations.dart';
 import 'package:clean_path/providers/daily_tasks_provider.dart';
 import 'package:clean_path/utils_files/daily_task_utils.dart';
+import 'package:clean_path/widgets/daily_task_widgets/daily_task_statistics_tile.dart';
 import 'package:clean_path/widgets/statistics_widgets/statistic_list_tile.dart';
 import 'package:clean_path/widgets/daily_task_widgets/daily_tasks_status_widget.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +49,9 @@ class DailyTaskStatisticsView extends StatelessWidget {
                 typeIndex,
                 '',
               );
-              return DailyTaskCategoryStatisticsCard(
+              return DailyTaskStatisticsTile(
                 categoryLabel: categoryLabel,
+                categoryType: typeIndex,
                 completedInCategory: completedInCategory,
                 progress: progressMap[typeIndex],
                 tasks: tasks
@@ -64,30 +66,6 @@ class DailyTaskStatisticsView extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class DailyTaskCategoryStatisticsCard extends StatelessWidget {
-  final String categoryLabel;
-  final int completedInCategory;
-  final TaskProgress? progress;
-  final List<DailyTask> tasks;
-
-  const DailyTaskCategoryStatisticsCard({
-    super.key,
-    required this.categoryLabel,
-    required this.completedInCategory,
-    required this.progress,
-    required this.tasks,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return StatisticListTile(
-      mainText: AppLocalizations.of(context)!
-          .dailyTaskCompletedForCategory(categoryLabel),
-      highlightedText: '$completedInCategory',
     );
   }
 }

@@ -85,7 +85,7 @@ class _TimerWidgetState extends State<TimerWidget> {
       children: [
         Column(
           children: [
-            const SizedBox(height: 32),
+            //const SizedBox(height: 32),
             Expanded(
               child: Stack(
                 children: [
