@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '/l10n/app_localizations.dart';
 import '/utils_files/daily_task_utils.dart';
 import 'daily_task_calendar.dart';
 
@@ -33,8 +32,6 @@ class _DailyTaskCalendarViewState extends State<DailyTaskCalendarView>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return Column(
       children: [
         Material(
@@ -45,9 +42,11 @@ class _DailyTaskCalendarViewState extends State<DailyTaskCalendarView>
             tabs: List.generate(
               4,
                   (index) => Tab(
-                    icon: DailyTaskUtils.iconForType(index + 1),
-                  ),
-
+                child: Text(
+                  DailyTaskUtils.markerForTaskType(index),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
             ),
           ),
         ),
@@ -66,6 +65,3 @@ class _DailyTaskCalendarViewState extends State<DailyTaskCalendarView>
     );
   }
 }
-
-
-

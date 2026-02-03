@@ -1,7 +1,6 @@
 import 'package:clean_path/window_widgets/daily_task_views/daily_task_calendar.dart';
 import 'package:clean_path/window_widgets/daily_task_views/daily_task_statistics_view.dart';
 import 'package:flutter/material.dart';
-import '/l10n/app_localizations.dart';
 import '/utils_files/daily_task_utils.dart';
 
 class DailyTaskStatisticsPage extends StatefulWidget {
@@ -34,8 +33,6 @@ class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return Column(
       children: [
         Material(
@@ -44,11 +41,19 @@ class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
             controller: _tabController,
             isScrollable: false,
             tabs: [
-              const Tab(icon: Icon(Icons.menu)),
+              Tab(
+                child: Text(
+                  DailyTaskUtils.markerForMenu(),
+                  style: const TextStyle(fontSize: 18),
+                ),
+              ),
               ...List.generate(
                 4,
                     (index) => Tab(
-                  icon: DailyTaskUtils.iconForType(index + 1),
+                  child: Text(
+                    DailyTaskUtils.markerForTaskType(index),
+                    style: const TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
             ],
@@ -70,6 +75,3 @@ class _DailyTaskStatisticsPageState extends State<DailyTaskStatisticsPage>
     );
   }
 }
-
-
-

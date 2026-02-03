@@ -45,6 +45,10 @@ class DailyTaskUtils {
         return '✅';
     }
   }
+  static String markerForMenu() {
+    return '📋';
+  }
+
 
   static int totalTasksCount(Iterable<DailyTask> tasks) {
     return tasks.length;
