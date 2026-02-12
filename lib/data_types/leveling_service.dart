@@ -45,7 +45,7 @@ class DefaultLevelingService implements LevelingService {
   _LevelProgress _applyLevelProgress({
     required int totalXp,
   }) {
-    final level = totalXp ~/ _xpPerLevel;
+    final level = totalXp ~/ xpPerLevel;
     return _LevelProgress(level: level, totalXp: totalXp);
   }
 }
@@ -60,4 +60,4 @@ class _LevelProgress {
   });
 }
 
-const int _xpPerLevel = 100;
+const int xpPerLevel = 100;

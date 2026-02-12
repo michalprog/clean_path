@@ -99,6 +99,13 @@
   "accountNoEmail": "Keine E-Mail-Adresse",
   "accountLevelLabel": "Level",
   "accountXpLabel": "XP",
+  "accountXpToNextLabel": "Bis zum nächsten Level",
+  "accountXpToNextValue": "{xp} XP",
+  "@accountXpToNextValue": {
+    "placeholders": {
+      "xp": {}
+    }
+  },
   "accountStreakLabel": "Serie",
   "accountStreakValue": "{days} Tage",
   "@accountStreakValue": {

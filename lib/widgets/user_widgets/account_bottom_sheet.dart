@@ -2,7 +2,7 @@ import 'package:clean_path/window_widgets/user_views/account_edit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import '/data_types/leveling_service.dart';
 import '/l10n/app_localizations.dart';
 import '/providers/account_provider.dart';
 
@@ -27,7 +27,7 @@ class AccountBottomSheet extends StatelessWidget {
     final email = user?.email ?? l10n.accountNoEmail;
     final level = user?.level ?? 0;
     final xp = user?.xp ?? 0;
-    final streak = user?.streak ?? 0;
+    final xpToNextLevel = _xpToNextLevel(xp);
     final status = user?.status ?? 0;
     final joinDate = _formatJoinDate(context, user?.joinDate, l10n);
 
@@ -116,9 +116,9 @@ class AccountBottomSheet extends StatelessWidget {
                     color: Colors.green.shade600,
                   ),
                   AccountInfoTile(
-                    icon: Icons.local_fire_department,
-                    label: l10n.accountStreakLabel,
-                    value: l10n.accountStreakValue(streak),
+                    icon: Icons.trending_up,
+                    label: l10n.accountXpToNextLabel,
+                    value: l10n.accountXpToNextValue(xpToNextLevel),
                     color: Colors.green.shade800,
                   ),
                 ],
@@ -208,6 +208,11 @@ class AccountBottomSheet extends StatelessWidget {
         ),
       ),
     );
+  }
+  int _xpToNextLevel(int currentXp) {
+    final progressInLevel = currentXp % xpPerLevel;
+    final remainingXp = xpPerLevel - progressInLevel;
+    return remainingXp == 0 ? xpPerLevel : remainingXp;
   }
 
   String _formatJoinDate(

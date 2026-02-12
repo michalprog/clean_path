@@ -331,6 +331,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountXpLabel => 'XP';
 
   @override
+  String get accountXpToNextLabel => 'To next level';
+
+  @override
+  String accountXpToNextValue(Object xp) {
+    return '$xp XP';
+  }
+
+  @override
   String get accountStreakLabel => 'Streak';
 
   @override

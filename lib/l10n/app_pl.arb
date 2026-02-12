@@ -100,6 +100,13 @@
   "accountLevelLabel": "Poziom",
   "accountXpLabel": "XP",
   "accountStreakLabel": "Seria",
+  "accountXpToNextLabel": "Do następnego poziomu",
+  "accountXpToNextValue": "{xp} XP",
+  "@accountXpToNextValue": {
+    "placeholders": {
+      "xp": {}
+    }
+  },
   "accountStreakValue": "{days} dni",
   "@accountStreakValue": {
     "placeholders": {

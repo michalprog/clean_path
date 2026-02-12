@@ -702,6 +702,18 @@ abstract class AppLocalizations {
   /// **'XP'**
   String get accountXpLabel;
 
+  /// No description provided for @accountXpToNextLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'To next level'**
+  String get accountXpToNextLabel;
+
+  /// No description provided for @accountXpToNextValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{xp} XP'**
+  String accountXpToNextValue(Object xp);
+
   /// No description provided for @accountStreakLabel.
   ///
   /// In en, this message translates to:

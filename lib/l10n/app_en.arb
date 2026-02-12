@@ -104,6 +104,13 @@
   "accountNoEmail": "No email address",
   "accountLevelLabel": "Level",
   "accountXpLabel": "XP",
+  "accountXpToNextLabel": "To next level",
+  "accountXpToNextValue": "{xp} XP",
+  "@accountXpToNextValue": {
+    "placeholders": {
+      "xp": {}
+    }
+  },
   "accountStreakLabel": "Streak",
   "accountStreakValue": "{days} days",
   "@accountStreakValue": {
