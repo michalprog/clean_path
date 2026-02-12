@@ -1,7 +1,4 @@
 const int maxTaskLevel = 10;
-const int earlyLevelMax = 5;
-const int earlyLevelStep = 5;
-const int lateLevelStep = 10;
 
 const List<String> taskLevelColors = [
   '#4CAF50',
@@ -31,45 +28,58 @@ const List<String> taskRankTitles = [
   'Ranga 10',
 ];
 
+int tasksRequiredForNextLevel(int level) {
+  if (level <= 1) return 2;
+  if (level <= 4) return 3;
+  if (level <= 10) return 5;
+  return 7;
+}
+
 int calculateTaskLevel(int totalTasks) {
   if (totalTasks <= 0) return 0;
-  if (totalTasks < earlyLevelMax * earlyLevelStep) {
-    return (totalTasks ~/ earlyLevelStep).clamp(0, maxTaskLevel);
+
+  var remainingTasks = totalTasks;
+  var level = 0;
+
+  while (remainingTasks >= tasksRequiredForNextLevel(level)) {
+    remainingTasks -= tasksRequiredForNextLevel(level);
+    level++;
   }
-  final lateTasks = totalTasks - (earlyLevelMax * earlyLevelStep);
-  final lateLevel = lateTasks ~/ lateLevelStep;
-  return (earlyLevelMax + lateLevel).clamp(0, maxTaskLevel);
+
+  return level;
 }
 
 int tasksToNextLevel(int totalTasks) {
+  if (totalTasks < 0) {
+    return tasksRequiredForNextLevel(0);
+  }
+
   final level = calculateTaskLevel(totalTasks);
-  if (level >= maxTaskLevel) {
-    return 0;
-  }
-  if (totalTasks < earlyLevelMax * earlyLevelStep) {
-    final remainder = totalTasks % earlyLevelStep;
-    return earlyLevelStep - remainder;
-  }
-  final remainder = (totalTasks - (earlyLevelMax * earlyLevelStep)) %
-      lateLevelStep;
-  return lateLevelStep - remainder;
+  final minTasksForCurrentLevel = minTasksForLevel(level);
+  final currentLevelProgress = totalTasks - minTasksForCurrentLevel;
+  final levelRequirement = tasksRequiredForNextLevel(level);
+
+  return levelRequirement - currentLevelProgress;
 }
 
 int minTasksForLevel(int level) {
-  if (level <= earlyLevelMax) {
-    return level * earlyLevelStep;
+  if (level <= 0) return 0;
+
+  var minTasks = 0;
+  for (var currentLevel = 0; currentLevel < level; currentLevel++) {
+    minTasks += tasksRequiredForNextLevel(currentLevel);
   }
-  return (earlyLevelMax * earlyLevelStep) +
-      ((level - earlyLevelMax) * lateLevelStep);
+
+  return minTasks;
 }
 
 int maxTasksForLevel(int level) {
   if (level >= maxTaskLevel) {
     return 999999;
   }
+
   final minTasks = minTasksForLevel(level);
-  if (level < earlyLevelMax) {
-    return minTasks + (earlyLevelStep - 1);
-  }
-  return minTasks + (lateLevelStep - 1);
+  final levelRequirement = tasksRequiredForNextLevel(level);
+
+  return minTasks + (levelRequirement - 1);
 }

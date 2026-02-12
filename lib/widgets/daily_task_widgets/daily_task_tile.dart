@@ -35,7 +35,7 @@ class DailyTaskTile extends StatelessWidget {
     final accentColor = Colors.green.shade800;
     final accentBackground = accentColor.withValues(alpha: 0.12);
 
-    final levelStep = rank < earlyLevelMax ? earlyLevelStep : lateLevelStep;
+    final levelStep = tasksRequiredForNextLevel(rank);
     final currentLevelProgress = (levelStep - tasksToNext).clamp(0, levelStep);
 
     return Stack(
