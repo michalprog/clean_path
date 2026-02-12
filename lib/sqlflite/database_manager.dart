@@ -25,7 +25,7 @@ class DatabaseManager {
 
     return openDatabase(
       path,
-      version: 10,
+      version: 11,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
       onOpen: (db) async {
@@ -117,6 +117,21 @@ class DatabaseManager {
         min_level INTEGER NOT NULL
       )
     ''');
+    await db.execute('''
+      CREATE TABLE daily_login (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL,
+        login_date TEXT NOT NULL,
+        UNIQUE(username, login_date),
+        FOREIGN KEY(username) REFERENCES user(username)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE INDEX IF NOT EXISTS idx_daily_login_username_date
+      ON daily_login(username, login_date)
+    ''');
+
 
     await _ensureDefaultUser(db);
     await _ensureDefaultTaskProgress(db);
@@ -231,7 +246,31 @@ class DatabaseManager {
         )
       ''');
     }
+    if (oldVersion < 11) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS daily_login (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT NOT NULL,
+          login_date TEXT NOT NULL,
+          UNIQUE(username, login_date),
+          FOREIGN KEY(username) REFERENCES user(username)
+        )
+      ''');
 
+      await db.execute('''
+        CREATE INDEX IF NOT EXISTS idx_daily_login_username_date
+        ON daily_login(username, login_date)
+      ''');
+
+      final hasLegacyTable = await _tableExists(db, 'user_login_days');
+      if (hasLegacyTable) {
+        await db.execute('''
+          INSERT OR IGNORE INTO daily_login (username, login_date)
+          SELECT username, login_date FROM user_login_days
+        ''');
+        await db.execute('DROP TABLE IF EXISTS user_login_days');
+      }
+    }
     await _ensureDefaultUser(db);
     await _ensureDefaultTaskProgress(db);
     await _ensureDefaultTaskLevels(db);

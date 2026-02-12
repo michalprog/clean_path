@@ -1,3 +1,4 @@
+import 'package:clean_path/providers/account_provider.dart';
 import 'package:clean_path/widgets/main_addictions_widgets/active_navigation_icon.dart';
 import 'package:clean_path/widgets/user_widgets/account_bottom_sheet.dart';
 import 'package:clean_path/window_widgets/main_additcion_views/alk_view.dart';
@@ -31,6 +32,9 @@ class _MainWindowState extends State<MainWindow> {
   void initState() {
     super.initState();
     show_view = [FapView(), PapView(), AlkView(), DefaultView(), MainView()];
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDailyWelcome();
+    });
   }
 
   @override
@@ -110,6 +114,33 @@ class _MainWindowState extends State<MainWindow> {
       navigationIndex = page;
     });
   }
+  Future<void> showDailyWelcome() async {
+    if (!mounted) return;
+
+    final accountProvider = context.read<AccountProvider>();
+    if (!accountProvider.shouldShowDailyWelcome) {
+      return;
+    }
+
+    accountProvider.consumeDailyWelcomeFlag();
+
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Witamy!'),
+          content: const Text('Miło Cię widzieć dzisiaj 👋'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void showAccountBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
