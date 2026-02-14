@@ -20,6 +20,7 @@ class AccountInfoTile extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
 
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
         color: color.withOpacity(0.08),
@@ -27,6 +28,7 @@ class AccountInfoTile extends StatelessWidget {
         border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 18,
@@ -36,15 +38,29 @@ class AccountInfoTile extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: tt.titleSmall?.copyWith(
               fontWeight: FontWeight.w700,
               color: color,
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            label,
-            style: tt.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+          SizedBox(
+            height: 36,
+            child: Center(
+              child: Text(
+                label,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: tt.bodySmall?.copyWith(
+                  color: cs.onSurfaceVariant,
+                  fontSize: 10,
+                  height: 1.1,
+                ),
+              ),
+            ),
           ),
         ],
       ),

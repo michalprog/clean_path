@@ -100,28 +100,40 @@ class AccountBottomSheet extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: Colors.green.shade300),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AccountInfoTile(
-                    icon: Icons.emoji_events,
-                    label: l10n.accountLevelLabel,
-                    value: level.toString(),
-                    color: Colors.green.shade700,
-                  ),
-                  AccountInfoTile(
-                    icon: Icons.auto_graph,
-                    label: l10n.accountXpLabel,
-                    value: xp.toString(),
-                    color: Colors.green.shade600,
-                  ),
-                  AccountInfoTile(
-                    icon: Icons.trending_up,
-                    label: l10n.accountXpToNextLabel,
-                    value: l10n.accountXpToNextValue(xpToNextLevel),
-                    color: Colors.green.shade800,
-                  ),
-                ],
+              child: SizedBox(
+                height: 130,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: AccountInfoTile(
+                        icon: Icons.emoji_events,
+                        label: l10n.accountLevelLabel,
+                        value: level.toString(),
+                        color: Colors.green.shade700,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: AccountInfoTile(
+                        icon: Icons.auto_graph,
+                        label: l10n.accountXpLabel,
+                        value: xp.toString(),
+                        color: Colors.green.shade600,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: AccountInfoTile(
+                        icon: Icons.trending_up,
+                        label: l10n.accountXpToNextLabel,
+                        value: l10n.accountXpToNextValue(xpToNextLevel),
+                        color: Colors.green.shade800,
+                      ),
+                    ),
+                  ],
+
+                ),
               ),
             ),
 
