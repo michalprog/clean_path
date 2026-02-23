@@ -8,7 +8,6 @@ import '/l10n/app_localizations.dart';
 import '/providers/account_provider.dart';
 import 'account_edit_view.dart';
 
-
 class AccountSummaryView extends StatelessWidget {
   const AccountSummaryView({super.key});
 
@@ -28,16 +27,15 @@ class AccountSummaryView extends StatelessWidget {
     final joinDate = _formatJoinDate(context, user?.joinDate, l10n);
 
     return ListView(
+      primary: false,
+      shrinkWrap: true,
       padding: const EdgeInsets.all(16),
       children: [
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Colors.green.shade50,
-                Colors.green.shade100,
-              ],
+              colors: [Colors.green.shade50, Colors.green.shade100],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -103,25 +101,33 @@ class AccountSummaryView extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
             children: [
-              AccountInfoTile(
-                icon: Icons.emoji_events,
-                label: l10n.accountLevelLabel,
-                value: level.toString(),
-                color: Colors.green.shade700,
+              Expanded(
+                child: AccountInfoTile(
+                  icon: Icons.emoji_events,
+                  label: l10n.accountLevelLabel,
+                  value: level.toString(),
+                  color: Colors.green.shade700,
+                ),
               ),
-              AccountInfoTile(
-                icon: Icons.auto_graph,
-                label: l10n.accountXpLabel,
-                value: xp.toString(),
-                color: Colors.green.shade600,
+              const SizedBox(width: 8),
+              Expanded(
+                child: AccountInfoTile(
+                  icon: Icons.auto_graph,
+                  label: l10n.accountXpLabel,
+                  value: xp.toString(),
+                  color: Colors.green.shade600,
+                ),
               ),
-              AccountInfoTile(
-                icon: Icons.local_fire_department,
-                label: l10n.accountStreakLabel,
-                value: l10n.accountStreakValue(streak),
-                color: Colors.green.shade800,
+              const SizedBox(width: 8),
+              Expanded(
+                child: AccountInfoTile(
+                  icon: Icons.local_fire_department,
+                  label: l10n.accountStreakLabel,
+                  value: l10n.accountStreakValue(streak),
+                  color: Colors.green.shade800,
+                ),
               ),
             ],
           ),
@@ -130,9 +136,10 @@ class AccountSummaryView extends StatelessWidget {
         AccountRow(
           icon: Icons.check_circle,
           title: l10n.accountStatusTitle,
-          value: status == 1
-              ? l10n.accountStatusActive
-              : l10n.accountStatusInactive,
+          value:
+              status == 1
+                  ? l10n.accountStatusActive
+                  : l10n.accountStatusInactive,
           color: status == 1 ? Colors.green.shade700 : Colors.grey,
         ),
         const SizedBox(height: 12),
@@ -156,16 +163,16 @@ class AccountSummaryView extends StatelessWidget {
   }
 
   void _openEditProfile(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const AccountEditView()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const AccountEditView()));
   }
 
   String _formatJoinDate(
-      BuildContext context,
-      DateTime? date,
-      AppLocalizations l10n,
-      ) {
+    BuildContext context,
+    DateTime? date,
+    AppLocalizations l10n,
+  ) {
     if (date == null) {
       return l10n.accountNoData;
     }
