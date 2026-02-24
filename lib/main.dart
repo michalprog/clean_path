@@ -1,3 +1,4 @@
+import 'package:clean_path/main/notification_service.dart';
 import 'package:clean_path/providers/daily_tasks_provider.dart';
 import 'package:clean_path/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ Future<void> main() async {
   await setupServiceLocator();
   final accountProvider = getIt<AccountProvider>();
   await accountProvider.loadUser();
+  final notificationService = getIt<NotificationService>();
+  await notificationService.scheduleNotificationsFromTomorrow();
   runApp(
     MultiProvider(
       providers: [

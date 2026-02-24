@@ -4,7 +4,7 @@ class AchievementRecord {
   final String title;
   final String description;
   final DateTime? achievementDate;
-
+  // #Todo dodać ikonę oraz rzadkość
   AchievementRecord({
     required this.id,
     required this.isAchieved,

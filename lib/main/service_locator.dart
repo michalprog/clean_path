@@ -1,3 +1,4 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -5,6 +6,7 @@ import '/data_types/leveling_service.dart';
 import '/sqlflite/database_manager.dart';
 import '/providers/account_provider.dart';
 import '/providers/settings_storage.dart';
+import 'notification_service.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -30,6 +32,12 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton<AccountProvider>(
         () => AccountProvider(),
   );
+  getIt.registerLazySingleton<FlutterLocalNotificationsPlugin>(
+        () => FlutterLocalNotificationsPlugin(),
+  );
 
+  getIt.registerLazySingleton<NotificationService>(
+        () => NotificationService(getIt<FlutterLocalNotificationsPlugin>()),
+  );
   await getIt.allReady();
 }
