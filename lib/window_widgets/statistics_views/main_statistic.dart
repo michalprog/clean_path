@@ -2,6 +2,7 @@ import 'package:clean_path/window_widgets/statistics_views/statistic_universal_c
 import 'package:clean_path/window_widgets/statistics_views/statistics_trails_view.dart';
 import 'package:clean_path/window_widgets/statistics_views/uniwersal_statistics_view.dart';
 import 'package:clean_path/window_widgets/user_views/account_summary_view.dart';
+import 'package:clean_path/window_widgets/user_views/accout_calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '/l10n/app_localizations.dart';
@@ -68,7 +69,12 @@ class _MainStatisticState extends State<MainStatistic> {
       MainStatistcsView(),
       PageView(children: const [StatisticsTrailsView(), AllAttempsListView()]),
       const DailyTaskStatisticsPage(),
-      const AccountSummaryView(),// <- upewniamy się, że jest const jeśli się da
+       PageView(
+        children: [
+          AccountSummaryView(),
+          AccoutCalendarView(),
+        ],
+      ),
     ];
 
     // zabezpieczenie indeksu z zewnątrz
