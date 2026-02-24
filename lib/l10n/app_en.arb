@@ -128,5 +128,8 @@
   "accountSaveChanges": "Save changes",
   "accountClose": "Close",
   "accountLoading": "Loading data...",
-  "accountNoData": "No data"
+  "accountNoData": "No data",
+  "dailyWelcomeTitle": "Welcome!",
+  "dailyWelcomeMessage": "Great to see you today 👋",
+  "commonOk": "OK"
 }

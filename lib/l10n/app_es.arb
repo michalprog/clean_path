@@ -123,5 +123,8 @@
   "accountSaveChanges": "Guardar cambios",
   "accountClose": "Cerrar",
   "accountLoading": "Cargando datos...",
-  "accountNoData": "Sin datos"
+  "accountNoData": "Sin datos",
+  "dailyWelcomeTitle": "¡Bienvenido!",
+  "dailyWelcomeMessage": "Qué gusto verte hoy 👋",
+  "commonOk": "OK"
 }

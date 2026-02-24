@@ -381,4 +381,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get accountNoData => 'Sin datos';
+
+  @override
+  String get dailyWelcomeTitle => '¡Bienvenido!';
+
+  @override
+  String get dailyWelcomeMessage => 'Qué gusto verte hoy 👋';
+
+  @override
+  String get commonOk => 'OK';
 }

@@ -382,4 +382,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get accountNoData => 'Keine Daten';
+
+  @override
+  String get dailyWelcomeTitle => 'Willkommen!';
+
+  @override
+  String get dailyWelcomeMessage => 'Schön, dich heute zu sehen 👋';
+
+  @override
+  String get commonOk => 'OK';
 }

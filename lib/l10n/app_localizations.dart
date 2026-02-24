@@ -791,6 +791,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No data'**
   String get accountNoData;
+
+  /// No description provided for @dailyWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome!'**
+  String get dailyWelcomeTitle;
+
+  /// No description provided for @dailyWelcomeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Great to see you today 👋'**
+  String get dailyWelcomeMessage;
+
+  /// No description provided for @commonOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get commonOk;
 }
 
 class _AppLocalizationsDelegate

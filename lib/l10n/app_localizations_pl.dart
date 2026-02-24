@@ -378,4 +378,13 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get accountNoData => 'Brak danych';
+
+  @override
+  String get dailyWelcomeTitle => 'Witamy!';
+
+  @override
+  String get dailyWelcomeMessage => 'Miło Cię widzieć dzisiaj 👋';
+
+  @override
+  String get commonOk => 'OK';
 }
