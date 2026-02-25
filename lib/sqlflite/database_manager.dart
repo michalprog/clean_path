@@ -25,7 +25,7 @@ class DatabaseManager {
 
     return openDatabase(
       path,
-      version: 12,
+      version: 13,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
       onOpen: (db) async {
@@ -57,6 +57,7 @@ class DatabaseManager {
         title TEXT NOT NULL,
         description TEXT NOT NULL,
         icon_codepoint INTEGER NOT NULL DEFAULT 59448,
+        icon_font_package TEXT,
         rarity TEXT NOT NULL DEFAULT 'common',
         achievement_date TEXT
       )
@@ -282,6 +283,19 @@ class DatabaseManager {
       if (!await _hasColumn(db, 'achievement_record', 'rarity')) {
         await db.execute(
           "ALTER TABLE achievement_record ADD COLUMN rarity TEXT NOT NULL DEFAULT 'common'",
+        );
+      }
+    }
+    if (oldVersion < 13) {
+      if (!await _hasColumn(db, 'achievement_record', 'icon_font_family')) {
+        await db.execute(
+          "ALTER TABLE achievement_record ADD COLUMN icon_font_family TEXT",
+        );
+      }
+
+      if (!await _hasColumn(db, 'achievement_record', 'icon_font_package')) {
+        await db.execute(
+          "ALTER TABLE achievement_record ADD COLUMN icon_font_package TEXT",
         );
       }
     }

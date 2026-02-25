@@ -16,16 +16,46 @@ class AchievementDao {
         title TEXT NOT NULL,
         description TEXT NOT NULL,
         icon_codepoint INTEGER NOT NULL DEFAULT 59448,
+        icon_font_family TEXT,
+        icon_font_package TEXT,
         rarity TEXT NOT NULL DEFAULT 'common',
         achievement_date TEXT
       )
     ''');
 
-    final existing = await db.query('achievement_record');
-    if (existing.isEmpty) {
-      for (var achievement in startingAchievements) {
-        await db.insert('achievement_record', achievement.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    final tableInfo = await db.rawQuery('PRAGMA table_info(achievement_record)');
+    final columnNames = tableInfo
+        .map((row) => row['name'] as String?)
+        .whereType<String>()
+        .toSet();
+
+    if (!columnNames.contains('icon_font_family')) {
+      await db.execute(
+        'ALTER TABLE achievement_record ADD COLUMN icon_font_family TEXT',
+      );
+    }
+
+    if (!columnNames.contains('icon_font_package')) {
+      await db.execute(
+        'ALTER TABLE achievement_record ADD COLUMN icon_font_package TEXT',
+      );
+    }
+
+    final existing = await db.query('achievement_record', columns: ['id']);
+    final existingIds = existing
+        .map((row) => row['id'] as int?)
+        .whereType<int>()
+        .toSet();
+
+    for (final achievement in startingAchievements) {
+      if (existingIds.contains(achievement.id)) {
+        continue;
       }
+      await db.insert(
+        'achievement_record',
+        achievement.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
     }
   }
 
