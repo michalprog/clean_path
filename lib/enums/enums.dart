@@ -7,3 +7,11 @@ enum LevelingAction {
   achievementUnlocked,
   timerDayCompleted,
 }
+enum RarityLevel{
+  common,
+  uncommon,
+  rare,
+  epic,
+  legendary,
+  mythic,
+}
