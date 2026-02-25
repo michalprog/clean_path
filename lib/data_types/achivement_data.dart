@@ -39,7 +39,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Mała seria',
     description: 'Wytrzymaj 3 dni i zacznij budować swoją konsekwencję.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -48,7 +48,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Tydzień siły',
     description: 'Utrzymaj 7 dni czystości i udowodnij sobie, że potrafisz.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -57,7 +57,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Dwa tygodnie determinacji',
     description: 'Wytrwaj 14 dni bez uzależnienia.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.rare,
   ),
 
   AchievementRecord(
@@ -66,7 +66,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Miesiąc przemiany',
     description: 'Osiągnij 30 dni wolności od uzależnienia.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.rare,
   ),
 
   AchievementRecord(
@@ -75,7 +75,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Podwójna motywacja',
     description: 'Wytrzymaj 60 dni i umocnij nowe nawyki.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -84,7 +84,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Trzy cyfry',
     description: 'Osiągnij 100 dni bez uzależnienia.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -93,7 +93,7 @@ List<AchievementRecord> startingAchievements = [
     title: '200 dni wolności',
     description: 'Przekrocz granicę 200 dni czystości.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.legendary,
   ),
 
   AchievementRecord(
@@ -102,7 +102,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Rok zwycięstwa',
     description: 'Utrzymaj 365 dni bez powrotu do nałogu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.legendary,
   ),
 
   AchievementRecord(
@@ -120,7 +120,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Pełna produktywność',
     description: 'Wykonaj wszystkie 4 zadania dzienne w ciągu jednego dnia.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -129,7 +129,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Tydzień nawodnienia',
     description: 'Dbaj o odpowiednie nawodnienie przez 7 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -138,7 +138,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Tydzień nauki',
     description: 'Ucz się codziennie przez 7 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -147,7 +147,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Zdrowa głowa',
     description: 'Dbaj o zdrowie psychiczne przez 7 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -156,7 +156,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Zdrowe ciało',
     description: 'Dbaj o zdrowie fizyczne przez 7 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -165,7 +165,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Miesiąc nawodnienia',
     description: 'Utrzymaj nawyk prawidłowego nawodnienia przez 30 dni.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -174,7 +174,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Miesiąc rozwoju',
     description: 'Ucz się regularnie przez 30 dni.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -183,7 +183,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Stabilność psychiczna',
     description: 'Dbaj o zdrowie psychiczne przez pełny miesiąc.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -192,7 +192,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Forma miesiąca',
     description: 'Dbaj o zdrowie fizyczne przez 30 dni.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -210,7 +210,7 @@ List<AchievementRecord> startingAchievements = [
     title: '10 wykonanych zadań',
     description: 'Ukończ łącznie 10 zadań dziennych.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -219,7 +219,7 @@ List<AchievementRecord> startingAchievements = [
     title: '50 wykonanych zadań',
     description: 'Ukończ łącznie 50 zadań dziennych.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.rare,
   ),
 
   AchievementRecord(
@@ -228,7 +228,7 @@ List<AchievementRecord> startingAchievements = [
     title: '100 wykonanych zadań',
     description: 'Ukończ łącznie 100 zadań dziennych.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -237,7 +237,7 @@ List<AchievementRecord> startingAchievements = [
     title: '200 wykonanych zadań',
     description: 'Ukończ łącznie 200 zadań dziennych.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.legendary,
   ),
 
   AchievementRecord(
@@ -246,7 +246,7 @@ List<AchievementRecord> startingAchievements = [
     title: '500 wykonanych zadań',
     description: 'Ukończ łącznie 500 zadań dziennych.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.legendary,
   ),
 
   AchievementRecord(
@@ -255,7 +255,7 @@ List<AchievementRecord> startingAchievements = [
     title: '1000 wykonanych zadań',
     description: 'Ukończ łącznie 1000 zadań dziennych.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.mythic,
   ),
 
   AchievementRecord(
@@ -273,7 +273,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Wschodząca motywacja',
     description: 'Osiągnij poziom 5.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -282,7 +282,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Zaangażowany',
     description: 'Osiągnij poziom 10.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -291,7 +291,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Doświadczony',
     description: 'Osiągnij poziom 20.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.rare,
   ),
 
   AchievementRecord(
@@ -300,7 +300,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Ekspert samokontroli',
     description: 'Osiągnij poziom 30.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.rare,
   ),
 
   AchievementRecord(
@@ -309,7 +309,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Mistrz wytrwałości',
     description: 'Osiągnij poziom 50.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.legendary,
   ),
 
   AchievementRecord(
@@ -318,7 +318,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Legenda determinacji',
     description: 'Osiągnij poziom 70.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.legendary,
   ),
 
   AchievementRecord(
@@ -327,7 +327,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Poziom maksymalny',
     description: 'Osiągnij poziom 100.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.mythic,
   ),
 
   AchievementRecord(
@@ -345,7 +345,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Tydzień obecności',
     description: 'Korzystaj z aplikacji przez 7 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -354,7 +354,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Dwa tygodnie obecności',
     description: 'Korzystaj z aplikacji przez 14 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.uncommon,
   ),
 
   AchievementRecord(
@@ -363,7 +363,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Miesiąc systematyczności',
     description: 'Korzystaj z aplikacji przez 30 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.rare,
   ),
 
   AchievementRecord(
@@ -372,7 +372,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Dwa miesiące konsekwencji',
     description: 'Korzystaj z aplikacji przez 60 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -381,7 +381,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Kwartał wytrwałości',
     description: 'Korzystaj z aplikacji przez 90 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.epic,
   ),
 
   AchievementRecord(
@@ -390,7 +390,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Pół roku dyscypliny',
     description: 'Korzystaj z aplikacji przez 6 miesięcy z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.legendary,
   ),
 
   AchievementRecord(
@@ -399,7 +399,7 @@ List<AchievementRecord> startingAchievements = [
     title: 'Rok lojalności',
     description: 'Korzystaj z aplikacji przez 365 dni z rzędu.',
     icon: Icons.emoji_events,
-    rarity: RarityLevel.common,
+    rarity: RarityLevel.mythic,
   ),
 
 ];
