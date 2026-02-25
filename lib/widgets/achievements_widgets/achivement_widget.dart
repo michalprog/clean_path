@@ -12,7 +12,7 @@ class AchievementWidget extends StatelessWidget {
       case RarityLevel.common:
         return Colors.grey;
       case RarityLevel.uncommon:
-        return Colors.lightGreenAccent;
+        return Colors.green;
       case RarityLevel.rare:
         return Colors.blue.shade700;
       case RarityLevel.epic:
