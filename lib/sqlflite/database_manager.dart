@@ -25,7 +25,7 @@ class DatabaseManager {
 
     return openDatabase(
       path,
-      version: 11,
+      version: 12,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
       onOpen: (db) async {
@@ -56,6 +56,8 @@ class DatabaseManager {
         is_achieved INTEGER NOT NULL,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
+        icon_codepoint INTEGER NOT NULL DEFAULT 59448,
+        rarity TEXT NOT NULL DEFAULT 'common',
         achievement_date TEXT
       )
     ''');
@@ -131,7 +133,6 @@ class DatabaseManager {
       CREATE INDEX IF NOT EXISTS idx_daily_login_username_date
       ON daily_login(username, login_date)
     ''');
-
 
     await _ensureDefaultUser(db);
     await _ensureDefaultTaskProgress(db);
@@ -271,6 +272,19 @@ class DatabaseManager {
         await db.execute('DROP TABLE IF EXISTS user_login_days');
       }
     }
+    if (oldVersion < 12) {
+      if (!await _hasColumn(db, 'achievement_record', 'icon_codepoint')) {
+        await db.execute(
+          'ALTER TABLE achievement_record ADD COLUMN icon_codepoint INTEGER NOT NULL DEFAULT 59448',
+        );
+      }
+
+      if (!await _hasColumn(db, 'achievement_record', 'rarity')) {
+        await db.execute(
+          "ALTER TABLE achievement_record ADD COLUMN rarity TEXT NOT NULL DEFAULT 'common'",
+        );
+      }
+    }
     await _ensureDefaultUser(db);
     await _ensureDefaultTaskProgress(db);
     await _ensureDefaultTaskLevels(db);
@@ -335,7 +349,9 @@ class DatabaseManager {
     final hasTaskLevels = await _tableExists(db, 'task_levels');
     if (!hasTaskLevels) return;
 
-    final result = await db.rawQuery('SELECT COUNT(*) as count FROM task_levels');
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as count FROM task_levels',
+    );
     final count = Sqflite.firstIntValue(result) ?? 0;
     if (count != 0) return;
 
@@ -353,7 +369,9 @@ class DatabaseManager {
     final hasTaskRanks = await _tableExists(db, 'task_ranks');
     if (!hasTaskRanks) return;
 
-    final result = await db.rawQuery('SELECT COUNT(*) as count FROM task_ranks');
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as count FROM task_ranks',
+    );
     final count = Sqflite.firstIntValue(result) ?? 0;
     if (count != 0) return;
 

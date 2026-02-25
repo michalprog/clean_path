@@ -50,7 +50,7 @@ class AchievementView extends StatelessWidget {
                   return Center(child: Text(l10n.noAchievements));
                 }
 
-                final visible = items.take(20).toList();
+                final visible = items;
 
                 return Padding(
                   padding: const EdgeInsets.all(16),
@@ -137,7 +137,7 @@ class AchievementView extends StatelessWidget {
                                   physics: const BouncingScrollPhysics(),
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 4,
+                                        crossAxisCount: 5,
                                         crossAxisSpacing: 12,
                                         mainAxisSpacing: 12,
                                         childAspectRatio: 1,

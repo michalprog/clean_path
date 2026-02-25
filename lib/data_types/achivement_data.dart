@@ -1,3 +1,9 @@
+import 'package:clean_path/enums/enums.dart';
+import 'package:flutter/material.dart';
+
+import '/data_types/achievement_record.dart';
+
+
 List<AchievementRecord> startingAchievements = [
 
   AchievementRecord(

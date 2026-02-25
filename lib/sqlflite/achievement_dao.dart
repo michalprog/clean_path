@@ -15,6 +15,8 @@ class AchievementDao {
         is_achieved INTEGER NOT NULL,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
+        icon_codepoint INTEGER NOT NULL DEFAULT 59448,
+        rarity TEXT NOT NULL DEFAULT 'common',
         achievement_date TEXT
       )
     ''');
