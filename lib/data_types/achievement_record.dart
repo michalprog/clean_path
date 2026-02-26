@@ -1,8 +1,6 @@
 import 'package:clean_path/enums/enums.dart';
 import 'package:flutter/material.dart';
 
-
-
 class AchievementRecord {
   final int id;
   final bool isAchieved;
