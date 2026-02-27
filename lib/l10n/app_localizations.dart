@@ -809,6 +809,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get commonOk;
+
+  /// No description provided for @dailyWelcomeMotivation1.
+  ///
+  /// In en, this message translates to:
+  /// **'Every clean choice today builds your stronger tomorrow.'**
+  String get dailyWelcomeMotivation1;
+
+  /// No description provided for @dailyWelcomeMotivation2.
+  ///
+  /// In en, this message translates to:
+  /// **'You are growing, even when progress feels quiet.'**
+  String get dailyWelcomeMotivation2;
+
+  /// No description provided for @dailyWelcomeMotivation3.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay with your goal — your future self is grateful.'**
+  String get dailyWelcomeMotivation3;
+
+  /// No description provided for @dailyWelcomeMotivation4.
+  ///
+  /// In en, this message translates to:
+  /// **'Courage is repeating the right choice one more time.'**
+  String get dailyWelcomeMotivation4;
+
+  /// No description provided for @dailyWelcomeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s go'**
+  String get dailyWelcomeButton;
 }
 
 class _AppLocalizationsDelegate

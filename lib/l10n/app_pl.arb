@@ -126,6 +126,11 @@
   "accountNoData": "Brak danych",
   "dailyWelcomeTitle": "Witamy!",
   "dailyWelcomeMessage": "Miło Cię widzieć dzisiaj 👋",
-  "commonOk": "OK"
+  "commonOk": "OK",
+  "dailyWelcomeMotivation1": "Każdy czysty wybór dziś buduje Twoje silniejsze jutro.",
+  "dailyWelcomeMotivation2": "Rozwijasz się, nawet gdy postęp wydaje się cichy.",
+  "dailyWelcomeMotivation3": "Trzymaj się celu — Twoje przyszłe ja Ci podziękuje.",
+  "dailyWelcomeMotivation4": "Odwaga to ponownie wybrać to, co właściwe.",
+  "dailyWelcomeButton": "Działamy"
 }
 

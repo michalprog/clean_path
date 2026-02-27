@@ -126,5 +126,10 @@
   "accountNoData": "Keine Daten",
   "dailyWelcomeTitle": "Willkommen!",
   "dailyWelcomeMessage": "Schön, dich heute zu sehen 👋",
-  "commonOk": "OK"
+  "commonOk": "OK",
+  "dailyWelcomeMotivation1": "Jede saubere Entscheidung heute stärkt dein Morgen.",
+  "dailyWelcomeMotivation2": "Du wächst, auch wenn sich Fortschritt leise anfühlt.",
+  "dailyWelcomeMotivation3": "Bleib bei deinem Ziel — dein zukünftiges Ich wird dir danken.",
+  "dailyWelcomeMotivation4": "Mut bedeutet, die richtige Entscheidung noch einmal zu treffen.",
+  "dailyWelcomeButton": "Weiter"
 }

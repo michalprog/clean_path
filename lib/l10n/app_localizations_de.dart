@@ -391,4 +391,23 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get commonOk => 'OK';
+
+  @override
+  String get dailyWelcomeMotivation1 =>
+      'Jede saubere Entscheidung heute stärkt dein Morgen.';
+
+  @override
+  String get dailyWelcomeMotivation2 =>
+      'Du wächst, auch wenn sich Fortschritt leise anfühlt.';
+
+  @override
+  String get dailyWelcomeMotivation3 =>
+      'Bleib bei deinem Ziel — dein zukünftiges Ich wird dir danken.';
+
+  @override
+  String get dailyWelcomeMotivation4 =>
+      'Mut bedeutet, die richtige Entscheidung noch einmal zu treffen.';
+
+  @override
+  String get dailyWelcomeButton => 'Weiter';
 }

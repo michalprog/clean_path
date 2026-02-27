@@ -126,5 +126,10 @@
   "accountNoData": "Sin datos",
   "dailyWelcomeTitle": "¡Bienvenido!",
   "dailyWelcomeMessage": "Qué gusto verte hoy 👋",
-  "commonOk": "OK"
+  "commonOk": "OK",
+  "dailyWelcomeMotivation1": "Cada elección limpia de hoy construye tu mañana más fuerte.",
+  "dailyWelcomeMotivation2": "Estás creciendo, incluso cuando el progreso parece silencioso.",
+  "dailyWelcomeMotivation3": "Mantente en tu meta: tu yo del futuro te lo agradecerá.",
+  "dailyWelcomeMotivation4": "El valor es repetir una vez más la decisión correcta.",
+  "dailyWelcomeButton": "Continuar"
 }

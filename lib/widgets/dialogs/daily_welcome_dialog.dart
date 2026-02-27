@@ -1,65 +1,145 @@
 import 'package:flutter/material.dart';
-
 import '/l10n/app_localizations.dart';
 
 class DailyWelcomeDialog extends StatelessWidget {
   const DailyWelcomeDialog({super.key});
 
+  String _resolveMotivationText(AppLocalizations l10n) {
+    final motivationTexts = [
+      l10n.dailyWelcomeMotivation1,
+      l10n.dailyWelcomeMotivation2,
+      l10n.dailyWelcomeMotivation3,
+      l10n.dailyWelcomeMotivation4,
+    ];
+
+
+    final now = DateTime.now();
+    final dayOfYear = now.difference(DateTime(now.year, 1, 1)).inDays;
+    final dayIndex = dayOfYear % motivationTexts.length;
+
+    return motivationTexts[dayIndex];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final localeTag = Localizations.localeOf(context).toLanguageTag().toUpperCase();
+    const bg = Color(0xFFF4FBF6);
+    const border = Color(0xFFE2EEE6);
+
+    const titleColor = Color(0xFF203A28);
+    const bodyColor = Color(0xFF3F5C49);
+    const accent = Color(0xFF2D6A3D);
+
+    const chipBg = Color(0xFFE6F3EA);
+    const chipText = Color(0xFF2F6A44);
+
+    const buttonBg = Color(0xFF5E8B65);
+
     return AlertDialog(
       alignment: Alignment.center,
-      backgroundColor: const Color(0xFFF3F7F4),
+      scrollable: true,
+      backgroundColor: bg,
       surfaceTintColor: Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      titlePadding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
-      contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-      actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28),
+        side: const BorderSide(color: border, width: 1),
+      ),
+      titlePadding: const EdgeInsets.fromLTRB(24, 20, 24, 4),
+      contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+      actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       title: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 56,
-            height: 56,
+            width: 62,
+            height: 62,
             decoration: const BoxDecoration(
-              color: Color(0xFFDCEBDD),
+              gradient: LinearGradient(
+                colors: [Color(0xFFD6EBDD), Color(0xFFBFE0C7)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x22000000),
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
             ),
-            child: const Icon(Icons.waving_hand_rounded, color: Color(0xFF507A57), size: 28),
+            child: const Icon(Icons.waving_hand_rounded, color: titleColor, size: 30),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
           Text(
             l10n.dailyWelcomeTitle,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: const Color(0xFF2F4A33),
-              fontWeight: FontWeight.w700,
-              fontSize: 22,
+            style: const TextStyle(
+              color: titleColor,
+              fontWeight: FontWeight.w800,
+              fontSize: 24,
+              letterSpacing: -0.2,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: chipBg,
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: const Color(0xFFD2E6D8), width: 1),
+            ),
+            child: Text(
+              localeTag,
+              style: const TextStyle(
+                color: chipText,
+                fontWeight: FontWeight.w800,
+                fontSize: 11,
+                letterSpacing: 0.8,
+              ),
             ),
           ),
         ],
       ),
-      content: Text(
-        l10n.dailyWelcomeMessage,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          color: Color(0xFF5B6A5D),
-          fontSize: 16,
-          height: 1.35,
-        ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            l10n.dailyWelcomeMessage,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: bodyColor,
+              fontSize: 16,
+              height: 1.35,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            _resolveMotivationText(l10n),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: accent,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              height: 1.35,
+            ),
+          ),
+        ],
       ),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
-        FilledButton(
+        FilledButton.icon(
           style: FilledButton.styleFrom(
-            backgroundColor: const Color(0xFF5E8B65),
+            backgroundColor: buttonBg,
             foregroundColor: Colors.white,
-            minimumSize: const Size(120, 44),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            minimumSize: const Size(160, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            elevation: 0,
           ),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.commonOk),
+          icon: const Icon(Icons.arrow_forward_rounded, size: 18),
+          label: Text(l10n.dailyWelcomeButton),
         ),
       ],
     );

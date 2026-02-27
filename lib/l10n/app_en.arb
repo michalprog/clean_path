@@ -131,5 +131,10 @@
   "accountNoData": "No data",
   "dailyWelcomeTitle": "Welcome!",
   "dailyWelcomeMessage": "Great to see you today 👋",
-  "commonOk": "OK"
+  "commonOk": "OK",
+  "dailyWelcomeMotivation1": "Every clean choice today builds your stronger tomorrow.",
+  "dailyWelcomeMotivation2": "You are growing, even when progress feels quiet.",
+  "dailyWelcomeMotivation3": "Stay with your goal — your future self is grateful.",
+  "dailyWelcomeMotivation4": "Courage is repeating the right choice one more time.",
+  "dailyWelcomeButton": "Let's go"
 }

@@ -387,4 +387,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonOk => 'OK';
+
+  @override
+  String get dailyWelcomeMotivation1 =>
+      'Every clean choice today builds your stronger tomorrow.';
+
+  @override
+  String get dailyWelcomeMotivation2 =>
+      'You are growing, even when progress feels quiet.';
+
+  @override
+  String get dailyWelcomeMotivation3 =>
+      'Stay with your goal — your future self is grateful.';
+
+  @override
+  String get dailyWelcomeMotivation4 =>
+      'Courage is repeating the right choice one more time.';
+
+  @override
+  String get dailyWelcomeButton => 'Let\'s go';
 }
