@@ -12,7 +12,6 @@ class DailyWelcomeDialog extends StatelessWidget {
       l10n.dailyWelcomeMotivation4,
     ];
 
-
     final now = DateTime.now();
     final dayOfYear = now.difference(DateTime(now.year, 1, 1)).inDays;
     final dayIndex = dayOfYear % motivationTexts.length;
@@ -23,16 +22,11 @@ class DailyWelcomeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final localeTag = Localizations.localeOf(context).toLanguageTag().toUpperCase();
     const bg = Color(0xFFF4FBF6);
     const border = Color(0xFFE2EEE6);
 
     const titleColor = Color(0xFF203A28);
-    const bodyColor = Color(0xFF3F5C49);
     const accent = Color(0xFF2D6A3D);
-
-    const chipBg = Color(0xFFE6F3EA);
-    const chipText = Color(0xFF2F6A44);
 
     const buttonBg = Color(0xFF5E8B65);
 
@@ -82,39 +76,11 @@ class DailyWelcomeDialog extends StatelessWidget {
               letterSpacing: -0.2,
             ),
           ),
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: chipBg,
-              borderRadius: BorderRadius.circular(999),
-              border: Border.all(color: const Color(0xFFD2E6D8), width: 1),
-            ),
-            child: Text(
-              localeTag,
-              style: const TextStyle(
-                color: chipText,
-                fontWeight: FontWeight.w800,
-                fontSize: 11,
-                letterSpacing: 0.8,
-              ),
-            ),
-          ),
         ],
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            l10n.dailyWelcomeMessage,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: bodyColor,
-              fontSize: 16,
-              height: 1.35,
-            ),
-          ),
-          const SizedBox(height: 12),
           Text(
             _resolveMotivationText(l10n),
             textAlign: TextAlign.center,
@@ -138,7 +104,6 @@ class DailyWelcomeDialog extends StatelessWidget {
             elevation: 0,
           ),
           onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(Icons.arrow_forward_rounded, size: 18),
           label: Text(l10n.dailyWelcomeButton),
         ),
       ],
