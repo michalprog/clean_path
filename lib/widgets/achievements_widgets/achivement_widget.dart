@@ -27,48 +27,111 @@ class AchievementWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool unlocked = record.isAchieved;
+    final Color accentColor = rarityColor(record.rarity);
 
     return InkWell(
       borderRadius: BorderRadius.circular(14),
       onTap:
-          unlocked
-              ? () {
-                showDialog(
-                  context: context,
-                  builder:
-                      (_) => AlertDialog(
-                        title: Text(record.title),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(record.description),
-                            const SizedBox(height: 8),
-                            Text('Rarity: ${record.rarity.name}'),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text("OK"),
-                          ),
+      unlocked
+          ? () {
+        showDialog<void>(
+          context: context,
+          builder:
+              (_) => AlertDialog(
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
+            contentPadding: EdgeInsets.zero,
+            content: Container(
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: accentColor.withOpacity(0.55),
+                  width: 1.4,
+                ),
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.surface,
+                    Color.alphaBlend(
+                      accentColor.withOpacity(0.24),
+                      Theme.of(context).colorScheme.surface,
+                    ),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.18),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 68,
+                    height: 68,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          accentColor.withOpacity(0.34),
+                          accentColor.withOpacity(0.16),
                         ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                );
-              }
-              : null,
+                      border: Border.all(
+                        color: accentColor.withOpacity(0.65),
+                      ),
+                    ),
+                    child: Icon(
+                      record.icon,
+                      color: accentColor,
+                      size: 34,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    record.title,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    record.description,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 14),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+          : null,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           color:
-              unlocked
-                  ? Colors.white.withOpacity(0.85)
-                  : Colors.white.withOpacity(0.30),
+          unlocked
+              ? Colors.white.withOpacity(0.85)
+              : Colors.white.withOpacity(0.30),
           border: Border.all(
             color:
-                unlocked
-                    ? Colors.amber.withOpacity(0.45)
-                    : Colors.white.withOpacity(0.25),
+            unlocked
+                ? Colors.amber.withOpacity(0.45)
+                : Colors.white.withOpacity(0.25),
           ),
           boxShadow: [
             BoxShadow(
