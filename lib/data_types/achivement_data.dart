@@ -11,7 +11,7 @@ List<AchievementRecord> startingAchievements = [
     isAchieved: false,
     title: 'Pierwszy krok',
     description: 'Rozpocznij swoją walkę z uzależnieniem i podejmij świadomą decyzję o zmianie.',
-    icon: Icons.emoji_events,
+    icon: Icons.directions_walk,
     rarity: RarityLevel.common,
   ),
 

@@ -243,22 +243,73 @@ class _TimerWidgetState extends State<TimerWidget> {
     showDialog<void>(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        return Dialog(
+          insetPadding: const EdgeInsets.symmetric(horizontal: 28),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(28),
           ),
-          title: const Text('Motivation', textAlign: TextAlign.center),
-          content: Text(
-            quote,
-            textAlign: TextAlign.center,
-          ),
-          actionsAlignment: MainAxisAlignment.center,
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Thanks!'),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 18),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.green.shade50,
+                  Colors.white,
+                ],
+              ),
             ),
-          ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.green.shade100,
+                  child: Icon(
+                    Icons.lightbulb_outline_rounded,
+                    color: Colors.green.shade800,
+                    size: 30,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Motivation',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.green.shade900,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  quote,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    height: 1.35,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 22),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.tonal(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.green.shade200,
+                      foregroundColor: Colors.green.shade900,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Pause and reflect'),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
