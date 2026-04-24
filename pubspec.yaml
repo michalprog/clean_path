@@ -64,10 +64,10 @@ flutter_launcher_icons:
 flutter_native_splash:
   android: true
   ios: true
-  background_color: "#FFFFFF"
+  color: "#064E3B"
   image: "assets/icon/startIcon.png"
   android_gravity: center
-  android_scale_type: fitCenter
+
   ios_content_mode: scaleAspectFit
   fullscreen: false
 dev_dependencies:
