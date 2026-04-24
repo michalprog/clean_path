@@ -65,7 +65,7 @@ flutter_native_splash:
   android: true
   ios: true
   background_color: "#0b3d2e"
-  image: "assets/images/main_window_screen.png"
+  image: "assets/Icons/startIcon.png"
   android_gravity: center
   android_scale_type: fitCenter
   ios_content_mode: scaleAspectFit
