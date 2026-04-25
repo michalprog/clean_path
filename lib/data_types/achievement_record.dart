@@ -10,7 +10,7 @@ class AchievementRecord {
   final IconData icon;
   final RarityLevel rarity;
 
-  AchievementRecord({
+  const AchievementRecord({
     required this.id,
     required this.isAchieved,
     required this.title,

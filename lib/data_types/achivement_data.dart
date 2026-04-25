@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '/data_types/achievement_record.dart';
 
 
-List<AchievementRecord> startingAchievements = [
+final List<AchievementRecord> startingAchievements = [
 
   AchievementRecord(
     id: 1,

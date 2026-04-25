@@ -5,17 +5,17 @@ class Record {
   final AddictionTypes type;
   final bool isActive;
   final DateTime activated;
-  DateTime? desactivated;
+  final DateTime? desactivated;
   final String? comment;
 
   Record(
-      this.id,
-      this.type,
-      this.isActive,
-      this.activated, {
-        this.desactivated,
-        this.comment,
-      });
+    this.id,
+    this.type,
+    this.isActive,
+    this.activated, {
+    this.desactivated,
+    this.comment,
+  });
 
   factory Record.fromMap(Map<String, dynamic> map) {
     return Record(
@@ -23,9 +23,10 @@ class Record {
       AddictionTypes.values[map['type'] as int],
       map['is_active'] == 1,
       DateTime.parse(map['activated'] as String),
-      desactivated: map['desactivated'] != null
-          ? DateTime.parse(map['desactivated'] as String)
-          : null,
+      desactivated:
+          map['desactivated'] != null
+              ? DateTime.parse(map['desactivated'] as String)
+              : null,
       comment: map['comment'], // może być null, OK
     );
   }
