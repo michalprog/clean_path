@@ -1,6 +1,7 @@
 import 'package:clean_path/providers/account_provider.dart';
 import 'package:clean_path/widgets/dialogs/daily_welcome_dialog.dart';
 import 'package:clean_path/widgets/main_addictions_widgets/active_navigation_icon.dart';
+import 'package:clean_path/widgets/universal_widgets/gender_icon.dart';
 import 'package:clean_path/widgets/user_widgets/account_bottom_sheet.dart';
 import 'package:clean_path/window_widgets/main_additcion_views/alk_view.dart';
 import 'package:clean_path/window_widgets/main_additcion_views/default_view.dart';
@@ -83,7 +84,7 @@ class _MainWindowState extends State<MainWindow> {
               children: [
                 ActiveNavigationIcon(
                   onPressed: () => changeWindow(0),
-                  icon: const FaIcon(FontAwesomeIcons.marsAndVenus),
+                  icon: GenderIcon(),
                   isActive: activeTypes.contains(AddictionTypes.fap),
                 ),
                 ActiveNavigationIcon(
@@ -142,4 +143,5 @@ class _MainWindowState extends State<MainWindow> {
     );
   }
 }
+
 
