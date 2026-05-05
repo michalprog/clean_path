@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
 
 class GenderIcon extends StatelessWidget {
-  const GenderIcon();
+  const GenderIcon({super.key, this.size = 42, this.color = Colors.black});
+
+  final double size;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 42,
-      height: 36,
+    final femaleSize = size * 0.78;
+    final maleSize = size * 0.78;
+
+    return SizedBox(
+      width: size,
+      height: size,
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
           Positioned(
             left: 0,
             bottom: 0,
-            child: Icon(Icons.female, size: 28),
+            child: Icon(Icons.female, size: femaleSize, color: color),
           ),
           Positioned(
-            right: 0,
-            top: 0,
-            child: Icon(Icons.male, size: 28),
+            right: -size * 0.01,
+            top: -size * 0.12,
+            child: Icon(Icons.male, size: maleSize, color: color),
           ),
         ],
       ),
